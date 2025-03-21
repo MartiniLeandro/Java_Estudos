@@ -58,18 +58,22 @@ public class Worker {
         this.contracts.remove(contract);
     }
 
-    public double income(int year, int month){
-        double soma = baseSalary;
-        Calendar cal = Calendar.getInstance();
-        for (HourContract c : contracts) {
-            cal.setTime(c.getDate());
-            int c_year = cal.get(Calendar.YEAR);
-            int c_month = cal.get(Calendar.MONTH);
-            if(year == c_year && month == c_month){
-                soma += c.totalValue();
-            }
-        }
-        return soma;
+	public double income(int year, int month) {
+		double sum = baseSalary;
+		Calendar cal = Calendar.getInstance();
+		for (HourContract c : contracts) {
+			cal.setTime(c.getDate());
+			int c_year = cal.get(Calendar.YEAR);
+			int c_month = 1 + cal.get(Calendar.MONTH);
+			if (year == c_year && month == c_month) {
+				sum += c.totalValue();
+			}
+		}
+		return sum;
+	}
+
+    public String toString(){
+        return "Nome: " + name + " Level: " + level + " Base salary: " + baseSalary + " Departament: " + departament;
     }
 
 

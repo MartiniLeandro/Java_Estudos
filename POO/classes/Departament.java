@@ -13,4 +13,8 @@ public class Departament {
     public void setDepartament(String newDepartament){
         this.departament = newDepartament;
     }
+
+    public String toString(){
+        return departament;
+    }
 }
