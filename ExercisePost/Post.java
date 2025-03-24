@@ -55,11 +55,17 @@ public class Post {
 
 
     public String toString() {
-    return "Título: " + title + "\n" +
-           "Conteúdo: " + content + "\n" +
-           "Likes: " + likes + "\n" +
-           "Data: " + moment + "\n" +
-           "Comentários: " + comments;
-}
+		StringBuilder sb = new StringBuilder();
+		sb.append(title + "\n");
+		sb.append(likes);
+		sb.append(" Likes - ");
+		sb.append(LocalDateTime.now() + "\n");
+		sb.append(content + "\n");
+		sb.append("Comments:\n");
+		for (Comment c : comments) {
+			sb.append(c.getText() + "\n");
+		}
+		return sb.toString();
+	}
 
 }

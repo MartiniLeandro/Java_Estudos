@@ -24,8 +24,7 @@ public class Program {
             int likes = sc.nextInt();
             sc.nextLine(); 
 
-            LocalDateTime momentoAgora = agora;
-            novoPost = new Post(momentoAgora, titulo, conteudo, likes);
+            novoPost = new Post(agora, titulo, conteudo, likes);
 
             System.out.print("Quantos comentários você quer ter neste post: ");
             int comentarios = sc.nextInt();
