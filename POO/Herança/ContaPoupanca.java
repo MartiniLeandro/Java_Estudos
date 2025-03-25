@@ -1,6 +1,6 @@
 package POO.Herança;
 
-public class ContaPoupanca extends Conta {
+public final class ContaPoupanca extends Conta {
     private Double taxaJuros;
 
     public ContaPoupanca(){ super();};
@@ -19,5 +19,10 @@ public class ContaPoupanca extends Conta {
 
     public void SaldoAtualizado(){
         saldo += saldo * taxaJuros;
+    }
+
+    @Override
+    public void saque(Double valor){
+        saldo -= valor;
     }
 }

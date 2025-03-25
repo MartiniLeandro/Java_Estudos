@@ -32,7 +32,7 @@ public class Conta {
     }
 
     public void saque(Double valor){
-        this.saldo -= valor;
+        this.saldo -= valor + 5;
     }
     public void deposito(Double valor){
         this.saldo += valor;

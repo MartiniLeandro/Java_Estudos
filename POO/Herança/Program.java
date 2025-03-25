@@ -2,30 +2,18 @@ package POO.Herança;
 
 public class Program {
     public static void main(String[] args) {
-         Conta conta = new Conta(1003,"Bob", 0.0);
-         ContaBancaria contaBancaria = new ContaBancaria(1002, "Maria", 0.0, 500.0);
+      Conta acc1 = new Conta(1001, "Alex", 1000.0);
+      acc1.saque(200.0);
+      System.out.println(acc1.getSaldo());
 
-         // UPCASTING
+      Conta acc2 = new ContaPoupanca(1002, "Maria", 1000.0, 0.01);
+      acc2.saque(200.0);
+      System.out.println(acc2.getSaldo());
 
-         Conta acc1 = contaBancaria;
-         Conta acc2 = new ContaBancaria(1003, "Bob", 0.0, 200.0);
-         Conta acc3 = new ContaPoupanca(1004, "Anna", 0.0, 0.01);
+      Conta acc3 = new ContaBancaria(1003, "Leandro", 1000.0, 50.0);
+      acc3.saque(200.0);
+      System.out.println(acc3.getSaldo());
 
-         // DOWNCASTING
 
-         ContaBancaria acc4 = (ContaBancaria)acc2;
-         // ContaBancaria acc5 = (ContaBancaria)acc3; DA ERRO;
-         if(acc3 instanceof ContaBancaria){
-            ContaBancaria acc5 = (ContaBancaria)acc3;
-            acc5.emprestimo(200.0);
-            System.out.println("Empréstimo");
-         }
-         if(acc3 instanceof ContaPoupanca){
-            ContaPoupanca acc5 = (ContaPoupanca)acc3;
-            acc5.SaldoAtualizado();
-            System.out.println("SALDO ATUALIZADO");
-         }
-
-        
     }
 }
