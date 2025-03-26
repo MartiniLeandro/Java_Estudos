@@ -11,6 +11,14 @@ public class FuncionarioTerceirizado extends Funcionario{
         this.valorAdicional = valorAdicional;
     }
 
+    public Double getValorAdicional(){
+        return this.valorAdicional;
+    }
+
+    public void setValorAdicional(Double valor){
+        this.valorAdicional = valor;
+    }
+
     @Override
     public Double pagamento() {
         return super.pagamento() + (valorAdicional * 1.1);
