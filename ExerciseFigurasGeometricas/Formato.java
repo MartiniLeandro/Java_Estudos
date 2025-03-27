@@ -15,7 +15,5 @@ public abstract class Formato {
         this.cor = cor;
     }
 
-    public abstract Double area(){
-        
-    }
+    public abstract Double area();
 }
