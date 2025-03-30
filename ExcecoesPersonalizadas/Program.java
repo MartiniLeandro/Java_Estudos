@@ -6,20 +6,20 @@ import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class Program {
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args){
+
         Scanner sc = new Scanner(System.in);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        System.out.print("Numero do quarto: ");
-        Integer numeroQuarto = sc.nextInt();
-        System.out.print("Check-in (dd/MM/yyyy): ");
-        Date checkIn = sdf.parse(sc.next());
-        System.out.print("Check-Out (dd/MM/yyyy): ");
-        Date checkOut = sdf.parse(sc.next());
+        try{
+            System.out.print("Numero do quarto: ");
+            Integer numeroQuarto = sc.nextInt();
+            System.out.print("Check-in (dd/MM/yyyy): ");
+            Date checkIn = sdf.parse(sc.next());
+            System.out.print("Check-Out (dd/MM/yyyy): ");
+            Date checkOut = sdf.parse(sc.next());
 
-        if(!checkOut.after(checkIn)){
-            System.out.println("Erro na reserva: Chek-Out deve ser depois do Check-In");
-        }else {
+
             Reservas reserva = new Reservas(numeroQuarto, checkIn,checkOut);
             System.out.println("Reserva: " + reserva);
 
@@ -30,22 +30,15 @@ public class Program {
             System.out.print("Check-Out (dd/MM/yyyy): ");
             checkOut = sdf.parse(sc.next());
 
-            String erro = reserva.atualizarDatas(checkIn, checkOut);
-            if(erro != null){
-                System.out.println("Erro na reserva: " + erro);
-            }else {
-                System.out.println("Reserva: " + reserva);
-            }
-
             reserva.atualizarDatas(checkIn, checkOut);
             System.out.println("Reserva: " + reserva);
-
-
-
+        }catch(ParseException e){
+            System.out.println("Formato de data inválida!!!");
+        }catch(Exceptions e){
+            System.out.println("Erro na reserva: " + e.getMessage());
+        }catch(RuntimeException e){
+            System.out.println("Erro inesperado");
         }
-
-
-
         
         sc.close();
     }
