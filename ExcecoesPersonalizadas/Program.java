@@ -8,16 +8,16 @@ import java.util.Scanner;
 public class Program {
     public static void main(String[] args){
 
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         try{
             System.out.print("Numero do quarto: ");
-            Integer numeroQuarto = sc.nextInt();
+            Integer numeroQuarto = scanner.nextInt();
             System.out.print("Check-in (dd/MM/yyyy): ");
-            Date checkIn = sdf.parse(sc.next());
+            Date checkIn = sdf.parse(scanner.next());
             System.out.print("Check-Out (dd/MM/yyyy): ");
-            Date checkOut = sdf.parse(sc.next());
+            Date checkOut = sdf.parse(scanner.next());
 
 
             Reservas reserva = new Reservas(numeroQuarto, checkIn,checkOut);
@@ -26,9 +26,9 @@ public class Program {
             System.out.println();
             System.out.println("Digite as datas para atualizar a reserva: ");
             System.out.print("Check-in (dd/MM/yyyy): ");
-            checkIn = sdf.parse(sc.next());
+            checkIn = sdf.parse(scanner.next());
             System.out.print("Check-Out (dd/MM/yyyy): ");
-            checkOut = sdf.parse(sc.next());
+            checkOut = sdf.parse(scanner.next());
 
             reserva.atualizarDatas(checkIn, checkOut);
             System.out.println("Reserva: " + reserva);
@@ -40,6 +40,6 @@ public class Program {
             System.out.println("Erro inesperado");
         }
         
-        sc.close();
+        scanner.close();
     }
 }
