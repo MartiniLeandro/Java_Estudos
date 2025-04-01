@@ -2,19 +2,30 @@ package ExerciseGestãoEscolar;
 
 public class Aluno extends Pessoa{
     private Integer matricula;
-    private Disciplina disciplina;
+    private Boletim boletim;
 
     public Aluno(){super();};
 
-    public Aluno(String nome, String email, Integer cpf, Integer matricula){
+    public Aluno(String nome, String email, Long cpf, Integer matricula){
         super(nome, email, cpf);
         this.matricula = matricula;
+        boletim = null;
     }
 
     public Integer getMatricula(){
         return this.matricula;
     }
-    public Disciplina disciplina(){
-        return this.disciplina;
+    public Boletim getBoletim(){
+        return this.boletim;
+    }
+
+    public void setBoletim(Boletim Boletim){
+        this.boletim = Boletim;
+    }
+    
+
+    @Override
+    public String toString(){
+        return "Nome: " + super.getNome() + ", Email: " + super.getEmail() + ", CPF: " + super.getCpf() + ", Matrícula: " + getMatricula() + ", Média boletim: " + getBoletim().mediaBoletim() +  ", Aprovado ou Reprovado: " +  getBoletim().AprovadoOuReprovado() +  " || ";
     }
 }

@@ -3,11 +3,11 @@ package ExerciseGestãoEscolar;
 public class Pessoa {
     private String nome;
     private String email;
-    private Integer cpf;
+    private Long cpf;
 
     public Pessoa(){};
 
-    public Pessoa(String nome, String email, Integer cpf){
+    public Pessoa(String nome, String email, Long cpf){
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
@@ -19,7 +19,7 @@ public class Pessoa {
     public String getEmail(){
         return this.email;
     }
-    public Integer getCpf(){
+    public Long getCpf(){
         return this.cpf;
     }
 
