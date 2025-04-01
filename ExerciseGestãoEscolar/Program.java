@@ -14,8 +14,13 @@ public class Program {
             System.out.println("===== DADOS DO ALUNO #" + (i+1) + " ====");
             System.out.print("Nome do aluno: ");
             String nome = sc.nextLine();
-            System.out.print("Idade do aluno");
-
+            System.out.print("Idade do aluno: ");
+            Integer idade = sc.nextInt();
+            System.out.print("CPF do aluno: ");
+            Integer cpf = sc.nextInt();
+            System.out.print("Matrícula do aluno: ");
+            Integer matricula = sc.nextInt();
+            Pessoa aluno = new Aluno(nome, nome, cpf, matricula);
         }
         
         sc.close();
