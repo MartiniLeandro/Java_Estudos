@@ -33,11 +33,7 @@ public class Boletim {
     }
 
     public String AprovadoOuReprovado(){
-        if(mediaBoletim() >= 7){
-            return "APROVADO!!!";
-        }else{
-            return "REPROVADO!!!";
-        }
+        return mediaBoletim() >= 7 ? "APROVADO!!!" : "REPROVADO!!!";
     }
 
     public void consultaBoletim(){
