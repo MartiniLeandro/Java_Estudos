@@ -67,5 +67,32 @@ public class SistemaGestaoBiblioteca {
         }
         return pessoas;
     }
+
+    public static void EmprestimoLivro(Scanner sc, List<Pessoa> pessoas, List<Livro> livros){
+        System.out.print("Digite o ID do usuário: ");
+        Integer id = sc.nextInt();
+        Pessoa pessoaEncontrada = null;
+        for (Pessoa pessoa : pessoas) {
+            if(id.equals(pessoa.getId())){
+                pessoaEncontrada = pessoa;
+            }else{
+                System.out.println("ESTE ID NÃO EXISTE!!");
+            }
+        }
+        System.out.print("Digite o título do livro a ser emprestado: ");
+        String livroAlugadro = sc.next();
+        for (Livro livro : livros) {
+            if(livroAlugadro.equals(livro.getTitulo()) && livro.getStatus() == StatusLivro.DISPONIVEL){
+                pessoaEncontrada.getLivrosAlugados().add(livroAlugadro);
+                System.out.println("livro " + livroAlugadro + " emprestado para " + pessoaEncontrada.getNome());
+                //System.out.println(pessoaEncontrada.getLivrosAlugados());
+            }else if(livroAlugadro.equals(livro.getTitulo()) && livro.getStatus() == StatusLivro.EMPRESTADO){
+                System.out.println("ESTE LIVRO NÃO ESTÁ DISPONÍVEL PARA ALUGAR NO MOMENTO!!");
+            }else{
+                System.out.println("LIVRO NÃO CADASTRADO!!!");
+            }
+        }
+        
+    }
     
 }
