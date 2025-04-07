@@ -1,16 +1,18 @@
 package ExerciseFuncionarios;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Scanner;
+
+import ExerciseFuncionarios.services.FuncionarioService;
 
 public class Program {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        FuncionarioService service = new FuncionarioService();
         
         System.out.print("Numero de funcionários: ");
         Integer n = sc.nextInt();
-        List<Funcionario> funcionarios = new ArrayList<>();
+    
         for(int i = 0; i < n; i++){
             System.out.println("DADOS FUNCIONÁRIO #" + (i+1));
             System.out.print("Terceirizado(y/n)?");
@@ -24,19 +26,15 @@ public class Program {
             if(yesOrNo == 'y'){
                 System.out.print("Valor adicional: ");
                 Double valorAdicional = sc.nextDouble();
-                Funcionario funcionarioTerceirizado = new FuncionarioTerceirizado(nome, horas, valorHora, valorAdicional);
-                funcionarios.add(funcionarioTerceirizado);
+                service.cadastroFuncionarioTerceirizado(nome, horas, valorHora, valorAdicional);    
 
             }else {
-                funcionarios.add(new Funcionario(nome, horas, valorHora));
+               service.cadastroFuncionario(nome, horas, valorHora);
             }
         }
 
         System.out.println("PAGAMENTOS");
-        for (Funcionario funcionario : funcionarios) {
-            System.out.println(funcionario.getNome() + " - " + funcionario.pagamento());
-        }
-
+        service.totalPagamento();
 
         sc.close();
     }

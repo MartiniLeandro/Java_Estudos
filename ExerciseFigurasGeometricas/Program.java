@@ -1,16 +1,16 @@
 package ExerciseFigurasGeometricas;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+
+import ExerciseFigurasGeometricas.services.FormatoService;
 
 public class Program{
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        FormatoService service = new FormatoService();
         
         System.out.print("Números de formas geométricas: ");
         int n = sc.nextInt();
-        List<Formato> formasGeometricas = new ArrayList<>();
         for(int i = 0; i < n; i++){
             System.out.println("DADOS FORMATO #" + (i+1));
             System.out.print("Retangulo ou Circulo (r/c): ");
@@ -22,22 +22,17 @@ public class Program{
                 Double altura = sc.nextDouble();
                 System.out.print("Largura: ");
                 Double largura = sc.nextDouble();
-                Formato forma = new Retangulo(Cores.valueOf(cor), altura, largura);
-                formasGeometricas.add(forma);
+                service.CadastroRetangulo(altura, largura, Cores.valueOf(cor));
             }else if(retanguloCirculo == 'c'){
                 System.out.print("Raio: ");
                 Double raio = sc.nextDouble();
-                Formato forma = new Circulo(Cores.valueOf(cor), raio);
-                formasGeometricas.add(forma);
+                service.CadastroCirculo(raio, Cores.valueOf(cor));
             }
             
         }
 
         System.out.println("AREA DOS FORMATOS: ");
-        for (Formato formato : formasGeometricas) {
-            System.out.printf("%.2f%n", formato.area());
-        }
-        
+        service.AreaFormasGeometricas();
         sc.close();
     }
 }
