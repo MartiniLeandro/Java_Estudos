@@ -29,9 +29,6 @@ public class Pedido {
     public List<ItemPedido> getItemPedidos(){
         return this.itemPedidos;
     }
-    public void addItem(ItemPedido pedido){
-        itemPedidos.add(pedido);
-    }
     public void removeItem(ItemPedido pedido){
         itemPedidos.remove(pedido);
     }

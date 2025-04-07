@@ -3,21 +3,28 @@ package ExercisePedido;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
+import ExercisePedido.services.ClienteService;
+import ExercisePedido.services.PedidoService;
+import ExercisePedido.services.ProdutoService;
+
 public class Program {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         LocalDateTime momento = LocalDateTime.now();
+        ClienteService clienteService = new ClienteService();
+        PedidoService pedidoService = new PedidoService();
+        ProdutoService produtoService = new ProdutoService();
 
         System.out.println("DADOS DO CLIENTE:");
         System.out.print("nome:");
         String nome = sc.nextLine();
         System.out.print("email:");
         String email = sc.next();
-        Cliente cliente = new Cliente(nome,email);
+        Cliente cliente = clienteService.addCliente(nome, email);
         System.out.println("DADOS DO PEDIDO:");
         System.out.print("Status: ");
         String status = sc.next();
-        Pedido pedido = new Pedido(momento, StatusPedido.valueOf(status));
+        pedidoService.addPedido(momento, StatusPedido.valueOf(status));
         System.out.print("Quantos itens neste pedido: ");
         int qntdPedidos = sc.nextInt();
         for (int i = 0; i < qntdPedidos; i++){
@@ -28,17 +35,17 @@ public class Program {
             Double preco = sc.nextDouble();
             System.out.print("Quantidade: ");
             Integer quantidade = sc.nextInt();
-            Produto produto = new Produto(nomeProduto, preco);
+            Produto produto = produtoService.addProduto(nomeProduto, preco);
             ItemPedido itemPedido = new ItemPedido(quantidade, preco, produto);
-            pedido.addItem(itemPedido);
+            pedidoService.addItem(itemPedido);
 
         }
         System.out.println("DETALHES PEDIDO: ");
-        System.out.println("Momento do pedido: " + pedido.getMomento());
-        System.out.println("Status do pedido: " + pedido.getStatus());
+        System.out.println("Momento do pedido: " + pedidoService.getMomento());
+        System.out.println("Status do pedido: " + pedidoService.getStatus());
         System.out.println("Cliente: " + cliente.getNome() + " - " + cliente.getEmail());
         System.out.println("ITENS PEDIDOS:");
-        System.out.println(pedido);
+        System.out.println(pedidoService);
         
         
         sc.close();
