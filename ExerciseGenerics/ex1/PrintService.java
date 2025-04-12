@@ -1,4 +1,4 @@
-package ExerciseGenerics;
+package ExerciseGenerics.ex1;
 
 import java.util.ArrayList;
 import java.util.List;
