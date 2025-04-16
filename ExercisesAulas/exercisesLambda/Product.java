@@ -25,11 +25,12 @@ public class Product{
         this.valor = valor;
     }
 
-    public static boolean staticProductPredicate(Product p){
-        return p.getValor() > 100;
+    public static void staticConsumer(Product p){
+        p.setValor(p.getValor() * 1.1);
     }
-    public  boolean NoStaticProductPredicate(){
-        return valor > 100;
+
+    public void NoStaticConsumer(){
+        valor = valor * 1.1;
     }
 
     @Override
