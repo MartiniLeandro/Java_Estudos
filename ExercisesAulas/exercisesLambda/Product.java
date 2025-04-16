@@ -25,12 +25,12 @@ public class Product{
         this.valor = valor;
     }
 
-    public static void staticConsumer(Product p){
-        p.setValor(p.getValor() * 1.1);
+    public static String staticFunction(Product p){
+       return p.getNome().toUpperCase();
     }
 
-    public void NoStaticConsumer(){
-        valor = valor * 1.1;
+    public String NoStaticFunction(){
+        return nome.toUpperCase();
     }
 
     @Override
