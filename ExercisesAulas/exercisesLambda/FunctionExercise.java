@@ -14,7 +14,6 @@ public class FunctionExercise {
         products.add(new Product("hd case", 80.00));
 
         //Function<Product,String> nomes = p -> p.getNome().toUpperCase();
-
         List<String> names = products.stream().map(new ProductFunction()).collect(Collectors.toList());
         //List<String> names2 = products.stream().map(Product::staticFunction).collect(Collectors.toList());
         //List<String> names3 = products.stream().map(Product::NoStaticFunction).collect(Collectors.toList());
