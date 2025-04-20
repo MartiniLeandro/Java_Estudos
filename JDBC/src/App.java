@@ -8,5 +8,7 @@ public class App {
         } else {
             System.out.println("Falha na conexão.");
         }
+        Conection.closeConnection();
+        
     }
 }
