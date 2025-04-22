@@ -2,13 +2,13 @@ package entities;
 
 import java.io.Serializable;
 
-public class Departament implements Serializable{
+public class Department implements Serializable{
     private Integer id;
     private String name;
 
-    public Departament() {};
+    public Department() {};
 
-    public Departament(Integer id, String name) {
+    public Department(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -45,7 +45,7 @@ public class Departament implements Serializable{
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Departament other = (Departament) obj;
+        Department other = (Department) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
