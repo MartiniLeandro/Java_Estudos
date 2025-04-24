@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import dao.SellerDao;
 import db.DB;
 import db.DbException;
@@ -27,7 +28,26 @@ public class SellerDaoJDBC implements SellerDao{
     
     @Override
     public void insert(Seller obj) {
-        // TODO Auto-generated method stub
+        PreparedStatement st = null;
+        try{
+            st = conn.prepareStatement("insert into seller (id,name,email,birth_date,base_salary,department_id) values (?,?,?,?,?,?)");
+            st.setInt(1, obj.getId());
+            st.setString(2, obj.getName());
+            st.setString(3, obj.getEmail());
+            st.setDate(4, new java.sql.Date(obj.getBirthDate().getTime()));
+            st.setDouble(5, obj.getBaseSalary());
+            st.setInt(6, obj.getDepartment().getId());
+
+            int rowsAffected = st.executeUpdate();
+            if(rowsAffected == 0){
+                throw new DbException("Unexpected error! No rows affected");
+            }
+
+        }catch(SQLException e){
+            throw new DbException(e.getMessage());
+        }finally{
+            DB.closeStatement(st);
+        }
          
     }
 
