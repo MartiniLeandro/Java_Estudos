@@ -1,13 +1,38 @@
 package com.program;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import io.github.cdimascio.dotenv.Dotenv;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
 public class Main {
     public static void main(String[] args) {
-        Person p1 = new Person(1, "Bob Marley", "bob@gmail.com");
-        Person p2 = new Person(1, "Erick Marley", "erick@gmail.com");
-        Person p3 = new Person(1, "Pedro Marley", "pedro@gmail.com");
+        Dotenv dotenv = Dotenv.load();
 
-        System.out.println(p1);
-        System.out.println(p2);
-        System.out.println(p3);
+        //Person p1 = new Person(null, "Bob Marley", "bob@gmail.com");
+       //Person p2 = new Person(null, "Erick Marley", "erick@gmail.com");
+       // Person p3 = new Person(null, "Pedro Marley", "pedro@gmail.com");
+
+        Map<String, String> propriedades = new HashMap<>();
+        propriedades.put("javax.persistence.jdbc.url", dotenv.get("DB_URL"));
+        propriedades.put("javax.persistence.jdbc.password", dotenv.get("DB_PASSWORD"));
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("exemplo-jpa", propriedades);
+        EntityManager em = emf.createEntityManager();
+
+        Person p = em.find(Person.class, 2);
+        System.out.println(p);
+
+        //em.getTransaction().begin();
+        //em.persist(p1);
+        //em.persist(p2);
+        //em.persist(p3);
+        //em.getTransaction().commit();
+        System.out.println("Pronto!");
+        em.close();
+        emf.close();
     }
 }
