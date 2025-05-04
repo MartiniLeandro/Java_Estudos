@@ -3,6 +3,7 @@ package com.example.curso_matheus_leandro.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.curso_matheus_leandro.models.Produto;
@@ -12,6 +13,7 @@ import com.example.curso_matheus_leandro.repository.ProdutoRepository;
 public class ProdutoService {
     private ProdutoRepository produtoRepository;
 
+    @Autowired
     public ProdutoService(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;
     }
