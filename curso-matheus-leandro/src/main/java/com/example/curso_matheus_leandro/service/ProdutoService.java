@@ -1,11 +1,11 @@
 package com.example.curso_matheus_leandro.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.curso_matheus_leandro.Exceptions.RecursoNaoEncontradoException;
 import com.example.curso_matheus_leandro.models.Produto;
 import com.example.curso_matheus_leandro.repository.ProdutoRepository;
 
@@ -22,8 +22,8 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    public Optional<Produto> buscarPorId(Long id){
-        return produtoRepository.findById(id);
+    public Produto buscarPorId(Long id){
+        return produtoRepository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException("Produto com ID " + id + " não encontrado"));
     }
 
     public Produto salvarProduto(Produto produto){
@@ -31,6 +31,9 @@ public class ProdutoService {
     }
 
     public void deletarProduto(Long id){
+        if(!produtoRepository.existsById(id)){
+            throw new RecursoNaoEncontradoException("Produto com ID " + id + " não encontrado");
+        }
         produtoRepository.deleteById(id);
     }
 
