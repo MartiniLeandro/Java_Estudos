@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.educandoweb.course.entities.User;
+import com.educandoweb.course.models.User;
 import com.educandoweb.course.repositories.UserRepository;
 
 @Configuration
@@ -16,6 +16,10 @@ public class TestConfig implements CommandLineRunner{
     
     @Autowired
     private UserRepository userRepository;
+
+    public TestConfig(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void run(String... args) throws Exception {

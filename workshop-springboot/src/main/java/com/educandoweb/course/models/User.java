@@ -1,4 +1,4 @@
-package com.educandoweb.course.entities;
+package com.educandoweb.course.models;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable{
+public class User implements Serializable /*Serializable serve para ser transformados em cadeias de bytes, para poder trafegar na rede e etc...*/{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
