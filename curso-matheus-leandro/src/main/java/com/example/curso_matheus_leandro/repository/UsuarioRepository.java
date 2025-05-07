@@ -10,5 +10,5 @@ import com.example.curso_matheus_leandro.models.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     
-    Optional<Usuario> findByUsername(String username);
+    Optional<Usuario> findByUserName(String username);
 }
