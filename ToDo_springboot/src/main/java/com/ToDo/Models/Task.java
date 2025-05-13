@@ -20,6 +20,7 @@ public class Task implements Serializable{
     private Instant createData;
     private Status status;
 
+    public Task(){}
     public Task(String title, String description, Instant createData, Status status) {
         this.title = title;
         this.description = description;

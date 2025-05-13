@@ -12,8 +12,6 @@ import com.ToDo.Repositories.TaskRepository;
 public class TaskServices {
     private TaskRepository taskRepository;
 
-    public TaskServices() {}
-
     public TaskServices(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
@@ -24,5 +22,29 @@ public class TaskServices {
 
     public Optional<Task> findById(Long id){
         return taskRepository.findById(id);
+    }
+
+    public Task saveTask(Task task){
+       return taskRepository.save(task);
+    }
+
+    public void deleteById(Long id){
+        taskRepository.deleteById(id);
+    }
+
+    public Task updatedTask(Long id, Task updatedTask){
+        Optional<Task> existingTask = taskRepository.findById(id);
+        if(existingTask.isPresent()){
+            Task task = existingTask.get();
+
+            task.setTitle(updatedTask.getTitle());
+            task.setDescription(updatedTask.getDescription());
+            task.setCreateData(updatedTask.getCreateData());
+            task.setStatus(updatedTask.getStatus());
+
+            return taskRepository.save(task);
+        }else{
+            throw new RuntimeException("Task não encontrada");
+        }
     }
 }
