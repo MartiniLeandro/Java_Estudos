@@ -1,4 +1,4 @@
-package com.SistemaBilioteca_springboot.SistemaBiblioteca_springboot;
+package com.SistemaBilioteca_springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
