@@ -1,5 +1,6 @@
 package com.SistemaBilioteca_springboot.models;
 
+
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -17,7 +18,8 @@ public class Leitor {
     private String email;
 
     @OneToMany(mappedBy = "leitor")
-    private List<LivroEmprestimo> livrosEmprestados;
+    private List<Emprestimo> emprestimos;
+
     
     public Leitor(){}
     public Leitor(String nome, String email) {
@@ -47,15 +49,5 @@ public class Leitor {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<LivroEmprestimo> getLivrosEmprestados() {
-        return livrosEmprestados;
-    }
-
-    public void setLivrosEmprestados(List<LivroEmprestimo> livrosEmprestados) {
-        this.livrosEmprestados = livrosEmprestados;
-    }
-
-    
+    }  
 }

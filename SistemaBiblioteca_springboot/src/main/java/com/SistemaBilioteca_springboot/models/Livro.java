@@ -1,5 +1,6 @@
 package com.SistemaBilioteca_springboot.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -24,7 +25,9 @@ public class Livro {
     private Categoria categoria;
 
     @OneToMany(mappedBy = "livro")
-    private List<LivroEmprestimo> livroEmprestimo;
+    private List<LivroEmprestimo> emprestimos = new ArrayList<>();
+
+
 
     public Livro(){}
     public Livro(String titulo, String autor, Categoria categoria) {
@@ -55,5 +58,9 @@ public class Livro {
     }
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public List<LivroEmprestimo> getEmprestimos() {
+        return emprestimos;
     }
 }

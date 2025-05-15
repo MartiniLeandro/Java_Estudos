@@ -1,0 +1,52 @@
+package com.SistemaBilioteca_springboot.models;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
+@Entity
+public class Emprestimo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Instant dataEmprestimo;
+
+    @OneToMany(mappedBy = "emprestimo")
+    private List<LivroEmprestimo> livrosEmprestimo = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "leitor_id")
+    private Leitor leitor;
+
+    public Emprestimo(Instant dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Instant getDataEmprestimo() {
+        return dataEmprestimo;
+    }
+
+    public void setDataEmprestimo(Instant dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+
+    public List<LivroEmprestimo> getLivrosEmprestimo() {
+        return livrosEmprestimo;
+    }
+}
