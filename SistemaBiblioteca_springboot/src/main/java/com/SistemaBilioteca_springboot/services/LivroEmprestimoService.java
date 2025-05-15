@@ -24,7 +24,7 @@ public class LivroEmprestimoService {
         return livroEmprestimoRepository.findById(id).get();
     }
 
-    public LivroEmprestimo createLivroeEmprestimo(LivroEmprestimo livroEmprestimo){
+    public LivroEmprestimo createLivroEmprestimo(LivroEmprestimo livroEmprestimo){
         return livroEmprestimoRepository.save(livroEmprestimo);
     }
 
