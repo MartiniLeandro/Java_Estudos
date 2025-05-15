@@ -44,14 +44,14 @@ public class TestConfig implements CommandLineRunner{
     @Override
     public void run(String... args) throws Exception {
 
-        Categoria c1 = new Categoria("terror");
-        Categoria c2 = new Categoria("ação");
-        Livro l1 = new Livro("teste", "teste", c2);
-        Livro l2 = new Livro("teste", "teste", c1);
-        Leitor leitor1 = new Leitor("teste", "teste@gmail.com");
-        Leitor leitor2 = new Leitor("teste2", "teste2@gmail.com");
-        Emprestimo e1 = new Emprestimo(Instant.now());
-        LivroEmprestimo le1 = new LivroEmprestimo(l1,e1);
+        Categoria c1 = new Categoria("Romance");
+        Categoria c2 = new Categoria("Fábula");
+        Livro l1 = new Livro("O Pequeno Príncipe", "Antoine de Saint-Exupéry", c2);
+        Livro l2 = new Livro("A Cabana", "William P.", c1);
+        Leitor leitor1 = new Leitor("Leandro", "leandro@gmail.com");
+        Leitor leitor2 = new Leitor("gabriel", "gabriel@gmail.com");
+        Emprestimo e1 = new Emprestimo(Instant.now(),leitor1);
+        LivroEmprestimo le1 = new LivroEmprestimo(l2,e1);
 
         categoriaRepository.saveAll(Arrays.asList(c1,c2));
         livroRepository.saveAll(Arrays.asList(l1,l2));

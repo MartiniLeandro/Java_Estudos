@@ -27,8 +27,9 @@ public class Emprestimo {
     private Leitor leitor;
 
     public Emprestimo(){}
-    public Emprestimo(Instant dataEmprestimo) {
+    public Emprestimo(Instant dataEmprestimo, Leitor leitor) {
         this.dataEmprestimo = dataEmprestimo;
+        this.leitor = leitor;
     }
 
     public Long getId() {

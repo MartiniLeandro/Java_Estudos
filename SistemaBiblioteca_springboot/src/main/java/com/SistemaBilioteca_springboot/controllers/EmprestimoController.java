@@ -50,7 +50,7 @@ public class EmprestimoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Emprestimo> updateById(@PathVariable Long id, Emprestimo emprestimo){
+    public ResponseEntity<Emprestimo> updateById(@PathVariable Long id, @RequestBody Emprestimo emprestimo){
         Emprestimo emprestimoUpdate = emprestimoService.updateById(id, emprestimo);
         return ResponseEntity.ok().body(emprestimoUpdate);
     }

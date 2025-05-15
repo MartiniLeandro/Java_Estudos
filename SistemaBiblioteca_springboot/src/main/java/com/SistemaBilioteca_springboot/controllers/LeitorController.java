@@ -50,7 +50,7 @@ public class LeitorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Leitor> updateById(@PathVariable Long id, Leitor leitor){
+    public ResponseEntity<Leitor> updateById(@PathVariable Long id, @RequestBody Leitor leitor){
         Leitor leitorUpdate = leitorService.updateById(id, leitor);
         return ResponseEntity.ok().body(leitorUpdate);
     }
