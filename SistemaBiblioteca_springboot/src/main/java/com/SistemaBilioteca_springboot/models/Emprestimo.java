@@ -26,6 +26,7 @@ public class Emprestimo {
     @JoinColumn(name = "leitor_id")
     private Leitor leitor;
 
+    public Emprestimo(){}
     public Emprestimo(Instant dataEmprestimo) {
         this.dataEmprestimo = dataEmprestimo;
     }

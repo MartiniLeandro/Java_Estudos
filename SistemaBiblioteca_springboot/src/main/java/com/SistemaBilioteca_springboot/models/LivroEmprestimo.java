@@ -24,6 +24,10 @@ public class LivroEmprestimo {
     private Emprestimo emprestimo;
 
     public LivroEmprestimo(){}
+    public LivroEmprestimo(Livro livro, Emprestimo emprestimo){
+        this.livro = livro;
+        this.emprestimo = emprestimo;
+    }
 
     public Long getId() {
         return id;
