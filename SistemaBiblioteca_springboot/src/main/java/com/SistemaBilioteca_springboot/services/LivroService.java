@@ -3,6 +3,7 @@ package com.SistemaBilioteca_springboot.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.SistemaBilioteca_springboot.models.Livro;
@@ -11,6 +12,7 @@ import com.SistemaBilioteca_springboot.repositories.LivroRepository;
 @Service
 public class LivroService {
 
+    @Autowired
     private LivroRepository livroRepository;
 
     public LivroService(LivroRepository livroRepository) {

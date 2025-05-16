@@ -2,6 +2,7 @@ package com.SistemaBilioteca_springboot.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.SistemaBilioteca_springboot.models.Emprestimo;
@@ -10,6 +11,7 @@ import com.SistemaBilioteca_springboot.repositories.EmprestimoRepository;
 @Service
 public class EmprestimoService {
     
+    @Autowired
     private EmprestimoRepository emprestimoRepository;
 
     public EmprestimoService(EmprestimoRepository emprestimoRepository) {

@@ -2,6 +2,7 @@ package com.SistemaBilioteca_springboot.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.SistemaBilioteca_springboot.models.Categoria;
@@ -10,6 +11,7 @@ import com.SistemaBilioteca_springboot.repositories.CategoriaRepository;
 @Service
 public class CategoriaService {
 
+    @Autowired
     private CategoriaRepository categoriaRepository;
 
     public CategoriaService(CategoriaRepository categoriaRepository) {

@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +18,8 @@ public class Emprestimo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private Instant dataEmprestimo;
 
     @OneToMany(mappedBy = "emprestimo")
@@ -24,6 +27,7 @@ public class Emprestimo {
 
     @ManyToOne
     @JoinColumn(name = "leitor_id")
+    @Column(nullable = false, unique = true)
     private Leitor leitor;
 
     public Emprestimo(){}
