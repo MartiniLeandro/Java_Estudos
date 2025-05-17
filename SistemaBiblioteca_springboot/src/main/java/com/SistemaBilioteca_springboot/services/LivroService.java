@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.SistemaBilioteca_springboot.errors.ConstraintViolationException;
 import com.SistemaBilioteca_springboot.errors.ResourceNotFoundException;
 import com.SistemaBilioteca_springboot.models.Livro;
 import com.SistemaBilioteca_springboot.repositories.LivroRepository;
@@ -32,7 +33,12 @@ public class LivroService {
     }
 
     public void deleteById(Long id){
-        livroRepository.deleteById(id);
+        try{
+            livroRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+            livroRepository.deleteById(id);
+        }catch(ConstraintViolationException e){
+            throw new ConstraintViolationException(e.getMessage());
+        }
     }
 
     public Livro updateById(Long id, Livro livro){
