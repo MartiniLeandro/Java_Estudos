@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.SistemaBilioteca_springboot.errors.ResourceNotFoundException;
 import com.SistemaBilioteca_springboot.models.LivroEmprestimo;
 import com.SistemaBilioteca_springboot.repositories.LivroEmprestimoRepository;
 
@@ -23,7 +24,7 @@ public class LivroEmprestimoService {
     }
 
     public LivroEmprestimo findById(Long id){
-        return livroEmprestimoRepository.findById(id).get();
+        return livroEmprestimoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public LivroEmprestimo createLivroEmprestimo(LivroEmprestimo livroEmprestimo){

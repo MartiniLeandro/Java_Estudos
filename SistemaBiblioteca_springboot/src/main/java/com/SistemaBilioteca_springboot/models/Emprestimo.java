@@ -27,7 +27,6 @@ public class Emprestimo {
 
     @ManyToOne
     @JoinColumn(name = "leitor_id")
-    @Column(nullable = false, unique = true)
     private Leitor leitor;
 
     public Emprestimo(){}

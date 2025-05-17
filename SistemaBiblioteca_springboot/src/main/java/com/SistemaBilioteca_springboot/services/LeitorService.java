@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.SistemaBilioteca_springboot.errors.ResourceNotFoundException;
 import com.SistemaBilioteca_springboot.models.Leitor;
 import com.SistemaBilioteca_springboot.repositories.LeitorRepository;
 
@@ -23,7 +24,7 @@ public class LeitorService {
     }
 
     public Leitor findById(Long id){
-        return leitorRepository.findById(id).get();
+        return leitorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Leitor createLeitor(Leitor leitor){

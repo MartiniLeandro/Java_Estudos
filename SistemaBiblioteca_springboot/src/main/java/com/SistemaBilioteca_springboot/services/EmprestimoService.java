@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.SistemaBilioteca_springboot.errors.ResourceNotFoundException;
 import com.SistemaBilioteca_springboot.models.Emprestimo;
 import com.SistemaBilioteca_springboot.repositories.EmprestimoRepository;
 
@@ -23,7 +24,7 @@ public class EmprestimoService {
     }
 
     public Emprestimo findById(long id){
-        return emprestimoRepository.findById(id).get();
+        return emprestimoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Emprestimo createEmprestimo(Emprestimo emprestimo){

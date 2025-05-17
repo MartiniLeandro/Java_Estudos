@@ -1,11 +1,11 @@
 package com.SistemaBilioteca_springboot.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.SistemaBilioteca_springboot.errors.ResourceNotFoundException;
 import com.SistemaBilioteca_springboot.models.Livro;
 import com.SistemaBilioteca_springboot.repositories.LivroRepository;
 
@@ -24,8 +24,7 @@ public class LivroService {
     }
 
     public Livro findById(Long id){
-        Optional<Livro> livro = livroRepository.findById(id);
-        return livro.get();
+        return livroRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Livro createLivro(Livro livro){

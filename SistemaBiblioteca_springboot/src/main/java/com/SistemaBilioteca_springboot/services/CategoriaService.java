@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.SistemaBilioteca_springboot.errors.ResourceNotFoundException;
 import com.SistemaBilioteca_springboot.models.Categoria;
 import com.SistemaBilioteca_springboot.repositories.CategoriaRepository;
 
@@ -23,7 +24,7 @@ public class CategoriaService {
     }
 
     public Categoria findById(Long id){
-        return categoriaRepository.findById(id).get();
+        return categoriaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Categoria createCategoria(Categoria categoria){
