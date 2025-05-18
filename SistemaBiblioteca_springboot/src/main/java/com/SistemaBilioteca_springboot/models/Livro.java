@@ -32,7 +32,9 @@ public class Livro {
     @OneToMany(mappedBy = "livro")
     private List<LivroEmprestimo> emprestimos = new ArrayList<>();
 
-
+    public boolean temEmprestimo(){
+        return emprestimos != null && !emprestimos.isEmpty();
+    }
 
     public Livro(){}
     public Livro(String titulo, String autor, Categoria categoria) {

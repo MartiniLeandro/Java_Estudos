@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.SistemaBilioteca_springboot.errors.ConstraintViolationException;
+import com.SistemaBilioteca_springboot.errors.ViolationContractException;
+import com.SistemaBilioteca_springboot.errors.InvalidDataException;
 import com.SistemaBilioteca_springboot.errors.ResourceNotFoundException;
 import com.SistemaBilioteca_springboot.models.Livro;
 import com.SistemaBilioteca_springboot.repositories.LivroRepository;
@@ -38,20 +39,28 @@ public class LivroService {
     }
 
     public void deleteById(Long id){
-        try{
-            livroRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+            Livro livro = livroRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+            if(livro.temEmprestimo()){
+                throw new ViolationContractException("Não é possível excluir o livro porque ele possui empréstimos.");
+            }
             livroRepository.deleteById(id);
-        }catch(ConstraintViolationException e){
-            throw new ConstraintViolationException(e.getMessage());
-        }
     }
 
     public Livro updateById(Long id, Livro livro){
-        Livro livroParaUpdate = livroRepository.findById(id).get();
+        Livro livroParaUpdate = livroRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+
+        if(livroParaUpdate.getTitulo() == null || livroParaUpdate.getTitulo().isEmpty()){
+            throw new InvalidDataException("O título do livro não pode ser vazio");
+        }
+        if(livroParaUpdate.getAutor() == null || livroParaUpdate.getAutor().isEmpty()){
+            throw new InvalidDataException("O Autor do livro não pode ser vazio");
+        }
+
         livroParaUpdate.setTitulo(livro.getTitulo());
         livroParaUpdate.setAutor(livro.getAutor());
-        livroParaUpdate.setCategoria(livro.getCategoria());
 
         return livroRepository.save(livroParaUpdate);
+
+
     }
 }
