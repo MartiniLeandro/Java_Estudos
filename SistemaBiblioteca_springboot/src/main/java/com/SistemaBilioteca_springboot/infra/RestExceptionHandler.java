@@ -22,7 +22,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
 
     @ExceptionHandler(ConstraintViolationException.class)
     private ResponseEntity<ErrorAPI> ConstraintViolation(ConstraintViolationException e, HttpServletRequest request){
-        ErrorAPI error = new ErrorAPI(HttpStatus.BAD_REQUEST.value(), "Violation Contract", "Violação de Contrato", request.getRequestURI());
+        ErrorAPI error = new ErrorAPI(HttpStatus.BAD_REQUEST.value(), "Violation Contract", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }

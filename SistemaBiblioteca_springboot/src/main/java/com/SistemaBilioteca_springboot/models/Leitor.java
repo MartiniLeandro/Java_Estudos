@@ -3,12 +3,13 @@ package com.SistemaBilioteca_springboot.models;
 
 import java.util.List;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Leitor {
@@ -16,10 +17,10 @@ public class Leitor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false)
+    @NotBlank(message = "O nome não pode ser nulo")
     private String nome;
 
-    @Column(nullable = false, unique = true)
+    @Email(message = "Email deve conter este formato: nome@email.com")
     private String email;
 
     @OneToMany(mappedBy = "leitor")

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.SistemaBilioteca_springboot.models.Livro;
 import com.SistemaBilioteca_springboot.services.LivroService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/livros")
 public class LivroController {
@@ -40,19 +42,19 @@ public class LivroController {
     }
 
     @PostMapping
-    public ResponseEntity<Livro> createLivro(@RequestBody Livro livro){
+    public ResponseEntity<Livro> createLivro(@Valid @RequestBody Livro livro){
         Livro livroNovo = livroService.createLivro(livro);
         return ResponseEntity.ok().body(livroNovo);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id){
+    public ResponseEntity<Void> deleteById(@Valid @PathVariable Long id){
         livroService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Livro> updateById(@PathVariable Long id, @RequestBody Livro livro){
+    public ResponseEntity<Livro> updateById(@PathVariable Long id, @Valid  @RequestBody Livro livro){
         Livro livroUpdate = livroService.updateById(id, livro);
         return ResponseEntity.ok().body(livroUpdate);
     }

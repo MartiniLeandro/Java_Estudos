@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.SistemaBilioteca_springboot.models.LivroEmprestimo;
 import com.SistemaBilioteca_springboot.services.LivroEmprestimoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/livros_emprestimo")
 public class LivroEmprestimoController {
@@ -39,7 +41,7 @@ public class LivroEmprestimoController {
     }
 
     @PostMapping
-    public ResponseEntity<LivroEmprestimo> createLivroEmprestimo(@RequestBody LivroEmprestimo livroEmprestimo){
+    public ResponseEntity<LivroEmprestimo> createLivroEmprestimo(@Valid @RequestBody LivroEmprestimo livroEmprestimo){
         LivroEmprestimo livroEmprestimoNovo = livroEmprestimoService.createLivroEmprestimo(livroEmprestimo);
         return ResponseEntity.ok().body(livroEmprestimoNovo);
     }

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.SistemaBilioteca_springboot.models.Categoria;
 import com.SistemaBilioteca_springboot.services.CategoriaService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
@@ -40,7 +42,7 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> createCategory(@RequestBody Categoria categoria){
+    public ResponseEntity<Categoria> createCategory(@Valid @RequestBody Categoria categoria){
         Categoria categoriaNova = categoriaService.createCategoria(categoria);
         return ResponseEntity.ok().body(categoriaNova);
     }
@@ -52,7 +54,7 @@ public class CategoriaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> updateById(@PathVariable Long id,@RequestBody Categoria categoria){
+    public ResponseEntity<Categoria> updateById(@PathVariable Long id, @Valid @RequestBody Categoria categoria){
         Categoria categoriaUpdate = categoriaService.updateById(id, categoria);
         return ResponseEntity.ok().body(categoriaUpdate);
     }

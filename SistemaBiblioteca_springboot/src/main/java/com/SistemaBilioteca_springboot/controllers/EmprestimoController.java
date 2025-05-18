@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.SistemaBilioteca_springboot.models.Emprestimo;
 import com.SistemaBilioteca_springboot.services.EmprestimoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/emprestimos")
 public class EmprestimoController {
@@ -40,7 +42,7 @@ public class EmprestimoController {
     }
 
     @PostMapping
-    public ResponseEntity<Emprestimo> createEmprestimo(@RequestBody Emprestimo emprestimo){
+    public ResponseEntity<Emprestimo> createEmprestimo(@Valid @RequestBody Emprestimo emprestimo){
         Emprestimo emprestimoNovo = emprestimoService.createEmprestimo(emprestimo);
         return ResponseEntity.ok().body(emprestimoNovo);
     }
@@ -52,7 +54,7 @@ public class EmprestimoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Emprestimo> updateById(@PathVariable Long id, @RequestBody Emprestimo emprestimo){
+    public ResponseEntity<Emprestimo> updateById(@PathVariable Long id, @Valid @RequestBody Emprestimo emprestimo){
         Emprestimo emprestimoUpdate = emprestimoService.updateById(id, emprestimo);
         return ResponseEntity.ok().body(emprestimoUpdate);
     }

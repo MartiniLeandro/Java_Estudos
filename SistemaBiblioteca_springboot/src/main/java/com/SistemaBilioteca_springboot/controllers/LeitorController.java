@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.SistemaBilioteca_springboot.models.Leitor;
 import com.SistemaBilioteca_springboot.services.LeitorService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/leitores")
 public class LeitorController {
@@ -40,7 +42,7 @@ public class LeitorController {
     }
 
     @PostMapping
-    public ResponseEntity<Leitor> createLeitor(@RequestBody Leitor leitor){
+    public ResponseEntity<Leitor> createLeitor(@Valid @RequestBody Leitor leitor){
         Leitor leitorNovo = leitorService.createLeitor(leitor);
         return ResponseEntity.ok().body(leitorNovo);
     }
@@ -52,7 +54,7 @@ public class LeitorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Leitor> updateById(@PathVariable Long id, @RequestBody Leitor leitor){
+    public ResponseEntity<Leitor> updateById(@PathVariable Long id, @Valid @RequestBody Leitor leitor){
         Leitor leitorUpdate = leitorService.updateById(id, leitor);
         return ResponseEntity.ok().body(leitorUpdate);
     }

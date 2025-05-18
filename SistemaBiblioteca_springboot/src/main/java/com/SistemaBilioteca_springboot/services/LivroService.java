@@ -29,7 +29,12 @@ public class LivroService {
     }
 
     public Livro createLivro(Livro livro){
-        return livroRepository.save(livro);
+        try{
+            return livroRepository.save(livro);
+        }catch(RuntimeException e){
+            e.printStackTrace();
+        }
+        return livro;
     }
 
     public void deleteById(Long id){
