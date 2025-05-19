@@ -3,15 +3,17 @@ package com.treinoSecurity.Controllers;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.treinoSecurity.Models.User;
 import com.treinoSecurity.Services.UserService;
 
-@Controller
-@RestController("/users")
+@RestController
+@RequestMapping("/users")
 public class UserController {
     
     private UserService userService;
@@ -21,5 +23,11 @@ public class UserController {
     public ResponseEntity<List<User>> findAll(){
         List<User> users = userService.findAll();
         return ResponseEntity.ok().body(users);
+    }
+
+    @PostMapping
+    public ResponseEntity<User> createUser(@RequestBody User user){
+        User newUser = userService.createUser(user);
+        return ResponseEntity.ok().body(newUser);
     }
 }
