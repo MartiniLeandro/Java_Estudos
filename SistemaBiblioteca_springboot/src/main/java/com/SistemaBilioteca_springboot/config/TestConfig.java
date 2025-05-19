@@ -12,6 +12,7 @@ import com.SistemaBilioteca_springboot.models.Emprestimo;
 import com.SistemaBilioteca_springboot.models.Leitor;
 import com.SistemaBilioteca_springboot.models.Livro;
 import com.SistemaBilioteca_springboot.models.LivroEmprestimo;
+import com.SistemaBilioteca_springboot.models.enums.LeitorRole;
 import com.SistemaBilioteca_springboot.repositories.CategoriaRepository;
 import com.SistemaBilioteca_springboot.repositories.EmprestimoRepository;
 import com.SistemaBilioteca_springboot.repositories.LeitorRepository;
@@ -48,8 +49,8 @@ public class TestConfig implements CommandLineRunner{
         Categoria c2 = new Categoria("Fábula");
         Livro l1 = new Livro("O Pequeno Príncipe", "Antoine de Saint-Exupéry", c2);
         Livro l2 = new Livro("A Cabana", "William P.", c1);
-        Leitor leitor1 = new Leitor("Leandro", "leandro@gmail.com");
-        Leitor leitor2 = new Leitor("gabriel", "gabriel@gmail.com");
+        Leitor leitor1 = new Leitor("Leandro", "teste123",LeitorRole.ADMIN);
+        Leitor leitor2 = new Leitor("gabriel", "teste1234",LeitorRole.ADMIN);
         Emprestimo e1 = new Emprestimo(Instant.now(),leitor1);
         LivroEmprestimo le1 = new LivroEmprestimo(l2,e1);
 

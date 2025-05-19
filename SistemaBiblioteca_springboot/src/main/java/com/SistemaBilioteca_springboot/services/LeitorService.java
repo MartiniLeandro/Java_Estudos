@@ -37,8 +37,9 @@ public class LeitorService {
 
     public Leitor updateById(Long id, Leitor leitor){
         Leitor leitorUpdate = leitorRepository.findById(id).get();
-        leitorUpdate.setNome(leitor.getNome());
-        leitorUpdate.setEmail(leitor.getEmail());
+        leitorUpdate.setLogin(leitor.getLogin());
+        leitorUpdate.setSenha(leitor.getSenha());
+        leitorUpdate.setRole(leitor.getRole());
 
         return leitorRepository.save(leitorUpdate);
     } 
