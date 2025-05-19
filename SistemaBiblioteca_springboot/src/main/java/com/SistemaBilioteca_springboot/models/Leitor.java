@@ -31,12 +31,12 @@ public class Leitor implements UserDetails{
     @NotBlank(message = "A senha não pode ser nula")
     private String senha;
 
-    @NotBlank(message = "A role não pode ser nula")
     private LeitorRole role;
 
     @OneToMany(mappedBy = "leitor")
     private List<Emprestimo> emprestimos;
 
+    public Leitor(){}
     public Leitor(String login, String senha, LeitorRole role) {
         this.login = login;
         this.senha = senha;
