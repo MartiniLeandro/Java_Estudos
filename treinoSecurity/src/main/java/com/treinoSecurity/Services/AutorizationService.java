@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.treinoSecurity.Repositories.UserRepository;
 
 @Service
-public class AutorizationService implements UserDetailsService{
+public class AutorizationService implements UserDetailsService{ //Spring Security conseguindo se conectar com o banco de dados dos Users
     
     private UserRepository userRepository;
 
