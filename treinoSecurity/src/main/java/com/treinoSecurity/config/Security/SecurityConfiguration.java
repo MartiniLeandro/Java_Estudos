@@ -1,5 +1,6 @@
-package com.treinoSecurity.infra.Security;
+package com.treinoSecurity.config.Security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,11 +12,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration { //configurações do SpringSecurity
     
+    @Autowired
+    SecurityFilter securityFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
@@ -27,6 +32,7 @@ public class SecurityConfiguration { //configurações do SpringSecurity
                 .requestMatchers(HttpMethod.POST, "/products")
                     .hasRole("admin")//tem que ser ADMIN para fazer post em /products
                     .anyRequest().authenticated()) //qualquer outra Request, tem que estar autentificado
+                    .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class) //filtro de verificação de token
                 .build(); 
     }
 

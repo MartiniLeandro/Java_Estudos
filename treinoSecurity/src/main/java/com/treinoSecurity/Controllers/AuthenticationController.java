@@ -1,6 +1,7 @@
 package com.treinoSecurity.Controllers;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,15 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.treinoSecurity.Models.AuthenticationDTO;
+import com.treinoSecurity.Models.LoginResponseDTO;
 import com.treinoSecurity.Models.RegisterDTO;
 import com.treinoSecurity.Models.User;
 import com.treinoSecurity.Repositories.UserRepository;
+import com.treinoSecurity.config.Security.TokenService;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
+    
+    @Autowired
+    private TokenService tokenService;
 
     private AuthenticationManager authenticationManager; //Coração para autentificar um usuário
     private UserRepository userRepository;
@@ -32,10 +38,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationDTO> login(@RequestBody @Valid AuthenticationDTO data){
+    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
         UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password()); //pegando o login e senha
         Authentication auth = authenticationManager.authenticate(usernamePassword); //autentificar para ver se existe
-        return ResponseEntity.ok().build();
+
+        var token = tokenService.generateToken((User) auth.getPrincipal());
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")
