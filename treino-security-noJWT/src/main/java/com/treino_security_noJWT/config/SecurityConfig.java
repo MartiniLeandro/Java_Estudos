@@ -24,14 +24,17 @@ public class SecurityConfig {
         this.securityService = securityService;
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/login").permitAll().anyRequest().authenticated())
-            .authenticationProvider(authenticationProvider());
+   @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+            http.csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/login", "/users").permitAll() // acesso público
+            .anyRequest().authenticated() // exige autenticação para o resto
+        );
 
         return http.build();
-        }
+    }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
