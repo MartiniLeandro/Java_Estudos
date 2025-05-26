@@ -30,7 +30,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
             .requestMatchers("/login", "/users").permitAll() // acesso público
             .anyRequest().authenticated() // exige autenticação para o resto
-        );
+        )
+            .formLogin();
 
         return http.build();
     }
