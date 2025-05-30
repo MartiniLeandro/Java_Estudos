@@ -30,7 +30,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/public").permitAll();
+            auth.requestMatchers("/public").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/private").hasRole("ADMIN");
             auth.requestMatchers(HttpMethod.GET, "/product").authenticated();
             auth.requestMatchers(HttpMethod.POST, "/product").hasRole("ADMIN");
