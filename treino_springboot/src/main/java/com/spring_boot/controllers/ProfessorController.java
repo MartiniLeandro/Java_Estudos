@@ -27,4 +27,10 @@ public class ProfessorController {
         return ResponseEntity.ok().body(professores);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Professor> findById(Long id){
+        Professor professor = professorService.findById(id);
+        return ResponseEntity.ok().body(professor);
+    }
+
 }

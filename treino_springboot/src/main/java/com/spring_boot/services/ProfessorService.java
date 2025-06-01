@@ -14,4 +14,8 @@ public class ProfessorService {
     public List<Professor> findAll(){
         return professorRepository.findAll();
     }
+
+    public Professor findById(Long id){
+        return professorRepository.findById(id);
+    }
 }
