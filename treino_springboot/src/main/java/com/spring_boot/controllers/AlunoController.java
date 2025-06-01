@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring_boot.exceptions.ResourceNotFoundExcepiton;
 import com.spring_boot.models.Aluno;
 import com.spring_boot.services.AlunoService;
 
@@ -25,5 +27,15 @@ public class AlunoController {
     public ResponseEntity<List<Aluno>> findAll(){
         List<Aluno> alunos = alunoService.findAll();
         return ResponseEntity.ok().body(alunos);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id){
+        try{
+            Aluno aluno = alunoService.findById(id);
+            return ResponseEntity.ok(aluno);
+        }catch(ResourceNotFoundExcepiton ex){
+            return ResponseEntity.badRequest().body("ResourceNotFound");
+        }
     }
 }
