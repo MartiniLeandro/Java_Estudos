@@ -34,7 +34,7 @@ public class Program {
             System.out.println("Reserva: " + reserva);
         }catch(ParseException e){
             System.out.println("Formato de data inválida!!!");
-        }catch(Exceptions e){
+        }catch(QuartoException e){
             System.out.println("Erro na reserva: " + e.getMessage());
         }catch(RuntimeException e){
             System.out.println("Erro inesperado");

@@ -13,9 +13,9 @@ public class Reservas {
 
     public Reservas(){};
 
-    public Reservas(Integer numeroQuarto, Date checkIn, Date checkOut) throws Exceptions{
+    public Reservas(Integer numeroQuarto, Date checkIn, Date checkOut){
         if(!checkOut.after(checkIn)){
-            throw new Exceptions("Erro na reserva: Chek-Out deve ser depois do Check-In");
+            throw new QuartoException("ERRO AO RESERVAR QUARTO!!!");
         }
         this.numeroQuarto = numeroQuarto;
         this.checkIn = checkIn;
@@ -40,12 +40,12 @@ public class Reservas {
         long diferenca = checkOut.getTime() - checkIn.getTime();
         return TimeUnit.DAYS.convert(diferenca, TimeUnit.MILLISECONDS);
     }
-    public void atualizarDatas(Date checkIn, Date checkOut) throws Exceptions{
+    public void atualizarDatas(Date checkIn, Date checkOut){
         Date agora = new Date();
         if(checkIn.before(agora) || checkOut.before(agora)){
-            throw new Exceptions("Erro na reserva: atualização da data da reserva deve ser futuras ");
+            throw new QuartoException("ERRO AO RESERVAR QUARTO!!!");
         }if(!checkOut.after(checkIn)){
-            throw new Exceptions("Erro na reserva: Chek-Out deve ser depois do Check-In");
+            throw new QuartoException("ERRO AO RESERVAR QUARTO!!!");
         }
         this.checkIn = checkIn;
         this.checkOut = checkOut;
