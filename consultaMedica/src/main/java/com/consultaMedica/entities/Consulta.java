@@ -1,28 +1,32 @@
 package com.consultaMedica.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
 @Entity
 public class Consulta {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne()
     @JoinColumn(name = "paciente_id")
-    private Paciente Paciente;
+    @JsonIgnoreProperties("consultas")
+    private Paciente paciente;
 
     @ManyToOne
     @JoinColumn(name = "medico_id")
+    @JsonIgnoreProperties("consultas")
     private Medico medico;
 
     private LocalDate data;
 
+    public Consulta(){};
     public Consulta(Long id, Paciente paciente, Medico medico, LocalDate data) {
         this.id = id;
-        Paciente = paciente;
+        this.paciente = paciente;
         this.medico = medico;
         this.data = data;
     }
@@ -36,11 +40,11 @@ public class Consulta {
     }
 
     public Paciente getPaciente() {
-        return Paciente;
+        return paciente;
     }
 
     public void setPaciente(Paciente paciente) {
-        Paciente = paciente;
+        this.paciente = paciente;
     }
 
     public Medico getMedico() {

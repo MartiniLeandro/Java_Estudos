@@ -1,5 +1,6 @@
 package com.consultaMedica.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class Paciente {
     @OneToMany(mappedBy = "paciente")
     private List<Consulta> consultas;
 
+    public Paciente(){};
     public Paciente(String nome, Long cpf, String telefone) {
         this.nome = nome;
         this.cpf = cpf;
