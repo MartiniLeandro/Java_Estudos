@@ -2,6 +2,7 @@ package com.consultaMedica.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.time.LocalDate;
 
@@ -21,6 +22,7 @@ public class Consulta {
     @JsonIgnoreProperties("consultas")
     private Medico medico;
 
+    @NotEmpty
     private LocalDate data;
 
     public Consulta(){};

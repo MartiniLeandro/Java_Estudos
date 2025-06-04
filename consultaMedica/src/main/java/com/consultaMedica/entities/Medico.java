@@ -1,6 +1,9 @@
 package com.consultaMedica.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
@@ -9,8 +12,14 @@ public class Medico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
     private String nome;
+
+    @NotBlank
     private String especialidade;
+
+    @NotNull
     private Long crm;
 
     @OneToMany(mappedBy = "medico")

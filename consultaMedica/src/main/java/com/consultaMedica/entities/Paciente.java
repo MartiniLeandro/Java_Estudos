@@ -2,6 +2,8 @@ package com.consultaMedica.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
@@ -10,8 +12,14 @@ public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
     private String nome;
+
+    @NotNull
     private Long cpf;
+
+    @NotBlank
     private String telefone;
 
     @OneToMany(mappedBy = "paciente")

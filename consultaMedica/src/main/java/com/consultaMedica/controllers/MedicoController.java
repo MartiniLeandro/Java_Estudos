@@ -2,6 +2,7 @@ package com.consultaMedica.controllers;
 
 import com.consultaMedica.entities.Medico;
 import com.consultaMedica.services.MedicoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class MedicoController {
     }
 
     @PostMapping
-    public ResponseEntity<Medico> createMedico(@RequestBody Medico medico){
+    public ResponseEntity<Medico> createMedico(@RequestBody @Valid Medico medico){
         Medico newMedico = medicoService.createMedico(medico);
         return ResponseEntity.ok().body(newMedico);
     }
@@ -42,7 +43,7 @@ public class MedicoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Medico> updateMedico(@PathVariable Long id, @RequestBody Medico medico){
+    public ResponseEntity<Medico> updateMedico(@PathVariable Long id, @RequestBody @Valid Medico medico){
         Medico updateMedico = medicoService.updateMedico(id,medico);
         return ResponseEntity.ok().body(updateMedico);
     }
