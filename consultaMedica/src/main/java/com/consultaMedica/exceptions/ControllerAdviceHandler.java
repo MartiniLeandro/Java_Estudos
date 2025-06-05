@@ -6,17 +6,21 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.time.Instant;
+
 @ControllerAdvice
 public class ControllerAdviceHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<String> userNotFoundExceptionHandler(UserNotFoundException e){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    public ResponseEntity<RestErrorMessage> userNotFoundExceptionHandler(UserNotFoundException e){
+        RestErrorMessage restErrorMessage = new RestErrorMessage(HttpStatus.NOT_FOUND,e.getMessage(), Instant.now());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(restErrorMessage);
     }
 
     @ExceptionHandler(ValueHasExistException.class)
-    public ResponseEntity<String> valueHasExistExceptionHandler(ValueHasExistException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    public ResponseEntity<RestErrorMessage> valueHasExistExceptionHandler(ValueHasExistException e){
+        RestErrorMessage restErrorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST,e.getMessage(),Instant.now());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(restErrorMessage);
     }
 
 }
