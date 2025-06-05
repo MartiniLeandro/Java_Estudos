@@ -1,6 +1,7 @@
 package com.consultaMedica.controllers;
 
 import com.consultaMedica.entities.Medico;
+import com.consultaMedica.exceptions.UserNotFoundException;
 import com.consultaMedica.services.MedicoService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,13 @@ public class MedicoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Medico> findMedicoById(@PathVariable Long id){
+    public ResponseEntity<?> findMedicoById(@PathVariable Long id){
+        try{
         Medico medicoId = medicoService.findById(id);
         return ResponseEntity.ok().body(medicoId);
+        }catch (UserNotFoundException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping
