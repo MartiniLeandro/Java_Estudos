@@ -26,29 +26,13 @@ public class PacienteService {
     }
 
     public Paciente createPaciente(Paciente paciente){
-        if(pacienteRepository.existsByNome(paciente.getNome())){
-            throw new ValueHasExistException("Já existe um paciente com este nome");
-        }
-        if(pacienteRepository.existsByCpf(paciente.getCpf())){
-            throw new ValueHasExistException("Já existe um paciente com este CPF");
-        }
-        if(pacienteRepository.existsByTelefone(paciente.getTelefone())){
-            throw new ValueHasExistException("Já existe um paciente com este Telefone");
-        }
+        validarCampos(paciente);
         return pacienteRepository.save(paciente);
     }
 
     public Paciente updatePaciente(Long id, Paciente paciente){
         Paciente pacienteAtualizado = pacienteRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Não existe paciente com este ID")) ;
-        if(pacienteRepository.existsByNome(paciente.getNome()) && !pacienteAtualizado.getNome().equals(paciente.getNome())){
-            throw new ValueHasExistException("Já existe um paciente com este nome");
-        }
-        if(pacienteRepository.existsByCpf(paciente.getCpf()) && !pacienteAtualizado.getCpf().equals(paciente.getCpf())){
-            throw new ValueHasExistException("Já existe um paciente com este CPF");
-        }
-        if(pacienteRepository.existsByTelefone(paciente.getTelefone()) && !pacienteAtualizado.getTelefone().equals(paciente.getTelefone())){
-            throw new ValueHasExistException("Já existe um paciente com este telefone");
-        }
+        validarCamposUpdate(id,paciente, pacienteAtualizado);
         pacienteAtualizado.setNome(paciente.getNome());
         pacienteAtualizado.setCpf(paciente.getCpf());
         pacienteAtualizado.setTelefone(paciente.getTelefone());
@@ -61,4 +45,29 @@ public class PacienteService {
         }
         pacienteRepository.deleteById(id);
     }
+
+    private void validarCampos(Paciente paciente){
+        if(pacienteRepository.existsByNome(paciente.getNome())){
+            throw new ValueHasExistException("Já existe um paciente com este nome");
+        }
+        if(pacienteRepository.existsByCpf(paciente.getCpf())){
+            throw new ValueHasExistException("Já existe um paciente com este CPF");
+        }
+        if(pacienteRepository.existsByTelefone(paciente.getTelefone())){
+            throw new ValueHasExistException("Já existe um paciente com este Telefone");
+        }
+    }
+
+    private void validarCamposUpdate(Long id, Paciente paciente, Paciente pacienteAtualizado){
+        if(pacienteRepository.existsByNome(paciente.getNome()) && !pacienteAtualizado.getNome().equals(paciente.getNome())){
+            throw new ValueHasExistException("Já existe um paciente com este nome");
+        }
+        if(pacienteRepository.existsByCpf(paciente.getCpf()) && !pacienteAtualizado.getCpf().equals(paciente.getCpf())){
+            throw new ValueHasExistException("Já existe um paciente com este CPF");
+        }
+        if(pacienteRepository.existsByTelefone(paciente.getTelefone()) && !pacienteAtualizado.getTelefone().equals(paciente.getTelefone())){
+            throw new ValueHasExistException("Já existe um paciente com este telefone");
+        }
+    }
+
 }
