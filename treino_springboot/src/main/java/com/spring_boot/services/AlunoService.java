@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.spring_boot.exceptions.ResourceNotFoundExcepiton;
+import com.spring_boot.exceptions.UserNotFoundExcepiton;
 import com.spring_boot.models.Aluno;
 import com.spring_boot.repository.AlunoRepository;
 
 @Service
 public class AlunoService {
 
-    private AlunoRepository alunoRepository;
+    private final AlunoRepository alunoRepository;
 
     public AlunoService(AlunoRepository alunoRepository) {
         this.alunoRepository = alunoRepository;
@@ -23,6 +23,6 @@ public class AlunoService {
     }
 
     public Aluno findById(Long id){
-        return alunoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundExcepiton("Não existe Aluno com este ID"));
+        return alunoRepository.findById(id).orElseThrow(() -> new UserNotFoundExcepiton("Não existe Aluno com este ID"));
     }
 }

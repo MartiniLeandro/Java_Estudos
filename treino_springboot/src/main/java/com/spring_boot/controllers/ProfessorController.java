@@ -14,7 +14,7 @@ import com.spring_boot.services.ProfessorService;
 @RequestMapping (value = "/professores")
 public class ProfessorController {
     
-    private ProfessorService professorService;
+    private final ProfessorService professorService;
 
     public ProfessorController(ProfessorService professorService){
         this.professorService = professorService; 

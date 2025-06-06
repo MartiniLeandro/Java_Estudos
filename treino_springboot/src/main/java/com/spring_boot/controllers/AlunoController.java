@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring_boot.exceptions.ResourceNotFoundExcepiton;
+import com.spring_boot.exceptions.UserNotFoundExcepiton;
 import com.spring_boot.models.Aluno;
 import com.spring_boot.services.AlunoService;
 
 @RestController
 @RequestMapping(value = "/alunos")
 public class AlunoController {
-    private AlunoService alunoService;
+    private final AlunoService alunoService;
 
     public AlunoController(AlunoService alunoService) {
         this.alunoService = alunoService;
@@ -31,11 +31,7 @@ public class AlunoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
-        try{
-            Aluno aluno = alunoService.findById(id);
-            return ResponseEntity.ok(aluno);
-        }catch(ResourceNotFoundExcepiton ex){
-            return ResponseEntity.badRequest().body("ResourceNotFound");
-        }
+        Aluno aluno = alunoService.findById(id);
+        return ResponseEntity.ok().body(aluno);
     }
 }
