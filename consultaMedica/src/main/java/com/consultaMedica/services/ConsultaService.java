@@ -29,7 +29,7 @@ public class ConsultaService {
     }
 
     public Consulta updateConsulta(Long id, Consulta consulta){
-        Consulta consultaAtualizado = consultaRepository.findById(id).orElseThrow(() -> new RuntimeException("ERRO")) ;
+        Consulta consultaAtualizado = consultaRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Não existe consulta com este ID")) ;
         consultaAtualizado.setMedico(consulta.getMedico());
         consultaAtualizado.setPaciente(consulta.getPaciente());
         consultaAtualizado.setData(consulta.getData());
