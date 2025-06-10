@@ -1,9 +1,9 @@
 package com.consultaMedica.controllers;
 
-import com.consultaMedica.entities.AuthenticationDTO;
+import com.consultaMedica.entities.DTOS.LoginDTO;
+import com.consultaMedica.entities.DTOS.RegisterDTO;
 import com.consultaMedica.entities.Paciente;
 import com.consultaMedica.entities.Roles;
-import com.consultaMedica.exceptions.UserNotFoundException;
 import com.consultaMedica.exceptions.ValueHasExistException;
 import com.consultaMedica.repositories.PacienteRepository;
 import jakarta.validation.Valid;
@@ -28,23 +28,18 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid AuthenticationDTO data){
+    public ResponseEntity<String> login(@RequestBody @Valid LoginDTO data){
         UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.nome(), data.senha());
         authenticationManager.authenticate(usernamePassword);
         return ResponseEntity.ok().body("Login realizado com sucesso");
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody @Valid AuthenticationDTO data){
+    public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO data){
         if(pacienteRepository.existsByNome(data.nome())){
             throw new ValueHasExistException("Já existe um paciente com este nome");
         }
-        Paciente paciente = new Paciente();
-        paciente.setNome(data.nome());
-        paciente.setCpf(data.cpf());
-        paciente.setTelefone(data.telefone());
-        paciente.setSenha(passwordEncoder.encode(data.senha()));
-        paciente.setRole(Roles.PACIENTE);
+        Paciente paciente = new Paciente(data.nome(), data.senha(), data.cpf(), data.telefone());
         pacienteRepository.save(paciente);
         return ResponseEntity.ok("Paciente registrado com sucesso");
 

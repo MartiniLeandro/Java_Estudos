@@ -36,10 +36,13 @@ public class Paciente implements UserDetails {
     private List<Consulta> consultas;
 
     public Paciente(){};
-    public Paciente(String nome, Long cpf, String telefone) {
+
+    public Paciente(String nome, String senha, Long cpf, String telefone) {
         this.nome = nome;
+        this.senha = senha;
         this.cpf = cpf;
         this.telefone = telefone;
+        this.role = Roles.PACIENTE;
     }
 
     public Long getId() {
