@@ -3,7 +3,6 @@ package com.consultaMedica.controllers;
 import com.consultaMedica.entities.DTOS.LoginDTO;
 import com.consultaMedica.entities.DTOS.RegisterDTO;
 import com.consultaMedica.entities.Paciente;
-import com.consultaMedica.entities.Roles;
 import com.consultaMedica.exceptions.ValueHasExistException;
 import com.consultaMedica.repositories.PacienteRepository;
 import jakarta.validation.Valid;
@@ -15,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthenticationController {
+public class AuthenticationPacienteController {
 
     private final PacienteRepository pacienteRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationController(PacienteRepository pacienteRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthenticationPacienteController(PacienteRepository pacienteRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
         this.pacienteRepository = pacienteRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
@@ -39,7 +38,7 @@ public class AuthenticationController {
         if(pacienteRepository.existsByNome(data.nome())){
             throw new ValueHasExistException("Já existe um paciente com este nome");
         }
-        Paciente paciente = new Paciente(data.nome(), data.senha(), data.cpf(), data.telefone());
+        Paciente paciente = new Paciente(data.nome(), passwordEncoder.encode(data.senha()), data.cpf(), data.telefone());
         pacienteRepository.save(paciente);
         return ResponseEntity.ok("Paciente registrado com sucesso");
 

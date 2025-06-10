@@ -2,7 +2,8 @@ package com.consultaMedica.entities;
 
 public enum Roles {
     ADMIN("admin"),
-    PACIENTE("paciente");
+    PACIENTE("paciente"),
+    MEDICO("medico");
 
     private final String role;
 
