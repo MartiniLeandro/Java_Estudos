@@ -5,10 +5,12 @@ import com.consultaMedica.entities.DTOS.RegisterDTO;
 import com.consultaMedica.entities.Paciente;
 import com.consultaMedica.exceptions.ValueHasExistException;
 import com.consultaMedica.repositories.PacienteRepository;
+import com.consultaMedica.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,18 +21,24 @@ public class AuthenticationPacienteController {
     private final PacienteRepository pacienteRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
-    public AuthenticationPacienteController(PacienteRepository pacienteRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthenticationPacienteController(PacienteRepository pacienteRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.pacienteRepository = pacienteRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid LoginDTO data){
         UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.nome(), data.senha());
-        authenticationManager.authenticate(usernamePassword);
-        return ResponseEntity.ok().body("Login realizado com sucesso");
+        Authentication auth = authenticationManager.authenticate(usernamePassword);
+
+        String token = tokenService.generateToken((Paciente) auth.getPrincipal());
+
+        return ResponseEntity.ok().body(token);
+
     }
 
     @PostMapping("/register")
