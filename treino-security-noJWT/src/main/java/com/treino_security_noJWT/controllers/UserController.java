@@ -37,7 +37,7 @@ public class UserController {
     public ResponseEntity<String> CreateUser(@RequestBody @Valid UserDTO user){
         User newUser = new User();
         newUser.setLogin(user.login());
-        newUser.setPassword(passwordEncoder.encode(user.senha()));
+        newUser.setPassword(passwordEncoder.encode(user.password()));
         userService.createUser(newUser);
         return ResponseEntity.ok().body("Usuário Cadastrado");
     }
