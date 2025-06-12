@@ -2,6 +2,7 @@ package com.treino_security_noJWT.Controllers;
 
 import com.treino_security_noJWT.entities.User;
 import com.treino_security_noJWT.repositories.UserRepository;
+import com.treino_security_noJWT.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,22 +18,26 @@ public class AuthenticationController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
-    public AuthenticationController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthenticationController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
-    @PostMapping("/logando")
+    @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid User user){
         if(!userRepository.existsByLogin(user.getLogin())){
             throw new RuntimeException("Não existe usuário com este login");
         }
-        UsernamePasswordAuthenticationToken userPassword = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword());
-        authenticationManager.authenticate(userPassword);
+        UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword());
+        Authentication auth = authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok().body("Usuário logado com sucesso");
+        String token = tokenService.generateToken((User) auth.getPrincipal());
+
+        return ResponseEntity.ok().body("token JWT: " + token);
     }
 
 
