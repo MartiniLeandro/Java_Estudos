@@ -1,5 +1,6 @@
 package com.consultaMedica.security;
 
+import com.consultaMedica.repositories.MedicoRepository;
 import com.consultaMedica.repositories.PacienteRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,10 +19,12 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
     private final PacienteRepository pacienteRepository;
+    private final MedicoRepository medicoRepository;
 
-    public SecurityFilter(TokenService tokenService, PacienteRepository pacienteRepository) {
+    public SecurityFilter(TokenService tokenService, PacienteRepository pacienteRepository, MedicoRepository medicoRepository) {
         this.tokenService = tokenService;
         this.pacienteRepository = pacienteRepository;
+        this.medicoRepository = medicoRepository;
     }
 
     @Override
@@ -29,10 +32,14 @@ public class SecurityFilter extends OncePerRequestFilter {
         String token = this.recuperarToken(request);
         if(token != null){
            String login = tokenService.validateToken(token);
-           UserDetails paciente = pacienteRepository.findByNome(login);
-
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(paciente, null, paciente.getAuthorities());
+           UserDetails user = pacienteRepository.findByNome(login);
+           if(user == null){
+               user = medicoRepository.findByNome(login);
+           }
+           if(user != null){
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+           }
         }
         filterChain.doFilter(request,response);  //CHAMANDO O PRÓXIMO FILTRO
     }

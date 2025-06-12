@@ -7,6 +7,7 @@ import com.consultaMedica.entities.Roles;
 import com.consultaMedica.exceptions.UserNotFoundException;
 import com.consultaMedica.exceptions.ValueHasExistException;
 import com.consultaMedica.repositories.MedicoRepository;
+import com.consultaMedica.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,11 +25,13 @@ public class AuthenticationMedicoController {
     private final MedicoRepository medicoRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
-    public AuthenticationMedicoController(MedicoRepository medicoRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthenticationMedicoController(MedicoRepository medicoRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.medicoRepository = medicoRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/loginMedico")
@@ -38,7 +41,10 @@ public class AuthenticationMedicoController {
         }
         UsernamePasswordAuthenticationToken userPassword = new UsernamePasswordAuthenticationToken(data.nome(), data.senha());
         authenticationManager.authenticate(userPassword);
-        return ResponseEntity.ok().body("Usuário logado!!!");
+
+        String token = tokenService.generateToken(medicoRepository.findByNome(data.nome()));
+
+        return ResponseEntity.ok().body(token);
     }
 
     @PostMapping("/registerMedico")
