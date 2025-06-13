@@ -26,6 +26,7 @@ public class User implements UserDetails {
 
     private UserRoles roles;
 
+    public User(){}
     public User(String login, String password) {
         this.login = login;
         this.password = password;
