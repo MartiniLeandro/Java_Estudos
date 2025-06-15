@@ -1,14 +1,16 @@
 package com.sistema_barbearia.entities;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 public class Barbeiro{
 
-    private String nome;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private LocalDate inicioTrabalho;
     private LocalDate finalTrabalho;
     private final List<String> agendamentos;
@@ -17,20 +19,12 @@ public class Barbeiro{
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Barbeiro(String nome, LocalDate inicioTrabalho, LocalDate finalTrabalho, List<String> agendamentos) {
-        this.nome = nome;
+    public Barbeiro(LocalDate inicioTrabalho, LocalDate finalTrabalho, List<String> agendamentos) {
         this.inicioTrabalho = inicioTrabalho;
         this.finalTrabalho = finalTrabalho;
         this.agendamentos = agendamentos;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     public LocalDate getInicioTrabalho() {
         return inicioTrabalho;
@@ -52,4 +46,11 @@ public class Barbeiro{
         return agendamentos;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

@@ -19,7 +19,7 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    @GetMapping("/agendamentos")
+    @GetMapping("/agendamentos-cliente")
     @PreAuthorize("hasRole('CLIENTE')")
     public ResponseEntity<List<String>> verAgendamentos(){
         List<String> agendamentos = clienteService.verAgendamentos();

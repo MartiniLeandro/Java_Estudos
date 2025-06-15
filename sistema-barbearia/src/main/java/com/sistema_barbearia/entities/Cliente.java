@@ -1,16 +1,15 @@
 package com.sistema_barbearia.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 public class Cliente {
 
-    private String nome;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String telefone;
     private final List<String> agendamentos;
 
@@ -18,8 +17,7 @@ public class Cliente {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Cliente(String nome, String telefone, List<String> agendamentos, User user) {
-        this.nome = nome;
+    public Cliente(String telefone, List<String> agendamentos, User user) {
         this.telefone = telefone;
         this.agendamentos = agendamentos;
         this.user = user;
@@ -45,11 +43,11 @@ public class Cliente {
         this.user = user;
     }
 
-    public String getNome() {
-        return nome;
+    public Long getId() {
+        return id;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setId(Long id) {
+        this.id = id;
     }
 }

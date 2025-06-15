@@ -19,7 +19,7 @@ public class BarbeiroController {
         this.barbeiroService = barbeiroService;
     }
 
-    @GetMapping
+    @GetMapping("/agendamentos-barbeiro")
     @PreAuthorize("hasRole('BARBEIRO')")
     public ResponseEntity<List<String>> verAgendamentos(){
         List<String> agendamentos = barbeiroService.verAgendamentos();

@@ -11,11 +11,15 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
+    private String nome;
 
     @NotBlank
     private String email;
@@ -27,7 +31,8 @@ public class User implements UserDetails {
     private Roles roles;
 
     public User(){}
-    public User(String email, String senha, Roles roles) {
+    public User(String nome, String email, String senha, Roles roles) {
+        this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.roles = roles;
@@ -65,6 +70,13 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
