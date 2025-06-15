@@ -4,10 +4,12 @@ import com.sistema_barbearia.entities.DTOS.LoginDTO;
 import com.sistema_barbearia.entities.DTOS.RegisterDTO;
 import com.sistema_barbearia.entities.User;
 import com.sistema_barbearia.repositories.UserRepository;
+import com.sistema_barbearia.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,19 +20,23 @@ public class AuthenticationController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
-    public AuthenticationController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthenticationController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid LoginDTO data){
         UsernamePasswordAuthenticationToken userPassword = new UsernamePasswordAuthenticationToken(data.email(), data.senha());
-        authenticationManager.authenticate(userPassword);
+        Authentication auth = authenticationManager.authenticate(userPassword);
 
-        return ResponseEntity.ok().body("Usuário logado");
+        String token = tokenService.generateToken((User) auth.getPrincipal());
+
+        return ResponseEntity.ok().body("token JWT: " + token);
     }
 
     @PostMapping("/register")
