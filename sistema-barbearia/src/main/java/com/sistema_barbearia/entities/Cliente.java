@@ -1,7 +1,9 @@
 package com.sistema_barbearia.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,16 +12,19 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
     private String telefone;
-    private final List<String> agendamentos;
+
+    private final List<String> agendamentos = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Cliente(String telefone, List<String> agendamentos, User user) {
+    public Cliente(){}
+    public Cliente(String telefone, User user) {
         this.telefone = telefone;
-        this.agendamentos = agendamentos;
         this.user = user;
     }
 
