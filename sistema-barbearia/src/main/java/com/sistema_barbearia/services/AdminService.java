@@ -60,7 +60,6 @@ public class AdminService {
         Barbeiro updateBarbeiro = barbeiroRepository.findById(id).orElseThrow(() -> new RuntimeException("não há barbeiro com este ID"));
         updateBarbeiro.setInicioTrabalho(barbeiro.getInicioTrabalho());
         updateBarbeiro.setFinalTrabalho(barbeiro.getFinalTrabalho());
-        updateBarbeiro.setUser(barbeiro.getUser());
 
         return barbeiroRepository.save(updateBarbeiro);
     }
@@ -76,7 +75,6 @@ public class AdminService {
     public Cliente updateCliente(Long id, Cliente cliente){
         Cliente updateCliente = clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("não há barbeiro com este ID"));
         updateCliente.setTelefone(cliente.getTelefone());
-        updateCliente.setUser(cliente.getUser());
         return clienteRepository.save(updateCliente);
     }
 
