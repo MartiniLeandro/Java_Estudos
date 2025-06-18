@@ -5,6 +5,7 @@ import com.sistema_barbearia.entities.Cliente;
 import com.sistema_barbearia.entities.DTOS.agendamentosCliente.DeleteAgendamentosDTO;
 import com.sistema_barbearia.entities.DTOS.agendamentosCliente.UpdateAgendamentoDTO;
 import com.sistema_barbearia.entities.User;
+import com.sistema_barbearia.exceptions.UserNotFound;
 import com.sistema_barbearia.repositories.BarbeiroRepository;
 import com.sistema_barbearia.repositories.ClienteRepository;
 import com.sistema_barbearia.repositories.UserRepository;
@@ -29,35 +30,35 @@ public class AdminService {
     }
 
     public void addAgendamentoBarbeiro(String agendamento, Long idBarbeiro){
-        Barbeiro barbeiro = barbeiroRepository.findById(idBarbeiro).orElseThrow(() -> new RuntimeException("Não existe barbeiro com este ID"));
+        Barbeiro barbeiro = barbeiroRepository.findById(idBarbeiro).orElseThrow(() -> new UserNotFound("Não existe barbeiro com este ID"));
         List<String> agendamentosBarbeiro = barbeiro.getAgendamentos();
         agendamentosBarbeiro.add(agendamento);
         barbeiroRepository.save(barbeiro);
     }
 
     public void deleteAgendamentoBarbeiro(int index, Long idBarbeiro){
-        Barbeiro barbeiro = barbeiroRepository.findById(idBarbeiro).orElseThrow(() -> new RuntimeException("Não existe barbeiro com este ID"));
+        Barbeiro barbeiro = barbeiroRepository.findById(idBarbeiro).orElseThrow(() -> new UserNotFound("Não existe barbeiro com este ID"));
         List<String> agendamentosBarbeiro = barbeiro.getAgendamentos();
         agendamentosBarbeiro.remove(index);
         barbeiroRepository.save(barbeiro);
     }
 
     public void updateAgendamentoBarbeiro(int index, String agendamento, Long idBarbeiro){
-        Barbeiro barbeiro = barbeiroRepository.findById(idBarbeiro).orElseThrow(() -> new RuntimeException("Não existe barbeiro com este ID"));
+        Barbeiro barbeiro = barbeiroRepository.findById(idBarbeiro).orElseThrow(() -> new UserNotFound("Não existe barbeiro com este ID"));
         List<String> agendamentosBarbeiro = barbeiro.getAgendamentos();
         agendamentosBarbeiro.set(index, agendamento);
         barbeiroRepository.save(barbeiro);
     }
 
     public void deleteAgendamentoCliente(DeleteAgendamentosDTO data){
-        Cliente cliente = clienteRepository.findById(data.idCliente()).orElseThrow(() -> new RuntimeException("Não existe cliente com este ID"));
+        Cliente cliente = clienteRepository.findById(data.idCliente()).orElseThrow(() -> new UserNotFound("Não existe cliente com este ID"));
         List<String> agendamentos = cliente.getAgendamentos();
         agendamentos.remove(data.index());
         clienteRepository.save(cliente);
     }
 
     public void updateAgendamentoCliente(UpdateAgendamentoDTO data){
-        Cliente cliente = clienteRepository.findById(data.idCliente()).orElseThrow(() -> new RuntimeException("Não existe cliente com este ID"));
+        Cliente cliente = clienteRepository.findById(data.idCliente()).orElseThrow(() -> new UserNotFound("Não existe cliente com este ID"));
         List<String> agendamentos = cliente.getAgendamentos();
         agendamentos.set(data.index(), data.agendamento());
         clienteRepository.save(cliente);
@@ -72,7 +73,7 @@ public class AdminService {
     }
 
     public Barbeiro updateBarbeiro(Long id, Barbeiro barbeiro){
-        Barbeiro updateBarbeiro = barbeiroRepository.findById(id).orElseThrow(() -> new RuntimeException("não há barbeiro com este ID"));
+        Barbeiro updateBarbeiro = barbeiroRepository.findById(id).orElseThrow(() -> new UserNotFound("não há barbeiro com este ID"));
         updateBarbeiro.setInicioTrabalho(barbeiro.getInicioTrabalho());
         updateBarbeiro.setFinalTrabalho(barbeiro.getFinalTrabalho());
 
@@ -88,7 +89,7 @@ public class AdminService {
     }
 
     public Cliente updateCliente(Long id, Cliente cliente){
-        Cliente updateCliente = clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("não há barbeiro com este ID"));
+        Cliente updateCliente = clienteRepository.findById(id).orElseThrow(() -> new UserNotFound("não há barbeiro com este ID"));
         updateCliente.setTelefone(cliente.getTelefone());
         return clienteRepository.save(updateCliente);
     }
@@ -102,7 +103,7 @@ public class AdminService {
     }
 
     public User updateUser(Long id, User user){
-        User updateUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("não há user com este ID"));
+        User updateUser = userRepository.findById(id).orElseThrow(() -> new UserNotFound("não há user com este ID"));
         updateUser.setEmail(user.getEmail());
         updateUser.setNome(user.getNome());
         updateUser.setSenha(passwordEncoder.encode(user.getSenha()));
