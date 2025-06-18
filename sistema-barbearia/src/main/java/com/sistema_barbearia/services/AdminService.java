@@ -2,6 +2,8 @@ package com.sistema_barbearia.services;
 
 import com.sistema_barbearia.entities.Barbeiro;
 import com.sistema_barbearia.entities.Cliente;
+import com.sistema_barbearia.entities.DTOS.agendamentosCliente.DeleteAgendamentosDTO;
+import com.sistema_barbearia.entities.DTOS.agendamentosCliente.UpdateAgendamentoDTO;
 import com.sistema_barbearia.entities.User;
 import com.sistema_barbearia.repositories.BarbeiroRepository;
 import com.sistema_barbearia.repositories.ClienteRepository;
@@ -45,7 +47,20 @@ public class AdminService {
         List<String> agendamentosBarbeiro = barbeiro.getAgendamentos();
         agendamentosBarbeiro.set(index, agendamento);
         barbeiroRepository.save(barbeiro);
+    }
 
+    public void deleteAgendamentoCliente(DeleteAgendamentosDTO data){
+        Cliente cliente = clienteRepository.findById(data.idCliente()).orElseThrow(() -> new RuntimeException("Não existe cliente com este ID"));
+        List<String> agendamentos = cliente.getAgendamentos();
+        agendamentos.remove(data.index());
+        clienteRepository.save(cliente);
+    }
+
+    public void updateAgendamentoCliente(UpdateAgendamentoDTO data){
+        Cliente cliente = clienteRepository.findById(data.idCliente()).orElseThrow(() -> new RuntimeException("Não existe cliente com este ID"));
+        List<String> agendamentos = cliente.getAgendamentos();
+        agendamentos.set(data.index(), data.agendamento());
+        clienteRepository.save(cliente);
     }
 
     public List<Barbeiro> listAllBarbeiro(){

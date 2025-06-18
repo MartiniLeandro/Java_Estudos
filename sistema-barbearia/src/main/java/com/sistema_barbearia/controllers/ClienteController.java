@@ -1,12 +1,9 @@
 package com.sistema_barbearia.controllers;
 
+import com.sistema_barbearia.entities.DTOS.agendamentosCliente.AgendamentoDTO;
 import com.sistema_barbearia.services.ClienteService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,12 @@ public class ClienteController {
         String token = authHeader.replace("Bearer ", "");
         List<String> agendamentos = clienteService.verAgendamentos(token);
         return ResponseEntity.ok().body(agendamentos);
+    }
+
+    @PostMapping("/createAgendamentos")
+    public ResponseEntity<List<String>> createAgendamentos(@RequestHeader("Authorization") String authHeader, @RequestBody AgendamentoDTO data){
+        String token = authHeader.replace("Bearer ", "");
+        List<String> newAgendamentos = clienteService.createAgendamento(token, data);
+        return ResponseEntity.ok().body(newAgendamentos);
     }
 }

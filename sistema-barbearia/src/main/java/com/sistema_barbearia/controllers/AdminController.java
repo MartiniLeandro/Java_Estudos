@@ -5,6 +5,8 @@ import com.sistema_barbearia.entities.Cliente;
 import com.sistema_barbearia.entities.DTOS.agendamentosBarbeiro.AddAgendamentoBarbeiroDTO;
 import com.sistema_barbearia.entities.DTOS.agendamentosBarbeiro.DeleteAgendamentoBarbeiroDTO;
 import com.sistema_barbearia.entities.DTOS.agendamentosBarbeiro.UpdateAgendamentoBarbeiroDTO;
+import com.sistema_barbearia.entities.DTOS.agendamentosCliente.DeleteAgendamentosDTO;
+import com.sistema_barbearia.entities.DTOS.agendamentosCliente.UpdateAgendamentoDTO;
 import com.sistema_barbearia.entities.User;
 import com.sistema_barbearia.services.AdminService;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +40,18 @@ public class AdminController {
     public ResponseEntity<String> updateAgendamentoBarbeiro(@RequestBody UpdateAgendamentoBarbeiroDTO data){
         adminService.updateAgendamentoBarbeiro(data.index(), data.agendamento(), data.idBarbeiro());
         return ResponseEntity.ok().body("Agendamento atualizado ao barbeiro com ID: " + data.idBarbeiro());
+    }
+
+    @DeleteMapping("/delete/agendamentosCliente")
+    public ResponseEntity<String> deleteAgendamentoCliente(@RequestBody DeleteAgendamentosDTO data){
+        adminService.deleteAgendamentoCliente(data);
+        return ResponseEntity.ok().body("Agendamento deletado");
+    }
+
+    @PutMapping("/update/agendamentosCliente")
+    public ResponseEntity<String> updateAgendamentoCliente(@RequestBody UpdateAgendamentoDTO data){
+        adminService.updateAgendamentoCliente(data);
+        return ResponseEntity.ok().body("Agendamento atualizado");
     }
 
     @GetMapping("/allBarbeiros")
