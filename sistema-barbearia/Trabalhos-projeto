@@ -1,0 +1,4 @@
+*Regras de negócio do AuthenticationController, jogar para o service
+*adicionar exceção IncorrectData para o service de authentication
+*mudar os agendamentos que estão em STRING
+*filtrar os agendamentos

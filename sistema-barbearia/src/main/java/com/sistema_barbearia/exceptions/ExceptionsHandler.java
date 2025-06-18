@@ -13,4 +13,9 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> userNotFound(UserNotFound e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
+
+    @ExceptionHandler(IncorrectData.class)
+    public ResponseEntity<String> incorrectData(IncorrectData e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
 }

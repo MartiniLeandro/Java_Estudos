@@ -2,6 +2,7 @@ package com.sistema_barbearia.entities;
 
 import com.sistema_barbearia.repositories.BarbeiroRepository;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -13,8 +14,13 @@ public class Barbeiro{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
     private String inicioTrabalho;
+
+    @NotBlank
     private String finalTrabalho;
+
     private final List<String> agendamentos = new ArrayList<>();
 
     @OneToOne
