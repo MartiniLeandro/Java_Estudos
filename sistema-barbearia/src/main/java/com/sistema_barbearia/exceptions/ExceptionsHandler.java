@@ -9,13 +9,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(UserNotFound.class)
-    public ResponseEntity<String> userNotFound(UserNotFound e){
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> userNotFound(UserNotFoundException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
-    @ExceptionHandler(IncorrectData.class)
-    public ResponseEntity<String> incorrectData(IncorrectData e){
+    @ExceptionHandler(IncorrectDataException.class)
+    public ResponseEntity<String> incorrectData(IncorrectDataException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }
