@@ -1,4 +1,6 @@
 package com.sistema_barbearia.entities.DTOS.agendamentosBarbeiro;
 
-public record UpdateAgendamentoBarbeiroDTO(int index, String agendamento, Long idBarbeiro) {
+import jakarta.validation.constraints.NotNull;
+
+public record UpdateAgendamentoBarbeiroDTO(@NotNull int index, String agendamento,@NotNull Long idBarbeiro) {
 }

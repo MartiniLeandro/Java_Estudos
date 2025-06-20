@@ -1,4 +1,6 @@
 package com.sistema_barbearia.entities.DTOS.agendamentosBarbeiro;
 
-public record DeleteAgendamentoBarbeiroDTO(int index, Long idBarbeiro) {
+import jakarta.validation.constraints.NotNull;
+
+public record DeleteAgendamentoBarbeiroDTO(@NotNull int index, @NotNull Long idBarbeiro) {
 }

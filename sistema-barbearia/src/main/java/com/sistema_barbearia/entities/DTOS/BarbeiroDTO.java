@@ -1,4 +1,6 @@
 package com.sistema_barbearia.entities.DTOS;
 
-public record BarbeiroDTO(String inicioTrabalho, String finalTrabalho, Long user_id) {
+import jakarta.validation.constraints.NotNull;
+
+public record BarbeiroDTO(String inicioTrabalho, String finalTrabalho, @NotNull Long user_id) {
 }

@@ -1,4 +1,6 @@
 package com.sistema_barbearia.entities.DTOS.agendamentosBarbeiro;
 
-public record AddAgendamentoBarbeiroDTO(String agendamento, Long idBarbeiro) {
+import jakarta.validation.constraints.NotNull;
+
+public record AddAgendamentoBarbeiroDTO(String agendamento, @NotNull Long idBarbeiro) {
 }
