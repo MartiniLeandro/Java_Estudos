@@ -1,8 +1,11 @@
 package com.sistema_barbearia.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sistema_barbearia.repositories.BarbeiroRepository;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -15,11 +18,15 @@ public class Barbeiro{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    private String inicioTrabalho;
+    @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime inicioTrabalho;
 
-    @NotBlank
-    private String finalTrabalho;
+    @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime finalTrabalho;
 
     private final List<String> agendamentos = new ArrayList<>();
 
@@ -28,26 +35,26 @@ public class Barbeiro{
     private User user;
 
     public Barbeiro(){}
-    public Barbeiro(String inicioTrabalho, String finalTrabalho, User user) {
+    public Barbeiro(LocalTime inicioTrabalho, LocalTime finalTrabalho, User user) {
         this.inicioTrabalho = inicioTrabalho;
         this.finalTrabalho = finalTrabalho;
         this.user = user;
     }
 
 
-    public String getInicioTrabalho() {
+    public LocalTime getInicioTrabalho() {
         return inicioTrabalho;
     }
 
-    public void setInicioTrabalho(String inicioTrabalho) {
+    public void setInicioTrabalho(LocalTime inicioTrabalho) {
         this.inicioTrabalho = inicioTrabalho;
     }
 
-    public String getFinalTrabalho() {
+    public LocalTime getFinalTrabalho() {
         return finalTrabalho;
     }
 
-    public void setFinalTrabalho(String finalTrabalho) {
+    public void setFinalTrabalho(LocalTime finalTrabalho) {
         this.finalTrabalho = finalTrabalho;
     }
 

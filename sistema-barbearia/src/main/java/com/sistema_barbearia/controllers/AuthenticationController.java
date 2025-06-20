@@ -2,10 +2,7 @@ package com.sistema_barbearia.controllers;
 
 import com.sistema_barbearia.entities.Barbeiro;
 import com.sistema_barbearia.entities.Cliente;
-import com.sistema_barbearia.entities.DTOS.BarbeiroDTO;
-import com.sistema_barbearia.entities.DTOS.ClienteDTO;
-import com.sistema_barbearia.entities.DTOS.LoginDTO;
-import com.sistema_barbearia.entities.DTOS.RegisterDTO;
+import com.sistema_barbearia.entities.DTOS.*;
 import com.sistema_barbearia.entities.User;
 import com.sistema_barbearia.services.AuthenticationService;
 import jakarta.validation.Valid;
@@ -42,8 +39,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register/barbeiro")
-    public ResponseEntity<Barbeiro> registerBarbeiro(@RequestBody @Valid BarbeiroDTO data){
-        Barbeiro barbeiro = authenticationService.registerBarbeiro(data);
+    public ResponseEntity<BarbeiroDTO> registerBarbeiro(@RequestBody @Valid BarbeiroCreateDTO data){
+        BarbeiroDTO barbeiro = authenticationService.registerBarbeiro(data);
         return ResponseEntity.ok().body(barbeiro);
     }
 }

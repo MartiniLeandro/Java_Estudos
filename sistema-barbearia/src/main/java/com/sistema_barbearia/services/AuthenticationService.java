@@ -2,10 +2,7 @@ package com.sistema_barbearia.services;
 
 import com.sistema_barbearia.entities.Barbeiro;
 import com.sistema_barbearia.entities.Cliente;
-import com.sistema_barbearia.entities.DTOS.BarbeiroDTO;
-import com.sistema_barbearia.entities.DTOS.ClienteDTO;
-import com.sistema_barbearia.entities.DTOS.LoginDTO;
-import com.sistema_barbearia.entities.DTOS.RegisterDTO;
+import com.sistema_barbearia.entities.DTOS.*;
 import com.sistema_barbearia.entities.User;
 import com.sistema_barbearia.exceptions.AlreadyExistException;
 import com.sistema_barbearia.exceptions.UserNotFoundException;
@@ -45,10 +42,11 @@ public class AuthenticationService {
         return userRepository.save(user);
     }
 
-    public Barbeiro registerBarbeiro(BarbeiroDTO data){
+    public BarbeiroDTO registerBarbeiro(BarbeiroCreateDTO data){
         User user = userRepository.findById(data.user_id()).orElseThrow(() -> new UserNotFoundException("Não existe User com este ID"));
         Barbeiro barbeiro = new Barbeiro(data.inicioTrabalho(), data.finalTrabalho(), user);
-        return barbeiroRepository.save(barbeiro);
+        barbeiroRepository.save(barbeiro);
+        return new BarbeiroDTO(barbeiro);
     }
 
     public Cliente registerCliente(ClienteDTO data){
