@@ -36,10 +36,11 @@ public class AuthenticationService {
     }
 
 
-    public User registerUser(RegisterDTO data){
+    public UserDTO registerUser(RegisterDTO data){
         if(userRepository.existsByEmail(data.email())) throw new AlreadyExistException("Já existe um usuário com este email");
         User user = new User(data.nome(), data.email(), passwordEncoder.encode(data.senha()), data.role());
-        return userRepository.save(user);
+        userRepository.save(user);
+        return new UserDTO(user);
     }
 
     public BarbeiroDTO registerBarbeiro(BarbeiroCreateDTO data){
@@ -49,10 +50,11 @@ public class AuthenticationService {
         return new BarbeiroDTO(barbeiro);
     }
 
-    public Cliente registerCliente(ClienteDTO data){
+    public ClientesDTO registerCliente(ClienteDTO data){
         User user = userRepository.findById(data.user_id()).orElseThrow(() -> new UserNotFoundException("Não existe User com este ID"));
         Cliente cliente = new Cliente(data.telefone(), user);
-        return clienteRepository.save(cliente);
+        clienteRepository.save(cliente);
+        return new ClientesDTO(cliente);
     }
 
     public String login(LoginDTO data){

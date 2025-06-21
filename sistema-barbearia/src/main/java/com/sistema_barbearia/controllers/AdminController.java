@@ -2,6 +2,9 @@ package com.sistema_barbearia.controllers;
 
 import com.sistema_barbearia.entities.Barbeiro;
 import com.sistema_barbearia.entities.Cliente;
+import com.sistema_barbearia.entities.DTOS.BarbeiroDTO;
+import com.sistema_barbearia.entities.DTOS.ClientesDTO;
+import com.sistema_barbearia.entities.DTOS.UserDTO;
 import com.sistema_barbearia.entities.DTOS.agendamentosBarbeiro.AddAgendamentoBarbeiroDTO;
 import com.sistema_barbearia.entities.DTOS.agendamentosBarbeiro.DeleteAgendamentoBarbeiroDTO;
 import com.sistema_barbearia.entities.DTOS.agendamentosBarbeiro.UpdateAgendamentoBarbeiroDTO;
@@ -55,8 +58,8 @@ public class AdminController {
     }
 
     @GetMapping("/allBarbeiros")
-    public ResponseEntity<List<Barbeiro>> findAllBarbeiros(){
-        List<Barbeiro> allBarbeiros = adminService.listAllBarbeiro();
+    public ResponseEntity<List<BarbeiroDTO>> findAllBarbeiros(){
+        List<BarbeiroDTO> allBarbeiros = adminService.listAllBarbeiro();
         return ResponseEntity.ok().body(allBarbeiros);
     }
 
@@ -67,14 +70,14 @@ public class AdminController {
     }
 
     @PutMapping("/updateBarbeiros/{id}")
-    public ResponseEntity<Barbeiro> updateBarbeiro(@PathVariable  Long id, @RequestBody Barbeiro barbeiro){
-        Barbeiro barbeiroUpdate = adminService.updateBarbeiro(id, barbeiro);
+    public ResponseEntity<BarbeiroDTO> updateBarbeiro(@PathVariable  Long id, @RequestBody Barbeiro barbeiro){
+        BarbeiroDTO barbeiroUpdate = adminService.updateBarbeiro(id, barbeiro);
         return ResponseEntity.ok().body(barbeiroUpdate);
     }
 
     @GetMapping("/allClientes")
-    public ResponseEntity<List<Cliente>> findAllClientes(){
-        List<Cliente> allClientes = adminService.listAllCliente();
+    public ResponseEntity<List<ClientesDTO>> findAllClientes(){
+        List<ClientesDTO> allClientes = adminService.listAllCliente();
         return ResponseEntity.ok().body(allClientes);
     }
 
@@ -85,14 +88,14 @@ public class AdminController {
     }
 
     @PutMapping("/updateClientes/{id}")
-    public ResponseEntity<Cliente> updateCliente(@PathVariable  Long id,@RequestBody Cliente cliente){
-        Cliente updateCliente = adminService.updateCliente(id, cliente);
+    public ResponseEntity<ClientesDTO> updateCliente(@PathVariable  Long id,@RequestBody Cliente cliente){
+        ClientesDTO updateCliente = adminService.updateCliente(id, cliente);
         return ResponseEntity.ok().body(updateCliente);
     }
 
     @GetMapping("/allUsers")
-    public ResponseEntity<List<User>> findAllUsers(){
-        List<User> allUsers = adminService.listAllUsers();
+    public ResponseEntity<List<UserDTO>> findAllUsers(){
+        List<UserDTO> allUsers = adminService.listAllUsers();
         return ResponseEntity.ok().body(allUsers);
     }
 
@@ -103,8 +106,8 @@ public class AdminController {
     }
 
     @PutMapping("/updateUsers/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user){
-        User updateUser = adminService.updateUser(id, user);
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody User user){
+        UserDTO updateUser = adminService.updateUser(id, user);
         return ResponseEntity.ok().body(updateUser);
     }
 

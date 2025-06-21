@@ -27,14 +27,14 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register/user")
-    public ResponseEntity<User> register(@RequestBody @Valid RegisterDTO data){
-        User user = authenticationService.registerUser(data);
+    public ResponseEntity<UserDTO> register(@RequestBody @Valid RegisterDTO data){
+        UserDTO user = authenticationService.registerUser(data);
         return ResponseEntity.ok().body(user);
     }
 
     @PostMapping("/register/cliente")
-    public ResponseEntity<Cliente> registerCliente(@RequestBody @Valid ClienteDTO data){
-        Cliente cliente = authenticationService.registerCliente(data);
+    public ResponseEntity<ClientesDTO> registerCliente(@RequestBody @Valid ClienteDTO data){
+        ClientesDTO cliente = authenticationService.registerCliente(data);
         return ResponseEntity.ok().body(cliente);
     }
 

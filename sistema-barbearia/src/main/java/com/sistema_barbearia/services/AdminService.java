@@ -2,6 +2,9 @@ package com.sistema_barbearia.services;
 
 import com.sistema_barbearia.entities.Barbeiro;
 import com.sistema_barbearia.entities.Cliente;
+import com.sistema_barbearia.entities.DTOS.BarbeiroDTO;
+import com.sistema_barbearia.entities.DTOS.ClientesDTO;
+import com.sistema_barbearia.entities.DTOS.UserDTO;
 import com.sistema_barbearia.entities.DTOS.agendamentosCliente.DeleteAgendamentosDTO;
 import com.sistema_barbearia.entities.DTOS.agendamentosCliente.UpdateAgendamentoDTO;
 import com.sistema_barbearia.entities.User;
@@ -69,8 +72,8 @@ public class AdminService {
         clienteRepository.save(cliente);
     }
 
-    public List<Barbeiro> listAllBarbeiro(){
-        return barbeiroRepository.findAll();
+    public List<BarbeiroDTO> listAllBarbeiro(){
+        return barbeiroRepository.findAll().stream().map(BarbeiroDTO::new).toList();
     }
 
     public void deleteBarbeiro(Long id){
@@ -78,16 +81,16 @@ public class AdminService {
         barbeiroRepository.deleteById(id);
     }
 
-    public Barbeiro updateBarbeiro(Long id, Barbeiro barbeiro){
+    public BarbeiroDTO updateBarbeiro(Long id, Barbeiro barbeiro){
         Barbeiro updateBarbeiro = barbeiroRepository.findById(id).orElseThrow(() -> new UserNotFoundException("não há barbeiro com este ID"));
         updateBarbeiro.setInicioTrabalho(barbeiro.getInicioTrabalho());
         updateBarbeiro.setFinalTrabalho(barbeiro.getFinalTrabalho());
-
-        return barbeiroRepository.save(updateBarbeiro);
+        barbeiroRepository.save(updateBarbeiro);
+        return new BarbeiroDTO(updateBarbeiro);
     }
 
-    public List<Cliente> listAllCliente(){
-        return clienteRepository.findAll();
+    public List<ClientesDTO> listAllCliente(){
+        return clienteRepository.findAll().stream().map(ClientesDTO::new).toList();
     }
 
     public void deleteCliente(Long id){
@@ -95,14 +98,15 @@ public class AdminService {
         clienteRepository.deleteById(id);
     }
 
-    public Cliente updateCliente(Long id, Cliente cliente){
+    public ClientesDTO updateCliente(Long id, Cliente cliente){
         Cliente updateCliente = clienteRepository.findById(id).orElseThrow(() -> new UserNotFoundException("não há cliente com este ID"));
         updateCliente.setTelefone(cliente.getTelefone());
-        return clienteRepository.save(updateCliente);
+        clienteRepository.save(updateCliente);
+        return new ClientesDTO(updateCliente);
     }
 
-    public List<User> listAllUsers(){
-        return userRepository.findAll();
+    public List<UserDTO> listAllUsers(){
+        return userRepository.findAll().stream().map(UserDTO::new).toList();
     }
 
     public void deleteUser(Long id){
@@ -110,13 +114,13 @@ public class AdminService {
         userRepository.deleteById(id);
     }
 
-    public User updateUser(Long id, User user){
+    public UserDTO updateUser(Long id, User user){
         User updateUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("não há user com este ID"));
         updateUser.setEmail(user.getEmail());
         updateUser.setNome(user.getNome());
         updateUser.setSenha(passwordEncoder.encode(user.getSenha()));
-
-        return userRepository.save(updateUser);
+        userRepository.save(updateUser);
+        return new UserDTO(updateUser);
     }
 
 }
