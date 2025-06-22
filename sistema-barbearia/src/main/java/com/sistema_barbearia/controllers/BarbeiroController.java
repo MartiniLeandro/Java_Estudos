@@ -1,5 +1,6 @@
 package com.sistema_barbearia.controllers;
 
+import com.sistema_barbearia.entities.utils.AgendamentoBarbeiro;
 import com.sistema_barbearia.services.BarbeiroService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,9 +22,9 @@ public class BarbeiroController {
     }
 
     @GetMapping("/agendamentos")
-    public ResponseEntity<List<String>> verAgendamentos(@RequestHeader("Authorization") String authHeader){
+    public ResponseEntity<List<AgendamentoBarbeiro>> verAgendamentos(@RequestHeader("Authorization") String authHeader){
         String token = authHeader.replace("Bearer ", "");
-        List<String> agendamentos = barbeiroService.verAgendamentos(token);
+        List<AgendamentoBarbeiro> agendamentos = barbeiroService.verAgendamentos(token);
         return ResponseEntity.ok().body(agendamentos);
     }
 

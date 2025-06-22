@@ -1,6 +1,7 @@
 package com.sistema_barbearia.entities.DTOS;
 
 import com.sistema_barbearia.entities.Barbeiro;
+import com.sistema_barbearia.entities.utils.AgendamentoBarbeiro;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -9,7 +10,7 @@ public class AllBarbeirosDTO {
     private Long id;
     private LocalTime inicioTrabalho;
     private LocalTime finalTrabalho;
-    private List<String> agendamentos;
+    private List<AgendamentoBarbeiro> agendamentos;
     private UserDTO user;
 
     public AllBarbeirosDTO(Barbeiro barbeiro){
@@ -40,11 +41,11 @@ public class AllBarbeirosDTO {
         this.finalTrabalho = finalTrabalho;
     }
 
-    public List<String> getAgendamentos() {
+    public List<AgendamentoBarbeiro> getAgendamentos() {
         return agendamentos;
     }
 
-    public void setAgendamentos(List<String> agendamentos) {
+    public void setAgendamentos(List<AgendamentoBarbeiro> agendamentos) {
         this.agendamentos = agendamentos;
     }
 

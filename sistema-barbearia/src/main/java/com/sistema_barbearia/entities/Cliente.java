@@ -1,5 +1,6 @@
 package com.sistema_barbearia.entities;
 
+import com.sistema_barbearia.entities.utils.AgendamentoCliente;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -16,7 +17,8 @@ public class Cliente {
     @NotBlank
     private String telefone;
 
-    private final List<String> agendamentos = new ArrayList<>();
+    @ElementCollection
+    private final List<AgendamentoCliente> agendamentos = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -36,7 +38,7 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    public List<String> getAgendamentos() {
+    public List<AgendamentoCliente> getAgendamentos() {
         return agendamentos;
     }
 

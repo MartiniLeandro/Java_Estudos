@@ -8,6 +8,8 @@ import com.sistema_barbearia.entities.DTOS.UserDTO;
 import com.sistema_barbearia.entities.DTOS.agendamentosCliente.DeleteAgendamentosDTO;
 import com.sistema_barbearia.entities.DTOS.agendamentosCliente.UpdateAgendamentoDTO;
 import com.sistema_barbearia.entities.User;
+import com.sistema_barbearia.entities.utils.AgendamentoBarbeiro;
+import com.sistema_barbearia.entities.utils.AgendamentoCliente;
 import com.sistema_barbearia.exceptions.IncorrectDataException;
 import com.sistema_barbearia.exceptions.UserNotFoundException;
 import com.sistema_barbearia.repositories.BarbeiroRepository;
@@ -33,24 +35,24 @@ public class AdminService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void addAgendamentoBarbeiro(String agendamento, Long idBarbeiro){
+    public void addAgendamentoBarbeiro(AgendamentoBarbeiro agendamento, Long idBarbeiro){
         Barbeiro barbeiro = barbeiroRepository.findById(idBarbeiro).orElseThrow(() -> new UserNotFoundException("Não existe barbeiro com este ID"));
-        List<String> agendamentosBarbeiro = barbeiro.getAgendamentos();
+        List<AgendamentoBarbeiro> agendamentosBarbeiro = barbeiro.getAgendamentos();
         agendamentosBarbeiro.add(agendamento);
         barbeiroRepository.save(barbeiro);
     }
 
     public void deleteAgendamentoBarbeiro(int index, Long idBarbeiro){
         Barbeiro barbeiro = barbeiroRepository.findById(idBarbeiro).orElseThrow(() -> new UserNotFoundException("Não existe barbeiro com este ID"));
-        List<String> agendamentosBarbeiro = barbeiro.getAgendamentos();
+        List<AgendamentoBarbeiro> agendamentosBarbeiro = barbeiro.getAgendamentos();
         if(index >= agendamentosBarbeiro.size() || index < 0) throw new IncorrectDataException("Não existe agendamento com este index");
         agendamentosBarbeiro.remove(index);
         barbeiroRepository.save(barbeiro);
     }
 
-    public void updateAgendamentoBarbeiro(int index, String agendamento, Long idBarbeiro){
+    public void updateAgendamentoBarbeiro(int index, AgendamentoBarbeiro agendamento, Long idBarbeiro){
         Barbeiro barbeiro = barbeiroRepository.findById(idBarbeiro).orElseThrow(() -> new UserNotFoundException("Não existe barbeiro com este ID"));
-        List<String> agendamentosBarbeiro = barbeiro.getAgendamentos();
+        List<AgendamentoBarbeiro> agendamentosBarbeiro = barbeiro.getAgendamentos();
         if(index >= agendamentosBarbeiro.size() || index < 0) throw  new IncorrectDataException("Não há agendamento com este index");
         agendamentosBarbeiro.set(index, agendamento);
         barbeiroRepository.save(barbeiro);
@@ -58,7 +60,7 @@ public class AdminService {
 
     public void deleteAgendamentoCliente(DeleteAgendamentosDTO data){
         Cliente cliente = clienteRepository.findById(data.idCliente()).orElseThrow(() -> new UserNotFoundException("Não existe cliente com este ID"));
-        List<String> agendamentos = cliente.getAgendamentos();
+        List<AgendamentoCliente> agendamentos = cliente.getAgendamentos();
         if(data.index() >= agendamentos.size() || data.index() < 0) throw new IncorrectDataException("Não há agendamento com este index");
         agendamentos.remove(data.index());
         clienteRepository.save(cliente);
@@ -66,7 +68,7 @@ public class AdminService {
 
     public void updateAgendamentoCliente(UpdateAgendamentoDTO data){
         Cliente cliente = clienteRepository.findById(data.idCliente()).orElseThrow(() -> new UserNotFoundException("Não existe cliente com este ID"));
-        List<String> agendamentos = cliente.getAgendamentos();
+        List<AgendamentoCliente> agendamentos = cliente.getAgendamentos();
         if(data.index() >= agendamentos.size() || data.index() < 0) throw new IncorrectDataException("Não há agendamento com este index");
         agendamentos.set(data.index(), data.agendamento());
         clienteRepository.save(cliente);

@@ -1,6 +1,7 @@
 package com.sistema_barbearia.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sistema_barbearia.entities.utils.AgendamentoBarbeiro;
 import com.sistema_barbearia.repositories.BarbeiroRepository;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -28,7 +29,8 @@ public class Barbeiro{
     @JsonFormat(pattern = "HH:mm")
     private LocalTime finalTrabalho;
 
-    private final List<String> agendamentos = new ArrayList<>();
+    @ElementCollection
+    private final List<AgendamentoBarbeiro> agendamentos = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -58,7 +60,7 @@ public class Barbeiro{
         this.finalTrabalho = finalTrabalho;
     }
 
-    public List<String> getAgendamentos() {
+    public List<AgendamentoBarbeiro> getAgendamentos() {
         return agendamentos;
     }
 

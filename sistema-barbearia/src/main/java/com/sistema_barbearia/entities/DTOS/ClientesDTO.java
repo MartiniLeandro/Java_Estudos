@@ -1,13 +1,14 @@
 package com.sistema_barbearia.entities.DTOS;
 
 import com.sistema_barbearia.entities.Cliente;
+import com.sistema_barbearia.entities.utils.AgendamentoCliente;
 
 import java.util.List;
 
 public class ClientesDTO {
     private Long id;
     private String telefone;
-    private List<String> agendamentos;
+    private List<AgendamentoCliente> agendamentos;
     private UserDTO user;
 
     public ClientesDTO(Cliente cliente){
@@ -29,11 +30,11 @@ public class ClientesDTO {
         this.telefone = telefone;
     }
 
-    public List<String> getAgendamentos() {
+    public List<AgendamentoCliente> getAgendamentos() {
         return agendamentos;
     }
 
-    public void setAgendamentos(List<String> agendamentos) {
+    public void setAgendamentos(List<AgendamentoCliente> agendamentos) {
         this.agendamentos = agendamentos;
     }
 

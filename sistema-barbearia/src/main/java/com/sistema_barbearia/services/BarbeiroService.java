@@ -2,6 +2,7 @@ package com.sistema_barbearia.services;
 
 import com.sistema_barbearia.entities.Barbeiro;
 import com.sistema_barbearia.entities.User;
+import com.sistema_barbearia.entities.utils.AgendamentoBarbeiro;
 import com.sistema_barbearia.exceptions.UserNotFoundException;
 import com.sistema_barbearia.repositories.BarbeiroRepository;
 import com.sistema_barbearia.repositories.UserRepository;
@@ -23,7 +24,7 @@ public class BarbeiroService {
         this.userRepository = userRepository;
     }
 
-    public List<String> verAgendamentos(String token){
+    public List<AgendamentoBarbeiro> verAgendamentos(String token){
         String email = tokenService.validateToken(token);
         User user = userRepository.findUserByEmail(email);
         if(user == null) throw new UserNotFoundException("Não há user com este email");

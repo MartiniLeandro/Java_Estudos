@@ -3,6 +3,7 @@ package com.sistema_barbearia.services;
 import com.sistema_barbearia.entities.Cliente;
 import com.sistema_barbearia.entities.DTOS.agendamentosCliente.AgendamentoDTO;
 import com.sistema_barbearia.entities.User;
+import com.sistema_barbearia.entities.utils.AgendamentoCliente;
 import com.sistema_barbearia.exceptions.UserNotFoundException;
 import com.sistema_barbearia.repositories.ClienteRepository;
 import com.sistema_barbearia.repositories.UserRepository;
@@ -24,7 +25,7 @@ public class ClienteService {
         this.userRepository = userRepository;
     }
 
-    public List<String>  verAgendamentos(String token){
+    public List<AgendamentoCliente>  verAgendamentos(String token){
         String email = tokenService.validateToken(token);
         User user = userRepository.findUserByEmail(email);
         if(user == null) throw new UserNotFoundException("Não há user com este email");
@@ -33,12 +34,12 @@ public class ClienteService {
         return cliente.getAgendamentos();
     }
 
-    public List<String> createAgendamento(String token, AgendamentoDTO data){
+    public List<AgendamentoCliente> createAgendamento(String token, AgendamentoDTO data){
         String email = tokenService.validateToken(token);
         User user = userRepository.findUserByEmail(email);
         if(user == null) throw new UserNotFoundException("Não há user com este email");
         Cliente cliente = clienteRepository.findByUser(user);
-        List<String> agendamentos = cliente.getAgendamentos();
+        List<AgendamentoCliente> agendamentos = cliente.getAgendamentos();
         agendamentos.add(data.agendamento());
         clienteRepository.save(cliente);
         return agendamentos;
