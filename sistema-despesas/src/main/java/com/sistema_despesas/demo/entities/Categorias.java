@@ -16,14 +16,10 @@ public class Categorias {
 
     private TipoCategoria tipoCategoria;
 
-    @OneToMany(mappedBy = "categoria")
-    private ReceitasDespesas receitasDespesas;
-
     public Categorias(){}
-    public Categorias(String nome, TipoCategoria tipoCategoria, ReceitasDespesas receitasDespesas) {
+    public Categorias(String nome, TipoCategoria tipoCategoria) {
         this.nome = nome;
         this.tipoCategoria = tipoCategoria;
-        this.receitasDespesas = receitasDespesas;
     }
 
     public Long getId() {
@@ -38,15 +34,8 @@ public class Categorias {
         this.nome = nome;
     }
 
-    public TipoCategoria getReceitaOuDespesa() {
-        return this.tipoCategoria;
-    }
-
     public void setReceitaOuDespesa(TipoCategoria tipoCategoria) {
         this.tipoCategoria = tipoCategoria;
     }
 
-    public ReceitasDespesas getReceitasDespesas() {
-        return receitasDespesas;
-    }
 }

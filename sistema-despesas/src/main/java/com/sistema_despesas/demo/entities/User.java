@@ -27,14 +27,14 @@ public class User implements UserDetails {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<ReceitasDespesas> receitasDespesas = new ArrayList<>();
+    private List<Launch> receitasDespesas = new ArrayList<>();
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private Roles roles;
 
     public User(){}
-    public User(String email, String password, List<ReceitasDespesas> receitasDespesas, Roles roles) {
+    public User(String email, String password, List<Launch> receitasDespesas, Roles roles) {
         this.email = email;
         this.password = password;
         this.receitasDespesas = receitasDespesas;
@@ -57,7 +57,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public List<ReceitasDespesas> getReceitasDespesas() {
+    public List<Launch> getReceitasDespesas() {
         return receitasDespesas;
     }
 

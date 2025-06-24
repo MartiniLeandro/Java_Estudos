@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class ReceitasDespesas {
+public class Launch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,8 +25,8 @@ public class ReceitasDespesas {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public ReceitasDespesas(){}
-    public ReceitasDespesas(String description, Categorias categoria, Double valor, User user) {
+    public Launch(){}
+    public Launch(String description, Categorias categoria, Double valor, User user) {
         this.description = description;
         this.categoria = categoria;
         this.valor = valor;
