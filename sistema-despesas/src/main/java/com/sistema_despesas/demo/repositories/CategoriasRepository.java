@@ -1,4 +1,7 @@
 package com.sistema_despesas.demo.repositories;
 
-public interface CategoriasRepository {
+import com.sistema_despesas.demo.entities.Categorias;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategoriasRepository extends JpaRepository<Categorias, Long> {
 }

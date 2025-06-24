@@ -1,7 +1,5 @@
-package com.sistema_despesas.demo.entities.utils;
+package com.sistema_despesas.demo.entities;
 
-import com.sistema_despesas.demo.entities.Categorias;
-import com.sistema_despesas.demo.entities.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

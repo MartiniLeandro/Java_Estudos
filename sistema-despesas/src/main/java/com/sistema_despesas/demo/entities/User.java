@@ -1,6 +1,5 @@
 package com.sistema_despesas.demo.entities;
 
-import com.sistema_despesas.demo.entities.utils.ReceitasDespesas;
 import com.sistema_despesas.demo.entities.utils.Roles;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
