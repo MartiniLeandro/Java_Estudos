@@ -19,12 +19,13 @@ public class AdminService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<User> allUsers(){
-        return userRepository.findAll();
+    public List<UserDTO> allUsers(){
+        return userRepository.findAll().stream().map(UserDTO::new).toList();
     }
 
-    public User findById(Long id){
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Não existe User com este ID"));
+    public UserDTO findById(Long id){
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Não existe User com este ID"));
+        return new UserDTO(user);
     }
 
     public UserDTO updateUser(Long id, User user){
