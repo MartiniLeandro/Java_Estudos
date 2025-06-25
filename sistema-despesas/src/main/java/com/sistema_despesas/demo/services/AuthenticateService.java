@@ -1,16 +1,44 @@
 package com.sistema_despesas.demo.services;
 
+import com.sistema_despesas.demo.entities.DTOS.LoginDTO;
+import com.sistema_despesas.demo.entities.DTOS.RegisterDTO;
+import com.sistema_despesas.demo.entities.User;
 import com.sistema_despesas.demo.repositories.UserRepository;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.sistema_despesas.demo.security.TokenService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-public class AuthenticateService implements UserDetailsService {
+@Service
+public class AuthenticateService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
+    private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username);
+    public AuthenticateService(UserRepository userRepository, AuthenticationManager authenticationManager, TokenService tokenService, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public void registerUser(RegisterDTO data){
+        if(userRepository.existsByEmail(data.email())) throw new RuntimeException("Já existe um usuário com este EMAIL!!");
+        User newUser = new User(data.email(), passwordEncoder.encode(data.password()), data.role());
+        userRepository.save(newUser);
+    }
+
+    public String loginUser(LoginDTO data){
+        try{
+            UsernamePasswordAuthenticationToken userPassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
+            Authentication auth = authenticationManager.authenticate(userPassword);
+            return tokenService.generateToken((User) auth.getPrincipal());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getCause());
+        }
     }
 }
