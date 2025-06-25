@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Launch {
     @Id
@@ -18,6 +20,8 @@ public class Launch {
     @NotNull
     private Categorias categoria;
 
+    private LocalDateTime dataHora;
+
     @NotNull
     private Double valor;
 
@@ -26,11 +30,11 @@ public class Launch {
     private User user;
 
     public Launch(){}
-    public Launch(String description, Categorias categoria, Double valor, User user) {
+    public Launch(String description, Categorias categoria, Double valor, User user, LocalDateTime dataHora) {
         this.description = description;
         this.categoria = categoria;
         this.valor = valor;
-        this.user = user;
+        this.dataHora = dataHora;
     }
 
     public Long getId() {
@@ -63,5 +67,13 @@ public class Launch {
 
     public User getUser() {
         return user;
+    }
+
+    public LocalDateTime getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
     }
 }
