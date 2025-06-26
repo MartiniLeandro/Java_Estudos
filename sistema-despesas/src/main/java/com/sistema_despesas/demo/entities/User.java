@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @NotBlank
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Launch> launches;
 
     @NotNull
