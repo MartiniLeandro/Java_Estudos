@@ -14,6 +14,7 @@ public class Categorias {
     @NotBlank
     private String nome;
 
+    @Enumerated(EnumType.STRING)
     private TipoCategoria tipoCategoria;
 
     public Categorias(){}

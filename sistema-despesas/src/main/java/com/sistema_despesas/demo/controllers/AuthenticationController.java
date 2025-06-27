@@ -28,7 +28,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody LoginDTO data){
         String token = authenticateService.loginUser(data);
-        return ResponseEntity.ok().body("Token JWT: " + token);
+        return ResponseEntity.ok().body(token);
     }
 
 }

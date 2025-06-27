@@ -29,11 +29,12 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(System.getenv("SECRET_PASS"));
             return JWT.require(algorithm)
+                    .withIssuer("admin")
                     .build()
                     .verify(token)
                     .getSubject();
         }catch (JWTVerificationException e){
-            throw new RuntimeException("Token inválido");
+            throw new RuntimeException("Token inválido: " + e.getMessage());
         }
     }
 }
