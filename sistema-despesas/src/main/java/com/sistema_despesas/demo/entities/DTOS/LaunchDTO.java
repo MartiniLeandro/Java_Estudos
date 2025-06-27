@@ -1,27 +1,31 @@
 package com.sistema_despesas.demo.entities.DTOS;
 
-import com.sistema_despesas.demo.entities.Categorias;
 import com.sistema_despesas.demo.entities.Launch;
-import com.sistema_despesas.demo.entities.User;
+
+import java.time.LocalDateTime;
 
 public class LaunchDTO {
 
-    private final Long id;
+    private Long id;
     private String description;
-    private Categorias categoria;
+    private String categoria;
     private Double valor;
-    private UserDTO user;
+    private LocalDateTime localDateTime;
 
+    public LaunchDTO(){}
     public LaunchDTO(Launch launch){
         this.id = launch.getId();
         this.description = launch.getDescription();
-        this.categoria = launch.getCategoria();
+        this.categoria = launch.getCategoria().getNome();
         this.valor = launch.getValor();
-        this.user = new UserDTO(launch.getUser());
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -32,11 +36,11 @@ public class LaunchDTO {
         this.description = description;
     }
 
-    public Categorias getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categorias categoria) {
+    public void setCategoria_id(String categoria) {
         this.categoria = categoria;
     }
 
@@ -46,5 +50,13 @@ public class LaunchDTO {
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 }
