@@ -39,4 +39,11 @@ public class Categorias {
         this.tipoCategoria = tipoCategoria;
     }
 
+    public TipoCategoria getTipoCategoria() {
+        return tipoCategoria;
+    }
+
+    public void setTipoCategoria(TipoCategoria tipoCategoria) {
+        this.tipoCategoria = tipoCategoria;
+    }
 }

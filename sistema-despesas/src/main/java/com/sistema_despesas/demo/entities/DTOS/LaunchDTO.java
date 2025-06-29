@@ -2,7 +2,7 @@ package com.sistema_despesas.demo.entities.DTOS;
 
 import com.sistema_despesas.demo.entities.Launch;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class LaunchDTO {
 
@@ -10,7 +10,7 @@ public class LaunchDTO {
     private String description;
     private String categoria;
     private Double valor;
-    private LocalDateTime localDateTime;
+    private LocalDate data;
 
     public LaunchDTO(){}
     public LaunchDTO(Launch launch){
@@ -18,6 +18,7 @@ public class LaunchDTO {
         this.description = launch.getDescription();
         this.categoria = launch.getCategoria().getNome();
         this.valor = launch.getValor();
+        this.data = launch.getData();
     }
 
     public Long getId() {
@@ -52,11 +53,11 @@ public class LaunchDTO {
         this.valor = valor;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public LocalDate getData() {
+        return data;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setLocalDateTime(LocalDate data) {
+        this.data = data;
     }
 }

@@ -41,7 +41,7 @@ public class UserService {
         newLaunch.setCategoria(categoriasRepository.findByNome(launch.getCategoria()));
         newLaunch.setValor(launch.getValor());
         newLaunch.setDescription(launch.getDescription());
-        newLaunch.setDataHora(launch.getLocalDateTime());
+        newLaunch.setDataHora(launch.getData());
 
         launchRepository.save(newLaunch);
         return launchRepository.findAllByUserId(user.getId()).stream().map(LaunchDTO::new).toList();
@@ -69,7 +69,7 @@ public class UserService {
         updateLaunch.setDescription(launch.getDescription());
         updateLaunch.setValor(launch.getValor());
         updateLaunch.setCategoria(categoriasRepository.findByNome(launch.getCategoria()));
-        updateLaunch.setDataHora(launch.getLocalDateTime());
+        updateLaunch.setDataHora(launch.getData());
         launchRepository.save(updateLaunch);
         return launchRepository.findAllByUserId(user.getId()).stream().map(LaunchDTO::new).toList();
     }

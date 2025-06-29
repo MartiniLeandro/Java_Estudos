@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 public class Launch {
@@ -20,7 +20,7 @@ public class Launch {
     @NotNull
     private Categorias categoria;
 
-    private LocalDateTime dataHora;
+    private LocalDate data;
 
     @NotNull
     private Double valor;
@@ -30,11 +30,11 @@ public class Launch {
     private User user;
 
     public Launch(){}
-    public Launch(String description, Categorias categoria, Double valor, User user, LocalDateTime dataHora) {
+    public Launch(String description, Categorias categoria, Double valor, User user, LocalDate data) {
         this.description = description;
         this.categoria = categoria;
         this.valor = valor;
-        this.dataHora = dataHora;
+        this.data = data;
     }
 
     public Long getId() {
@@ -71,11 +71,11 @@ public class Launch {
 
     public void setUser(User user){ this.user = user;}
 
-    public LocalDateTime getDataHora() {
-        return dataHora;
+    public LocalDate getData() {
+        return data;
     }
 
-    public void setDataHora(LocalDateTime dataHora) {
-        this.dataHora = dataHora;
+    public void setDataHora(LocalDate data) {
+        this.data = data;
     }
 }
