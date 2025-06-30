@@ -23,6 +23,12 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getLaunch(token));
     }
 
+    @GetMapping("/totalConta")
+    public ResponseEntity<Double> totalConta(@RequestHeader("Authorization") String authHeader){
+        String token = authHeader.replace("Bearer ", "");
+        return ResponseEntity.ok().body(userService.totalConta(token));
+    }
+
     @PostMapping("/createLaunch")
     public ResponseEntity<List<LaunchDTO>> createLaunch(@RequestHeader("Authorization") String authHeader, @RequestBody LaunchDTO launch){
         String token = authHeader.replace("Bearer ", "");

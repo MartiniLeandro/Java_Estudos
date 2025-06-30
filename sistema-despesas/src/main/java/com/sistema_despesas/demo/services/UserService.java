@@ -73,4 +73,21 @@ public class UserService {
         launchRepository.save(updateLaunch);
         return launchRepository.findAllByUserId(user.getId()).stream().map(LaunchDTO::new).toList();
     }
+
+    public Double totalConta(String token){
+        String email = tokenService.validateToken(token);
+        User user = userRepository.findUserByEmail(email);
+
+        List<Launch> launches = user.getLaunches();
+        Double totalConta = 0.0;
+        for(Launch launch : launches){
+            if("RECEITA".equalsIgnoreCase(launch.getCategoria().getTipoCategoria().toString().trim())){
+                totalConta += launch.getValor();
+            }else{
+                totalConta -= launch.getValor();
+            }
+        }
+
+        return totalConta;
+    }
 }

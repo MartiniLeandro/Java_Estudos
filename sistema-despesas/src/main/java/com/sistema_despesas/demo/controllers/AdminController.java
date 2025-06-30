@@ -44,4 +44,19 @@ public class AdminController {
     public ResponseEntity<Categorias> createCategoria(@RequestBody Categorias categoria){
         return ResponseEntity.ok().body(adminService.createCategoria(categoria));
     }
+
+    @GetMapping("/Categorias")
+    public ResponseEntity<List<Categorias>> allCategorias(){
+        return ResponseEntity.ok().body(adminService.allCategorias());
+    }
+
+    @PutMapping("/updateCategoria/{id}")
+    public ResponseEntity<Categorias> updateCategoria(@PathVariable Long id, @RequestBody Categorias categoria){
+        return ResponseEntity.ok().body(adminService.updateCategoria(id,categoria));
+    }
+
+    @DeleteMapping("/deleteCategoria/{id}")
+    public void deleteCategoria(@PathVariable Long id){
+        adminService.deleteCategoria(id);
+    }
 }

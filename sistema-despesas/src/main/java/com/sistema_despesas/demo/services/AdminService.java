@@ -44,8 +44,23 @@ public class AdminService {
         userRepository.deleteById(id);
     }
 
+    public List<Categorias> allCategorias(){
+        return categoriasRepository.findAll();
+    }
+
     public Categorias createCategoria(Categorias categoria){
         return categoriasRepository.save(categoria);
+    }
+
+    public Categorias updateCategoria(Long id, Categorias categoria){
+        Categorias updateCategoria = categoriasRepository.findById(id).orElseThrow(() -> new RuntimeException("Não há categoria com este ID"));
+        updateCategoria.setNome(categoria.getNome());
+        updateCategoria.setTipoCategoria(categoria.getTipoCategoria());
+        return categoriasRepository.save(updateCategoria);
+    }
+
+    public void deleteCategoria(Long id){
+        categoriasRepository.deleteById(id);
     }
 
 
