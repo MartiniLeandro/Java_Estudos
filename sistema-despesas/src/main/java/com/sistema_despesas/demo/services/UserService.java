@@ -3,6 +3,8 @@ package com.sistema_despesas.demo.services;
 import com.sistema_despesas.demo.entities.DTOS.LaunchDTO;
 import com.sistema_despesas.demo.entities.Launch;
 import com.sistema_despesas.demo.entities.User;
+import com.sistema_despesas.demo.exceptions.NotFoundException;
+import com.sistema_despesas.demo.exceptions.NotPertenceException;
 import com.sistema_despesas.demo.repositories.CategoriasRepository;
 import com.sistema_despesas.demo.repositories.LaunchRepository;
 import com.sistema_despesas.demo.repositories.UserRepository;
@@ -50,9 +52,9 @@ public class UserService {
     public List<LaunchDTO> deleteLaunch(String token, Long id){
         String email = tokenService.validateToken(token);
         User user = userRepository.findUserByEmail(email);
-        Launch launch = launchRepository.findById(id).orElseThrow(() -> new RuntimeException("Não existe uma lançamento com este ID"));
+        Launch launch = launchRepository.findById(id).orElseThrow(() -> new NotFoundException("Não existe uma lançamento com este ID"));
         if(!launch.getUser().getId().equals(user.getId())){
-            throw new RuntimeException("Este lançamento não pertence a você");
+            throw new NotPertenceException("Este lançamento não pertence a você");
         }
         launchRepository.delete(launch);
         return launchRepository.findAllByUserId(user.getId()).stream().map(LaunchDTO::new).toList();
@@ -62,9 +64,9 @@ public class UserService {
     public List<LaunchDTO> updateLaunch(LaunchDTO launch, String token, Long id){
         String email = tokenService.validateToken(token);
         User user = userRepository.findUserByEmail(email);
-        Launch updateLaunch = launchRepository.findById(id).orElseThrow( ()-> new RuntimeException("Não existe uma lançamento com este ID"));
+        Launch updateLaunch = launchRepository.findById(id).orElseThrow( ()-> new NotFoundException("Não existe uma lançamento com este ID"));
         if(!updateLaunch.getUser().getId().equals(user.getId())){
-            throw new RuntimeException("Este lançamento não pertence a você");
+            throw new NotPertenceException("Este lançamento não pertence a você");
         }
         updateLaunch.setDescription(launch.getDescription());
         updateLaunch.setValor(launch.getValor());

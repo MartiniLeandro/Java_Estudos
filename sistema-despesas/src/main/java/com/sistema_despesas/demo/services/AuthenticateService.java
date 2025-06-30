@@ -3,6 +3,8 @@ package com.sistema_despesas.demo.services;
 import com.sistema_despesas.demo.entities.DTOS.LoginDTO;
 import com.sistema_despesas.demo.entities.DTOS.RegisterDTO;
 import com.sistema_despesas.demo.entities.User;
+import com.sistema_despesas.demo.exceptions.AlreadyExistsException;
+import com.sistema_despesas.demo.exceptions.NotFoundException;
 import com.sistema_despesas.demo.repositories.UserRepository;
 import com.sistema_despesas.demo.security.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,18 +29,16 @@ public class AuthenticateService {
     }
 
     public void registerUser(RegisterDTO data){
-        if(userRepository.existsByEmail(data.email())) throw new RuntimeException("Já existe um usuário com este EMAIL!!");
+        if(userRepository.existsByEmail(data.email())) throw new AlreadyExistsException("Já existe um usuário com este email!!");
         User newUser = new User(data.email(), passwordEncoder.encode(data.password()), data.role());
         userRepository.save(newUser);
     }
 
     public String loginUser(LoginDTO data){
-        try{
-            UsernamePasswordAuthenticationToken userPassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-            Authentication auth = authenticationManager.authenticate(userPassword);
-            return tokenService.generateToken((User) auth.getPrincipal());
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e.getCause());
-        }
+        if(!userRepository.existsByEmail(data.email())) throw new NotFoundException("Não existe User com este Email");
+        UsernamePasswordAuthenticationToken userPassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
+        Authentication auth = authenticationManager.authenticate(userPassword);
+        return tokenService.generateToken((User) auth.getPrincipal());
+
     }
 }

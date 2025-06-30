@@ -3,6 +3,7 @@ package com.sistema_despesas.demo.services;
 import com.sistema_despesas.demo.entities.Categorias;
 import com.sistema_despesas.demo.entities.DTOS.UserDTO;
 import com.sistema_despesas.demo.entities.User;
+import com.sistema_despesas.demo.exceptions.NotFoundException;
 import com.sistema_despesas.demo.repositories.CategoriasRepository;
 import com.sistema_despesas.demo.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,12 +29,12 @@ public class AdminService {
     }
 
     public UserDTO findById(Long id){
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Não existe User com este ID"));
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Não existe User com este ID"));
         return new UserDTO(user);
     }
 
     public UserDTO updateUser(Long id, User user){
-        User updateUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Não existe User com este ID"));
+        User updateUser = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Não existe User com este ID"));
         updateUser.setEmail(user.getEmail());
         updateUser.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(updateUser);
@@ -41,7 +42,11 @@ public class AdminService {
     }
 
     public void deleteUser(Long id){
-        userRepository.deleteById(id);
+        if(userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        }else{
+            throw new NotFoundException("Não existe User com este ID");
+        }
     }
 
     public List<Categorias> allCategorias(){
@@ -53,14 +58,18 @@ public class AdminService {
     }
 
     public Categorias updateCategoria(Long id, Categorias categoria){
-        Categorias updateCategoria = categoriasRepository.findById(id).orElseThrow(() -> new RuntimeException("Não há categoria com este ID"));
+        Categorias updateCategoria = categoriasRepository.findById(id).orElseThrow(() -> new NotFoundException("Não há categoria com este ID"));
         updateCategoria.setNome(categoria.getNome());
         updateCategoria.setTipoCategoria(categoria.getTipoCategoria());
         return categoriasRepository.save(updateCategoria);
     }
 
     public void deleteCategoria(Long id){
-        categoriasRepository.deleteById(id);
+        if(categoriasRepository.existsById(id)){
+            categoriasRepository.deleteById(id);
+        }else{
+            throw new NotFoundException("Não existe Categoria com este ID");
+        }
     }
 
 
