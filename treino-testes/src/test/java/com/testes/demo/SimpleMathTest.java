@@ -75,11 +75,11 @@ public class SimpleMathTest {
         Assertions.assertEquals(11.135528725660043, resultSquareRoot, () -> message);
     }
 
-    @Disabled
     @Test
     @DisplayName("Divisão por zero")
     void TestDivision_PrimeiroNumeroPorZero_DeveRetornarArithmeticalException(){
-        fail();
+
+        Assertions.assertThrows(ArithmeticException.class, () -> math.division(4.0,0.0), () -> "Este teste deveria retornar um ArithmeticException");
     }
 
 }
