@@ -7,6 +7,7 @@ import com.sistema_despesas.demo.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -35,6 +36,12 @@ public class UserController {
     public ResponseEntity<List<LaunchDTO>> filtroCategoria(@RequestHeader("Authorization") String authHeader, @RequestParam String categoria){
         String token = authHeader.replace("Bearer ","");
         return ResponseEntity.ok().body(userService.filtroCategoria(token,categoria));
+    }
+
+    @GetMapping("/filtroData")
+    public ResponseEntity<List<LaunchDTO>> filtroData(@RequestHeader("Authorization") String authHeader, @RequestParam LocalDate dataInicial, @RequestParam LocalDate dataFinal){
+        String token = authHeader.replace("Bearer ","");
+        return ResponseEntity.ok().body(userService.filtroData(token,dataInicial,dataFinal));
     }
 
     @PostMapping("/createLaunch")

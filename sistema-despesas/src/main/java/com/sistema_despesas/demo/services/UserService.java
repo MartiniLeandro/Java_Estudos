@@ -102,4 +102,12 @@ public class UserService {
         launchesCategoria.removeIf(launch -> !launch.getCategoria().equals(categoriasRepository.findByNome(categoria)));
         return launchesCategoria.stream().map(LaunchDTO::new).toList();
     }
+
+    public List<LaunchDTO> filtroData(String token, LocalDate dataInicial, LocalDate dataFinal){
+        String email = tokenService.validateToken(token);
+        User user = userRepository.findUserByEmail(email);
+        List<Launch> launches = launchRepository.findByUserAndDataBetween(user, dataInicial, dataFinal);
+        return launches.stream().map(LaunchDTO::new).toList();
+    }
+
 }
