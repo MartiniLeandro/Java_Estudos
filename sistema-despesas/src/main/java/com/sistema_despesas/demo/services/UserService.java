@@ -1,5 +1,6 @@
 package com.sistema_despesas.demo.services;
 
+import com.sistema_despesas.demo.entities.Categorias;
 import com.sistema_despesas.demo.entities.DTOS.LaunchDTO;
 import com.sistema_despesas.demo.entities.Launch;
 import com.sistema_despesas.demo.entities.User;
@@ -11,6 +12,7 @@ import com.sistema_despesas.demo.repositories.UserRepository;
 import com.sistema_despesas.demo.security.TokenService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -91,5 +93,13 @@ public class UserService {
         }
 
         return totalConta;
+    }
+
+    public List<LaunchDTO> filtroCategoria(String token, String categoria){
+        String email = tokenService.validateToken(token);
+        User user = userRepository.findUserByEmail(email);
+        List<Launch> launchesCategoria = user.getLaunches();
+        launchesCategoria.removeIf(launch -> !launch.getCategoria().equals(categoriasRepository.findByNome(categoria)));
+        return launchesCategoria.stream().map(LaunchDTO::new).toList();
     }
 }

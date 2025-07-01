@@ -1,6 +1,8 @@
 package com.sistema_despesas.demo.controllers;
 
+import com.sistema_despesas.demo.entities.Categorias;
 import com.sistema_despesas.demo.entities.DTOS.LaunchDTO;
+import com.sistema_despesas.demo.entities.Launch;
 import com.sistema_despesas.demo.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,12 @@ public class UserController {
     public ResponseEntity<Double> totalConta(@RequestHeader("Authorization") String authHeader){
         String token = authHeader.replace("Bearer ", "");
         return ResponseEntity.ok().body(userService.totalConta(token));
+    }
+
+    @GetMapping("/filtroCategoria")
+    public ResponseEntity<List<LaunchDTO>> filtroCategoria(@RequestHeader("Authorization") String authHeader, @RequestParam String categoria){
+        String token = authHeader.replace("Bearer ","");
+        return ResponseEntity.ok().body(userService.filtroCategoria(token,categoria));
     }
 
     @PostMapping("/createLaunch")
