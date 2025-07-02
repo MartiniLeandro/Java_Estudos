@@ -1,14 +1,12 @@
 package com.testes.demo;
 
 import com.testes.demo.Classes.SimpleMath;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+//@Order(3) ordem de execução de todos os testes
 public class simpleMathTest2 {
 
     SimpleMath math;
@@ -19,11 +17,16 @@ public class simpleMathTest2 {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"leandro", "gabriel", "thiago"}) //utilizado para apenas um parâmetro
+    @ValueSource(strings = {"leandro"}) //utilizado para apenas um parâmetro
     @DisplayName("Test com nomes")
     void testNames(String name){
         System.out.println(name);
         Assertions.assertNotNull(name);
+    }
+
+    @RepeatedTest(3)
+    void testRepeated(){
+        System.out.println("teste repetindo");
     }
 
 

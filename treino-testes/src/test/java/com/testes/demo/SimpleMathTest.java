@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Fail.fail;
 
+//@Order(2)ordem de execução de todos os testes
 public class SimpleMathTest {
 
     SimpleMath math;
