@@ -55,4 +55,13 @@ public class PersonServiceTest {
     void testGenero(){
         Assertions.assertEquals(person.getGenero(),actual.getGenero(), () -> "o genero deve ser o mesmo");
     }
+
+    @Test
+    @DisplayName("Testando IllegalArgumentException")
+    void testException(){
+        person.setEmail(null);
+        String expectedMessage = "O email não pode estar nulo";
+        IllegalArgumentException erro = Assertions.assertThrows(IllegalArgumentException.class,() -> service.createPerson(person), () -> "O email não pode estar nulo");
+        Assertions.assertEquals(expectedMessage, erro.getMessage(),() -> "mensagens incorretas!");
+    }
 }
