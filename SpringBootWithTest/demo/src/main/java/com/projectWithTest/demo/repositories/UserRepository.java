@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User,Long> {
     User findByEmail(String email);
 
+    Boolean existsByEmail(String email);
+
     @Query("select u from User u where u.firstName =?1 and u.lastName =?2")
     User findByJPQL(String firstName, String lastName);
 

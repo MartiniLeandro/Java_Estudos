@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -24,6 +24,9 @@ public class UserService {
     }
 
     public User create(User user){
+        if (userRepository.existsByEmail(user.getEmail())){
+            throw new RuntimeException("Já existe um User com este email");
+        }
         return userRepository.save(user);
     }
 
