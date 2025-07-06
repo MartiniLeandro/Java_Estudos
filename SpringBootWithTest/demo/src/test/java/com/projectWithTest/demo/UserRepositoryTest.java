@@ -3,6 +3,7 @@ package com.projectWithTest.demo;
 import com.projectWithTest.demo.entities.User;
 import com.projectWithTest.demo.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,12 +21,19 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
+    User user,user2,savedUser;
+
+    @BeforeEach
+    void setup(){
+        user = new User("Leandro", "Martini","SC","Male","leandro@email.com");
+        user2 = new User("Leonardo", "Martini","SC","Male","leonardo@email.com");
+        savedUser = userRepository.save(user);
+        userRepository.save(user2);
+    }
+
     @DisplayName("Save User to DataBase")
     @Test
     void testSaveUser(){
-        User user = new User("Leandro", "Martini","SC","Male","leandro@email.com");
-        User savedUser = userRepository.save(user);
-
         Assertions.assertNotNull(savedUser);
         Assertions.assertTrue(savedUser.getId() > 0);
     }
@@ -33,12 +41,6 @@ public class UserRepositoryTest {
     @DisplayName("Test List All Users")
     @Test
     void testGetListUser(){
-        User user = new User("Leandro", "Martini","SC","Male","leandro@email.com");
-        User user2 = new User("Leonardo", "Martini","SC","Male","leandro@email.com");
-
-        userRepository.save(user);
-        userRepository.save(user2);
-
         List<User> allUsers = userRepository.findAll();
 
         Assertions.assertNotNull(allUsers);
@@ -48,9 +50,6 @@ public class UserRepositoryTest {
     @DisplayName("Test Find User By Id")
     @Test
     void testGetUserId(){
-        User user = new User("Leandro", "Martini","SC","Male","leandro@email.com");
-        userRepository.save(user);
-
         User userId = userRepository.findById(user.getId()).get();
 
         Assertions.assertNotNull(userId);
@@ -59,9 +58,7 @@ public class UserRepositoryTest {
 
     @DisplayName("Test find User by Email")
     @Test
-    void testGetUserById(){
-        User user = new User("Leandro", "Martini","SC","Male","leandro@email.com");
-        userRepository.save(user);
+    void testGetUserByEmail(){
         User userEmail = userRepository.findByEmail(user.getEmail());
 
         Assertions.assertNotNull(userEmail);
@@ -71,9 +68,6 @@ public class UserRepositoryTest {
     @DisplayName("Test Update User")
     @Test
     void testUpdateUser(){
-        User user = new User("Leandro", "Martini","SC","Male","leandro@email.com");
-        userRepository.save(user);
-
         user.setEmail("leonardo@email.com");
         user.setFirstName("Leonardo");
         User updatedUser = userRepository.save(user);
@@ -85,12 +79,46 @@ public class UserRepositoryTest {
     @DisplayName("Test Delete User")
     @Test
     void testDeleteUser(){
-        User user = new User("Leandro", "Martini","SC","Male","leandro@email.com");
-        userRepository.save(user);
         userRepository.deleteById(user.getId());
         Optional<User> userDeleted = userRepository.findById(user.getId());
 
         Assertions.assertTrue(userDeleted.isEmpty());
+    }
+
+    @DisplayName("Test find User By JPQL")
+    @Test
+    void testFindUserByJPQL(){
+        User userJPQL = userRepository.findByJPQL("Leandro", "Martini");
+        Assertions.assertNotNull(userJPQL);
+        Assertions.assertEquals("Leandro",userJPQL.getFirstName());
+        Assertions.assertEquals("Martini",userJPQL.getLastName());
+    }
+
+    @DisplayName("Test find User By JPQL NamedParams")
+    @Test
+    void testFindUserByJPQLNamedParams(){
+        User userJPQLNamedParams = userRepository.findByJPQLNamedParams("Leandro", "Martini");
+        Assertions.assertNotNull(userJPQLNamedParams);
+        Assertions.assertEquals("Leandro",userJPQLNamedParams.getFirstName());
+        Assertions.assertEquals("Martini",userJPQLNamedParams.getLastName());
+    }
+
+    @DisplayName("Test find User By SQL")
+    @Test
+    void testFindUserBySQL(){
+        User userSQL = userRepository.findBySQL("Leandro", "Martini");
+        Assertions.assertNotNull(userSQL);
+        Assertions.assertEquals("Leandro",userSQL.getFirstName());
+        Assertions.assertEquals("Martini",userSQL.getLastName());
+    }
+
+    @DisplayName("Test find User By SQLNamedParams")
+    @Test
+    void testFindUserBySQLNamedParams(){
+        User userSQLNamedParams = userRepository.findBySQLNamedParams("Leandro", "Martini");
+        Assertions.assertNotNull(userSQLNamedParams);
+        Assertions.assertEquals("Leandro",userSQLNamedParams.getFirstName());
+        Assertions.assertEquals("Martini",userSQLNamedParams.getLastName());
     }
 
 }
