@@ -113,7 +113,4 @@ public class UserRepositoryTest {
         Assertions.assertEquals(user, userByEmail);
         Assertions.assertEquals(admin, adminByEmail);
     }
-
-
-
 }
