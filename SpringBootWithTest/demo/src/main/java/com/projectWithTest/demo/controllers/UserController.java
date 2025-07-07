@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -24,7 +24,11 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id){
-        return ResponseEntity.ok().body(userService.findById(id));
+        try{
+            return ResponseEntity.ok().body(userService.findById(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping
@@ -34,11 +38,16 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id){
-        return ResponseEntity.ok().body(userService.update(user,id));
+        try{
+            return ResponseEntity.ok().body(userService.update(user,id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

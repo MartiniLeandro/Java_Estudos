@@ -1,7 +1,6 @@
-package com.projectWithTest.demo;
+package com.projectWithTest.demo.repositories;
 
 import com.projectWithTest.demo.entities.User;
-import com.projectWithTest.demo.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
