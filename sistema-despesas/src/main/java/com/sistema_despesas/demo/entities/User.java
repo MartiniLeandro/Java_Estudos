@@ -84,4 +84,8 @@ public class User implements UserDetails {
     public String getUsername() {
         return this.email;
     }
+
+    public void setLaunches(List<Launch> launches) {
+        this.launches = launches;
+    }
 }
