@@ -3,6 +3,7 @@ package com.sistema_despesas.demo.services;
 import com.sistema_despesas.demo.entities.DTOS.LoginDTO;
 import com.sistema_despesas.demo.entities.DTOS.RegisterDTO;
 import com.sistema_despesas.demo.entities.User;
+import com.sistema_despesas.demo.entities.utils.Roles;
 import com.sistema_despesas.demo.exceptions.AlreadyExistsException;
 import com.sistema_despesas.demo.exceptions.NotFoundException;
 import com.sistema_despesas.demo.repositories.UserRepository;
@@ -30,7 +31,7 @@ public class AuthenticateService {
 
     public void registerUser(RegisterDTO data){
         if(userRepository.existsByEmail(data.email())) throw new AlreadyExistsException("Já existe um usuário com este email!!");
-        User newUser = new User(data.email(), passwordEncoder.encode(data.password()), data.role());
+        User newUser = new User(data.email(), passwordEncoder.encode(data.password()), Roles.USER);
         userRepository.save(newUser);
     }
 
