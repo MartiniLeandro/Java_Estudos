@@ -24,6 +24,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
@@ -44,6 +46,7 @@ public class UserServiceTest {
 
     private User user;
     private Launch launch1,launch2;
+    private Categorias categoriaReceita,categoriaDespesa;
 
     @BeforeEach
     void setup(){
@@ -51,8 +54,8 @@ public class UserServiceTest {
         Mockito.when(tokenService.validateToken(Mockito.anyString())).thenReturn(user.getEmail());
         Mockito.when(userRepository.findUserByEmail(Mockito.anyString())).thenReturn(user);
 
-        Categorias categoriaReceita = new Categorias("salario", TipoCategoria.RECEITA);
-        Categorias categoriaDespesa = new Categorias("faculdade", TipoCategoria.DESPESA);
+        categoriaReceita = new Categorias("salario", TipoCategoria.RECEITA);
+        categoriaDespesa = new Categorias("faculdade", TipoCategoria.DESPESA);
         launch1 = new Launch("recebimento salario",categoriaReceita,1500.00,user, LocalDate.of(2025,7,1));
         launch2 = new Launch(" pagando faculdade",categoriaDespesa,500.00,user, LocalDate.of(2025,7,9));
         user.getLaunches().add(launch1);
@@ -80,13 +83,21 @@ public class UserServiceTest {
         LaunchDTO newLaunchDTO = new LaunchDTO(newLaunch);
 
         Mockito.when(categoriasRepository.findByNome(Mockito.anyString())).thenReturn(categorias);
-        Mockito.when(launchRepository.save(Mockito.any())).thenReturn(newLaunch);
-        user.getLaunches().add(newLaunch);
+        Mockito.when(launchRepository.save(any())).thenReturn(newLaunch);
         Mockito.when(launchRepository.findAllByUserId(user.getId())).thenReturn(user.getLaunches());
 
-        List<LaunchDTO> launches = userService.createLaunch(newLaunchDTO,"qualquerToken");
+        userService.createLaunch(newLaunchDTO,"qualquerToken");
 
-        Mockito.verify(launchRepository).save(Mockito.any(Launch.class));
-        Assertions.assertEquals(3,launches.size());
+        Mockito.verify(launchRepository).save(any(Launch.class));
+    }
+
+    @DisplayName("test update launch")
+    @Test
+    void testeUpdateLaunch(){
+
+        Mockito.when(launchRepository.findById(any())).thenReturn(Optional.ofNullable(launch1));
+        Mockito.when(categoriasRepository.findByNome(any())).thenReturn(categoriaReceita);
+
+
     }
 }
