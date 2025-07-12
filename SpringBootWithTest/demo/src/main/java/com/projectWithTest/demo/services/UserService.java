@@ -1,6 +1,7 @@
 package com.projectWithTest.demo.services;
 
 import com.projectWithTest.demo.entities.User;
+import com.projectWithTest.demo.exceptions.UserNotFoundException;
 import com.projectWithTest.demo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class UserService {
     }
 
     public User findById(Long id){
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Não existe user com este ID"));
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Não existe user com este ID"));
     }
 
     public User create(User user){
@@ -31,7 +32,7 @@ public class UserService {
     }
 
     public User update(User user, Long id){
-        User updateUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Não existe user com este ID"));
+        User updateUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Não existe user com este ID"));
         updateUser.setFirstName(user.getFirstName());
         updateUser.setLastName(user.getLastName());
         updateUser.setAddress(user.getAddress());

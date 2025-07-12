@@ -53,7 +53,7 @@ public class UserServiceTest {
         Mockito.verify(userRepository, Mockito.never()).save(Mockito.any());
     }
 
-    @DisplayName("test find all UCCESS")
+    @DisplayName("test find all SUCCESS")
     @Test
     void testFindAllSuccess(){
 

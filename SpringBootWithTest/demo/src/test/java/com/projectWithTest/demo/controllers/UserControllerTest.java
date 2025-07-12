@@ -1,7 +1,5 @@
 package com.projectWithTest.demo.controllers;
 
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projectWithTest.demo.entities.User;
 import com.projectWithTest.demo.services.UserService;
