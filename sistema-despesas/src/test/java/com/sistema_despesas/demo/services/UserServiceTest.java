@@ -50,7 +50,7 @@ public class UserServiceTest {
 
     @BeforeEach
     void setup(){
-        user = new User("user@email.com", "user123", Roles.USER);
+        user = new User(1L,"user@email.com", "user123", Roles.USER);
         Mockito.when(tokenService.validateToken(Mockito.anyString())).thenReturn(user.getEmail());
         Mockito.when(userRepository.findUserByEmail(Mockito.anyString())).thenReturn(user);
 
@@ -95,9 +95,27 @@ public class UserServiceTest {
     @Test
     void testeUpdateLaunch(){
 
-        Mockito.when(launchRepository.findById(any())).thenReturn(Optional.ofNullable(launch1));
-        Mockito.when(categoriasRepository.findByNome(any())).thenReturn(categoriaReceita);
+        LaunchDTO newLaunch = new LaunchDTO(1L,"launchTeste","salario",150.0,LocalDate.of(2025,5,14));
 
+        Mockito.when(launchRepository.findById(1L)).thenReturn(Optional.ofNullable(launch1));
+        Mockito.when(categoriasRepository.findByNome(any())).thenReturn(categoriaReceita);
+        Mockito.when(launchRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        Mockito.when(launchRepository.findAllByUserId(any())).thenReturn(user.getLaunches());
+        userService.updateLaunch(newLaunch,"qualquer-token",1L);
+
+        Assertions.assertEquals(150.0, launch1.getValor());
+        Assertions.assertEquals("salario", launch1.getCategoria().getNome());
+        Mockito.verify(launchRepository).save(launch1);
+
+    }
+
+    @DisplayName("teste delete launch")
+    @Test
+    void testDeleteLaunch(){
+        Mockito.when(launchRepository.findById(any())).thenReturn(Optional.ofNullable(launch1));
+
+        List<LaunchDTO> allLaunches = userService.deleteLaunch("qualquerToken", 1L);
+        Mockito.verify(launchRepository).delete(launch1);
 
     }
 }

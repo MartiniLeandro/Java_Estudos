@@ -55,9 +55,6 @@ public class UserService {
         String email = tokenService.validateToken(token);
         User user = userRepository.findUserByEmail(email);
         Launch launch = launchRepository.findById(id).orElseThrow(() -> new NotFoundException("Não existe uma lançamento com este ID"));
-        if(!launch.getUser().getId().equals(user.getId())){
-            throw new NotPertenceException("Este lançamento não pertence a você");
-        }
         launchRepository.delete(launch);
         return launchRepository.findAllByUserId(user.getId()).stream().map(LaunchDTO::new).toList();
 
@@ -67,9 +64,6 @@ public class UserService {
         String email = tokenService.validateToken(token);
         User user = userRepository.findUserByEmail(email);
         Launch updateLaunch = launchRepository.findById(id).orElseThrow( ()-> new NotFoundException("Não existe uma lançamento com este ID"));
-        if(!updateLaunch.getUser().getId().equals(user.getId())){
-            throw new NotPertenceException("Este lançamento não pertence a você");
-        }
         updateLaunch.setDescription(launch.getDescription());
         updateLaunch.setValor(launch.getValor());
         updateLaunch.setCategoria(categoriasRepository.findByNome(launch.getCategoria()));

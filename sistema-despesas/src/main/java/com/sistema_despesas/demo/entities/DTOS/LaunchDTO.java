@@ -13,6 +13,14 @@ public class LaunchDTO {
     private LocalDate data;
 
     public LaunchDTO(){}
+
+    public LaunchDTO(Long id, String description, String categoria, Double valor, LocalDate data) {
+        this.id = id;
+        this.description = description;
+        this.categoria = categoria;
+        this.valor = valor;
+        this.data = data;
+    }
     public LaunchDTO(Launch launch){
         this.id = launch.getId();
         this.description = launch.getDescription();

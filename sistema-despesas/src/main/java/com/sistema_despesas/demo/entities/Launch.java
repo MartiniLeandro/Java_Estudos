@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
-public class    Launch {
+public class Launch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

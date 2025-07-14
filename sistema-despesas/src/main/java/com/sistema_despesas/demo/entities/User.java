@@ -41,6 +41,14 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public User(Long id, String email, String password, Roles roles) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.launches = new ArrayList<>();
+        this.roles = roles;
+    }
+
     public Long getId() {
         return id;
     }
