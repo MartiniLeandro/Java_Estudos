@@ -1,4 +1,4 @@
-package com.projectWithTest.demo.integrationTests.swagger;
+package com.projectWithTest.demo.testesIntegracao.swagger;
 
 import com.projectWithTest.demo.config.AbstractIntegrationTest;
 import io.restassured.RestAssured;
@@ -7,10 +7,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("testeIntegration")
 public class SwaggerIntegrationTest extends AbstractIntegrationTest {
 
     @LocalServerPort

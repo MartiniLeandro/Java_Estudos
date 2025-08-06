@@ -1,6 +1,7 @@
-package com.projectWithTest.demo.controllers;
+package com.projectWithTest.demo.testesUnitarios.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.projectWithTest.demo.controllers.UserController;
 import com.projectWithTest.demo.entities.User;
 import com.projectWithTest.demo.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(UserController.class)
+@ActiveProfiles("testeUnitario")
 public class UserControllerTest {
 
     @Autowired
