@@ -10,8 +10,5 @@ public abstract class AbstractIntegrationTest {
 
     @Container
     @ServiceConnection
-    static final PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:15")
-            .withDatabaseName("testdb")
-            .withUsername("test")
-            .withPassword("test");
+    static final PostgreSQLContainer<?> postgresContainer = new PostgreSQLContainer<>("postgres:15");
 }

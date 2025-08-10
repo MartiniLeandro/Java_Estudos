@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ActiveProfiles("testeUnitario")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) //utilizar o postgres e nn um banco em memória(H2)
+@ActiveProfiles("testeIntegration")
 public class UserRepositoryTest extends AbstractIntegrationTest {
 
     @Autowired
