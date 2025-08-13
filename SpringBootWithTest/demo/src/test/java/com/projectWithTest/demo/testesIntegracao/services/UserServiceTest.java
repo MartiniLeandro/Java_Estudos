@@ -1,4 +1,10 @@
 package com.projectWithTest.demo.testesIntegracao.services;
 
-public class UserServiceTest {
+import com.projectWithTest.demo.config.AbstractIntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+public class UserServiceTest extends AbstractIntegrationTest {
+
+
 }
