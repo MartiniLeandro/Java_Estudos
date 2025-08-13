@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projectWithTest.demo.config.AbstractIntegrationTest;
 import com.projectWithTest.demo.entities.User;
 import com.projectWithTest.demo.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class UserControllerTest extends AbstractIntegrationTest {
 
     @Autowired
@@ -36,7 +38,6 @@ public class UserControllerTest extends AbstractIntegrationTest {
 
     @BeforeEach
     void setup(){
-        userRepository.deleteAll();
         user1 = new User("Leandro","Oliveira","SC","Male","leandro@email.com");
         user2 = new User("Gabriel","Oliveira","SC","Male","gabriel@email.com");
         user3 = new User("Thiago","Oliveira","SC","Male","thiago@email.com");
