@@ -3,7 +3,6 @@ package dev.matheuslf.desafio.inscritos.services;
 import dev.matheuslf.desafio.inscritos.entities.DTOS.FiltersDTO;
 import dev.matheuslf.desafio.inscritos.entities.DTOS.TaskRequestDTO;
 import dev.matheuslf.desafio.inscritos.entities.DTOS.TaskResponseDTO;
-import dev.matheuslf.desafio.inscritos.entities.Project;
 import dev.matheuslf.desafio.inscritos.entities.Task;
 import dev.matheuslf.desafio.inscritos.repositories.ProjectRepository;
 import dev.matheuslf.desafio.inscritos.repositories.TaskRepository;
@@ -26,10 +25,9 @@ public class TaskService {
         return taskRepository.findByStatus(data.status()).stream().map(TaskResponseDTO::new).toList();
     }
 
-    public TaskResponseDTO createTask(TaskRequestDTO data, Long id){
-        Project project = projectRepository.findById(id).orElseThrow();
+    public TaskResponseDTO createTask(TaskRequestDTO data){
         Task newTask = new Task(data);
-        newTask.setProject(project);
+        newTask.setProject(data.project());
         taskRepository.save(newTask);
         return new TaskResponseDTO(newTask);
     }
@@ -44,10 +42,6 @@ public class TaskService {
 
     public void deleteTask(Long id){
         taskRepository.deleteById(id);
-    }
-
-    public List<TaskResponseDTO> findAllTasks(){
-        return taskRepository.findAll().stream().map(TaskResponseDTO::new).toList();
     }
 
 }
