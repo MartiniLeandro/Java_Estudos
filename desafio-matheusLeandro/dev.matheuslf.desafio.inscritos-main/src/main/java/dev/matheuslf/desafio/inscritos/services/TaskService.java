@@ -5,7 +5,6 @@ import dev.matheuslf.desafio.inscritos.entities.DTOS.TaskRequestDTO;
 import dev.matheuslf.desafio.inscritos.entities.DTOS.TaskResponseDTO;
 import dev.matheuslf.desafio.inscritos.entities.Task;
 import dev.matheuslf.desafio.inscritos.exceptions.NotFoundException;
-import dev.matheuslf.desafio.inscritos.repositories.ProjectRepository;
 import dev.matheuslf.desafio.inscritos.repositories.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,7 @@ public class TaskService {
     }
 
     public TaskResponseDTO updateTask(TaskRequestDTO data, Long id){
-        Task updatedTask = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Not exist task with this ID"));
+        Task updatedTask = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Not exist task with this ID"));
         Task updateTask = new Task(data);
         updatedTask.setStatus(updateTask.getStatus());
         taskRepository.save(updatedTask);
