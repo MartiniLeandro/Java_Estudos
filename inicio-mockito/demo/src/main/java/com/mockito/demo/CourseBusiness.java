@@ -26,4 +26,15 @@ public class CourseBusiness {
 
         return filtroCursos;
     }
+    public void deleteCursosAlunoNaoRelacionadosSpring(String aluno){
+
+        List<String> filtroCursos = new ArrayList<String>();
+        List<String> todosCursos = courseService.todosCursos(aluno);
+
+        for (String curso : todosCursos){
+            if(!curso.contains("Spring")){
+                courseService.deleteCourse(curso);
+            }
+        }
+    }
 }

@@ -23,7 +23,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name cannot be null")
+    @NotBlank(message = "Title cannot be null")
     @Size(min = 5, max = 150, message = "The title can have between 5 and 150 letters")
     private String title;
 
