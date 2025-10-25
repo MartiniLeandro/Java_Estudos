@@ -19,6 +19,12 @@ public class ControllerAdviceExceptions {
 
         @ExceptionHandler(StatusNullException.class)
         public ResponseEntity<ErrorResponse> StatusNullException(StatusNullException exception, HttpServletRequest request){
+            ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), request.getRequestURI(), Instant.now());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> alreadyExists(AlreadyExistsException exception, HttpServletRequest request){
         ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), request.getRequestURI(), Instant.now());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
