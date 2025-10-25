@@ -6,6 +6,7 @@ import dev.matheuslf.desafio.inscritos.entities.DTOS.TaskResponseDTO;
 import dev.matheuslf.desafio.inscritos.entities.Task;
 import dev.matheuslf.desafio.inscritos.entities.enums.Status;
 import dev.matheuslf.desafio.inscritos.exceptions.NotFoundException;
+import dev.matheuslf.desafio.inscritos.exceptions.StatusNullException;
 import dev.matheuslf.desafio.inscritos.repositories.TaskRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -76,6 +77,15 @@ public class TaskServiceTest {
 
 
         Assertions.assertEquals("Not exist task with this ID",exception.getMessage());
+    }
+
+    @Test
+    void testUpdateTaskFailed2(){
+        Task t2 = Task.builder().title("task2").description("test task2").build();
+        when(taskRepository.findById(anyLong())).thenReturn(Optional.ofNullable(t1));
+
+        StatusNullException exception = Assertions.assertThrows(StatusNullException.class, () -> taskService.updateTask(new TaskRequestDTO(t2),1L));
+        Assertions.assertEquals("The status task is null",exception.getMessage());
     }
 
     @Test
