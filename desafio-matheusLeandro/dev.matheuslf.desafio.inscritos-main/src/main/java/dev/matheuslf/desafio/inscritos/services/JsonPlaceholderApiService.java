@@ -33,5 +33,14 @@ public class JsonPlaceholderApiService {
                 .block();
     }
 
+    public JsonPlaceholderPostsDTO createPost(JsonPlaceholderPostsDTO data){
+        return webClient.post()
+                .uri("/posts")
+                .bodyValue(data)
+                .retrieve()
+                .bodyToMono(JsonPlaceholderPostsDTO.class)
+                .block();
+    }
+
 
 }
