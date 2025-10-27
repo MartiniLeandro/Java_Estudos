@@ -1,0 +1,31 @@
+package dev.matheuslf.desafio.inscritos.services;
+
+import dev.matheuslf.desafio.inscritos.entities.DTOS.Coord;
+import dev.matheuslf.desafio.inscritos.entities.DTOS.OpenWeatherResponseDTO;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
+@Service
+public class OpenWeatherApiService {
+
+    @Value("${api.key}")
+    private String apiKey;
+
+    private final WebClient webClient;
+
+
+    public OpenWeatherApiService() {
+        this.webClient = WebClient.builder()
+                .baseUrl("https://api.openweathermap.org/data/2.5")
+                .build();
+    }
+
+    public OpenWeatherResponseDTO getInfosWeather(Coord coord){
+        return webClient.get()
+                .uri("weather?lat={lat}&lon={lon}&appid={apiKey}",coord.lat(),coord.lon(),apiKey)
+                .retrieve()
+                .bodyToMono(OpenWeatherResponseDTO.class)
+                .block();
+    }
+}
