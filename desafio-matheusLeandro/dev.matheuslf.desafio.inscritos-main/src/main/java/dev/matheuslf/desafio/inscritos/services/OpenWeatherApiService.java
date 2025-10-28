@@ -21,9 +21,17 @@ public class OpenWeatherApiService {
                 .build();
     }
 
-    public OpenWeatherResponseDTO getInfosWeather(Coord coord){
+    public OpenWeatherResponseDTO getInfosWeatherByCoordinates(Coord coord){
         return webClient.get()
-                .uri("weather?lat={lat}&lon={lon}&appid={apiKey}",coord.lat(),coord.lon(),apiKey)
+                .uri("/weather?lat={lat}&lon={lon}&appid={apiKey}",coord.lat(),coord.lon(),apiKey)
+                .retrieve()
+                .bodyToMono(OpenWeatherResponseDTO.class)
+                .block();
+    }
+
+    public OpenWeatherResponseDTO getInfosWeatherByCityName(String city){
+        return webClient.get()
+                .uri("/weather?q={cityName}&appid={apiKey}",city,this.apiKey)
                 .retrieve()
                 .bodyToMono(OpenWeatherResponseDTO.class)
                 .block();

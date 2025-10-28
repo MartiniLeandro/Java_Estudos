@@ -1,4 +1,6 @@
 package dev.matheuslf.desafio.inscritos.entities.DTOS;
 
-public record OpenWeatherResponseDTO(Coord coord) {
+import java.util.List;
+
+public record OpenWeatherResponseDTO(Coord coord, List<Weather> weather, Integer visibility, String name, Double id) {
 }

@@ -16,9 +16,14 @@ public class OpenWeatherController {
         this.openWeatherApiService = openWeatherApiService;
     }
 
-    @GetMapping
-    public ResponseEntity<OpenWeatherResponseDTO> getWeather(@RequestParam Double lat, @RequestParam Double lon){
+    @GetMapping("/coord")
+    public ResponseEntity<OpenWeatherResponseDTO> getWeatherByCoordinates(@RequestParam Double lat, @RequestParam Double lon){
         Coord coord = new Coord(lat,lon);
-        return ResponseEntity.ok().body(openWeatherApiService.getInfosWeather(coord));
+        return ResponseEntity.ok().body(openWeatherApiService.getInfosWeatherByCoordinates(coord));
+    }
+
+    @GetMapping("/cityName")
+    public ResponseEntity<OpenWeatherResponseDTO> getWeatherByCityName(@RequestParam String cityName){
+        return ResponseEntity.ok().body(openWeatherApiService.getInfosWeatherByCityName(cityName));
     }
 }
