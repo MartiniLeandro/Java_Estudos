@@ -23,7 +23,7 @@ public class OpenWeatherApiService {
 
     public OpenWeatherResponseDTO getInfosWeatherByCoordinates(Coord coord){
         return webClient.get()
-                .uri("/weather?lat={lat}&lon={lon}&appid={apiKey}",coord.lat(),coord.lon(),apiKey)
+                .uri(uriBuilder -> uriBuilder.path("/weather").queryParam("lat",coord.lat()).queryParam("lon",coord.lon()).queryParam("appid",apiKey).build())
                 .retrieve()
                 .bodyToMono(OpenWeatherResponseDTO.class)
                 .block();

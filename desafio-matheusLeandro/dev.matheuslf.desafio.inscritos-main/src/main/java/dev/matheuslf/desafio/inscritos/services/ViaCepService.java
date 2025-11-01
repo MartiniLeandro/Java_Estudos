@@ -17,7 +17,7 @@ public class ViaCepService {
 
     public ViaCepResponseDTO getCepData(String cep){
         return webClient.get()
-                .uri("/{cep}/json",cep)
+                .uri(uriBuilder -> uriBuilder.queryParam("cep",cep).path("json").build())
                 .retrieve()
                 .bodyToMono(ViaCepResponseDTO.class)
                 .block();

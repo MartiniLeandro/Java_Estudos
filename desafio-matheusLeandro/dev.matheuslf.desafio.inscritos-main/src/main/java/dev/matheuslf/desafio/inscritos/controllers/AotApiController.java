@@ -1,6 +1,7 @@
 package dev.matheuslf.desafio.inscritos.controllers;
 
 import dev.matheuslf.desafio.inscritos.entities.DTOS.AotCharactersDTO;
+import dev.matheuslf.desafio.inscritos.entities.DTOS.AotCharactersFilterDTO;
 import dev.matheuslf.desafio.inscritos.services.AotApiService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class AotApiController {
     }
 
     @GetMapping("/characters")
-    public ResponseEntity<List<AotCharactersDTO>> allCharacters(@RequestParam Integer page){
+    public ResponseEntity<List<AotCharactersDTO>> allCharacters(@RequestParam(required = false) Integer page){
         return ResponseEntity.ok().body(aotApiService.allCharacters(page));
     }
 
@@ -28,7 +29,11 @@ public class AotApiController {
     }
 
     @GetMapping("/characters/filter")
-    public ResponseEntity<List<AotCharactersDTO>> allCharactersByStatus(@RequestParam String status){
-        return ResponseEntity.ok().body(aotApiService.charactersByStatus(status));
+    public ResponseEntity<List<AotCharactersDTO>> allCharactersByStatus(@RequestParam(required = false) String name,
+                                                                        @RequestParam(required = false) String gender,
+                                                                        @RequestParam(required = false) String status,
+                                                                        @RequestParam(required = false) String occupation){
+        AotCharactersFilterDTO aotCharactersFilterDTO = new AotCharactersFilterDTO(name, gender, status, occupation);
+        return ResponseEntity.ok().body(aotApiService.charactersByFilters(aotCharactersFilterDTO));
     }
 }

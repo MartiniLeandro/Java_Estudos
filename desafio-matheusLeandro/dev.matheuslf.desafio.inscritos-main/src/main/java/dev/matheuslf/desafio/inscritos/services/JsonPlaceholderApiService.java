@@ -27,7 +27,7 @@ public class JsonPlaceholderApiService {
 
     public JsonPlaceholderPostsDTO getPostById(Long id){
         return webClient.get()
-                .uri("/posts/{id}",id)
+                .uri(uriBuilder -> uriBuilder.path("/posts").queryParam("id",id).build())
                 .retrieve()
                 .bodyToMono(JsonPlaceholderPostsDTO.class)
                 .block();

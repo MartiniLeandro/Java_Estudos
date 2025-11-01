@@ -1,7 +1,9 @@
 package dev.matheuslf.desafio.inscritos.services;
 
 import dev.matheuslf.desafio.inscritos.entities.DTOS.AotCharactersDTO;
+import dev.matheuslf.desafio.inscritos.entities.DTOS.AotCharactersFilterDTO;
 import dev.matheuslf.desafio.inscritos.entities.DTOS.AotCharactersResultDTO;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -20,31 +22,45 @@ public class AotApiService {
 
     public List<AotCharactersDTO> allCharacters(Integer page){
         AotCharactersResultDTO result = webClient.get()
-                    .uri("/characters?page={page}",page)
+                    .uri(uriBuilder -> {
+                        uriBuilder.path("/characters");
+                        if(page != null){
+                            uriBuilder.queryParam("page", page);
+                        }
+                        return uriBuilder.build();
+                    })
                     .retrieve()
                     .bodyToMono(AotCharactersResultDTO.class)
                     .block();
 
-        if(result == null) return null;
         return result.results().stream().map(AotCharactersDTO::new).toList();
     }
 
     public AotCharactersDTO characterById(Long id){
         return webClient.get()
-                    .uri("/characters/{id}",id)
+                    .uri(uriBuilder -> uriBuilder.path("/characters").queryParam("/id",id).build())
                     .retrieve()
                     .bodyToMono(AotCharactersDTO.class)
                     .block();
     }
 
-    public List<AotCharactersDTO> charactersByStatus(String status){
+    public List<AotCharactersDTO> charactersByFilters(AotCharactersFilterDTO data) {
         AotCharactersResultDTO result = webClient.get()
-                .uri("/characters?status={status}",status)
+                .uri(uriBuilder -> {
+                    uriBuilder.path("/characters");
+
+                    if (data.name() != null) uriBuilder.queryParam("name", data.name());
+                    if (data.gender() != null) uriBuilder.queryParam("gender", data.gender());
+                    if (data.status() != null) uriBuilder.queryParam("status", data.status());
+                    if (data.occupation() != null) uriBuilder.queryParam("occupation", data.occupation());
+
+                    return uriBuilder.build();
+                })
                 .retrieve()
                 .bodyToMono(AotCharactersResultDTO.class)
                 .block();
 
-        if(result == null) return null;
+        if (result == null) return null;
         return result.results().stream().map(AotCharactersDTO::new).toList();
     }
 }
