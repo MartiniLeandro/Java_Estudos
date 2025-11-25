@@ -3,7 +3,6 @@ package dev.matheuslf.desafio.inscritos.services;
 import dev.matheuslf.desafio.inscritos.entities.DTOS.AotCharactersDTO;
 import dev.matheuslf.desafio.inscritos.entities.DTOS.AotCharactersFilterDTO;
 import dev.matheuslf.desafio.inscritos.entities.DTOS.AotCharactersResultDTO;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -33,6 +32,7 @@ public class AotApiService {
                     .bodyToMono(AotCharactersResultDTO.class)
                     .block();
 
+        assert result != null;
         return result.results().stream().map(AotCharactersDTO::new).toList();
     }
 

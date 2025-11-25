@@ -28,12 +28,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests((requests) -> {
+                    requests.requestMatchers("/login").permitAll();
                     requests.requestMatchers("/auth/**").permitAll();
                     requests.requestMatchers("/test-api/**").permitAll();
                     requests.anyRequest().authenticated();
                 });
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.httpBasic(Customizer.withDefaults());
+        http.oauth2Login(Customizer.withDefaults());
         http.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
