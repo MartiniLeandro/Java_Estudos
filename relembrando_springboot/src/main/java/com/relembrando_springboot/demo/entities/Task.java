@@ -1,15 +1,12 @@
 package com.relembrando_springboot.demo.entities;
 
 import com.relembrando_springboot.demo.entities.DTOS.TaskRequestDTO;
-import com.relembrando_springboot.demo.entities.DTOS.TaskResponseDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "tasks")
 public class Task {
 
     @Id
