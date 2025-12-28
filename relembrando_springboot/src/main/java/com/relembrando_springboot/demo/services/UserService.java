@@ -1,6 +1,7 @@
 package com.relembrando_springboot.demo.services;
 
 import com.relembrando_springboot.demo.entities.User;
+import com.relembrando_springboot.demo.exceptions.NotFoundException;
 import com.relembrando_springboot.demo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class UserService {
     }
 
     public User userById(Long id){
-        return userRepository.findById(id).orElseThrow();
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Error!!!"));
     }
 
     public User createUser(User user){
@@ -29,7 +30,7 @@ public class UserService {
     }
 
     public User updateUser(User user,Long id){
-        User updatedUser = userRepository.findById(id).orElseThrow();
+        User updatedUser = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Error!!!"));
         updatedUser.setName(user.getName());
         updatedUser.setEmail(user.getEmail());
         updatedUser.setCpf(user.getCpf());
@@ -38,6 +39,10 @@ public class UserService {
     }
 
     public void deleteUser(Long id){
-        userRepository.deleteById(id);
+        try{
+            userRepository.deleteById(id);
+        }catch (NotFoundException exception){
+            throw new NotFoundException(exception.getMessage());
+        }
     }
 }

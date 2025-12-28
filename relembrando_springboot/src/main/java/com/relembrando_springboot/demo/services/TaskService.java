@@ -3,6 +3,7 @@ package com.relembrando_springboot.demo.services;
 import com.relembrando_springboot.demo.entities.DTOS.TaskRequestDTO;
 import com.relembrando_springboot.demo.entities.DTOS.TaskResponseDTO;
 import com.relembrando_springboot.demo.entities.Task;
+import com.relembrando_springboot.demo.exceptions.NotFoundException;
 import com.relembrando_springboot.demo.repositories.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class TaskService {
     }
 
     public TaskResponseDTO getTaskById(Long id){
-        Task task = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Error!!"));
+        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Error!!"));
         return new TaskResponseDTO(task);
     }
 
@@ -32,7 +33,7 @@ public class TaskService {
     }
 
     public TaskResponseDTO updateTask(TaskRequestDTO data, Long id){
-        Task updatedTask = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Error!!"));
+        Task updatedTask = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Error!!"));
         updatedTask.setTitle(data.title());
         updatedTask.setDesc(data.desc());
         updatedTask.setStatus(data.status());
@@ -41,6 +42,10 @@ public class TaskService {
     }
 
     public void deleteTask(Long id){
-        taskRepository.deleteById(id);
+        try{
+            taskRepository.deleteById(id);
+        }catch (NotFoundException exception){
+            throw new NotFoundException(exception.getMessage());
+        }
     }
 }
