@@ -1,5 +1,6 @@
 package com.demo.entities;
 
+import com.demo.entities.DTOS.ProdutoCreateDTO;
 import com.demo.entities.ENUMS.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -34,6 +35,13 @@ public class Produto {
     public Produto(String nome, Double preco, Categoria categoria, Status status) {
         this.nome = nome;
         this.preco = preco;
+        this.categoria = categoria;
+        this.status = Status.ATIVO;
+    }
+
+    public Produto(ProdutoCreateDTO data, Categoria categoria) {
+        this.nome = data.nome();
+        this.preco = data.preco();
         this.categoria = categoria;
         this.status = Status.ATIVO;
     }
