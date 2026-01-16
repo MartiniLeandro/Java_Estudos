@@ -5,5 +5,5 @@ import com.demo.entities.ENUMS.StatusPedido;
 
 import java.time.LocalDateTime;
 
-public record PedidoUpdateDTO(LocalDateTime data, StatusPedido status, Cliente cliente) {
+public record PedidoUpdateDTO(LocalDateTime data, StatusPedido status, Long idCliente) {
 }

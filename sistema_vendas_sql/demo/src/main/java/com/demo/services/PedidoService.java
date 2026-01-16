@@ -1,10 +1,12 @@
 package com.demo.services;
 
+import com.demo.entities.Cliente;
 import com.demo.entities.DTOS.PedidoCreateDTO;
 import com.demo.entities.DTOS.PedidoResponseDTO;
 import com.demo.entities.DTOS.PedidoUpdateDTO;
 import com.demo.entities.ENUMS.StatusPedido;
 import com.demo.entities.Pedido;
+import com.demo.repositories.ClienteRepository;
 import com.demo.repositories.PedidoRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +17,11 @@ import java.util.List;
 public class PedidoService {
 
     private final PedidoRepository pedidoRepository;
+    private final ClienteRepository clienteRepository;
 
-    public PedidoService(PedidoRepository pedidoRepository) {
+    public PedidoService(PedidoRepository pedidoRepository, ClienteRepository clienteRepository) {
         this.pedidoRepository = pedidoRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     public List<PedidoResponseDTO> getAllPedidos(){
@@ -40,18 +44,19 @@ public class PedidoService {
     }
 
     public List<PedidoResponseDTO> gePedidosBetweenDates(LocalDateTime inicio, LocalDateTime fim){
-        List<Pedido> pedidosBetweenDatas = pedidoRepository.findAllBetweenDates(inicio,fim);
+        List<Pedido> pedidosBetweenDatas = pedidoRepository.findByDataBetween(inicio,fim);
         return pedidosBetweenDatas.stream().map(PedidoResponseDTO::new).toList();
     }
 
     public PedidoResponseDTO createPedido(PedidoCreateDTO pedido){
-        Pedido novoPedido = new Pedido(pedido);
+        Cliente cliente = clienteRepository.findById(pedido.idCliente()).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        Pedido novoPedido = new Pedido(cliente);
         return new PedidoResponseDTO(pedidoRepository.save(novoPedido));
     }
 
     public PedidoResponseDTO updatePedido(PedidoUpdateDTO pedido, Long id){
         Pedido updatedPedido = pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
-        updatedPedido.setCliente(pedido.cliente());
+        updatedPedido.setCliente(clienteRepository.findById(pedido.idCliente()).orElseThrow(() -> new RuntimeException("Cliente não encontrado")));
         updatedPedido.setData(pedido.data());
         updatedPedido.setStatus(pedido.status());
         pedidoRepository.save(updatedPedido);

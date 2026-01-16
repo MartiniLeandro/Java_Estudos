@@ -34,10 +34,10 @@ public class Pedido {
         this.status = StatusPedido.CRIADO;
         this.cliente = pedido.getCliente();
     }
-    public Pedido(PedidoCreateDTO data){
+    public Pedido(Cliente data){
         this.data = LocalDateTime.now();
         this.status = StatusPedido.CRIADO;
-        this.cliente = data.cliente();
+        this.cliente = data;
     }
 
     public Long getIdPedido() {
@@ -71,4 +71,5 @@ public class Pedido {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
 }
