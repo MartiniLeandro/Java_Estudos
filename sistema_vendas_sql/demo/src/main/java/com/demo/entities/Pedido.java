@@ -1,6 +1,7 @@
 package com.demo.entities;
 
-import com.demo.DTOS.StatusPedido;
+import com.demo.entities.DTOS.PedidoCreateDTO;
+import com.demo.entities.ENUMS.StatusPedido;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -28,10 +29,15 @@ public class Pedido {
     private Cliente cliente;
 
     public Pedido() {}
-    public Pedido(Cliente cliente) {
+    public Pedido(Pedido pedido) {
         this.data = LocalDateTime.now();
         this.status = StatusPedido.CRIADO;
-        this.cliente = cliente;
+        this.cliente = pedido.getCliente();
+    }
+    public Pedido(PedidoCreateDTO data){
+        this.data = LocalDateTime.now();
+        this.status = StatusPedido.CRIADO;
+        this.cliente = data.cliente();
     }
 
     public Long getIdPedido() {

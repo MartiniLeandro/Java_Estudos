@@ -1,4 +1,4 @@
-package com.demo.DTOS;
+package com.demo.entities.ENUMS;
 
 public enum Status {
     ATIVO,

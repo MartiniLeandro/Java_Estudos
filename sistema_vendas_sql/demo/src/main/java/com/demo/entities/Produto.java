@@ -1,6 +1,6 @@
 package com.demo.entities;
 
-import com.demo.DTOS.Status;
+import com.demo.entities.ENUMS.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
