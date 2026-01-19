@@ -12,9 +12,11 @@ import java.util.List;
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     @Query(value = "select * from pedido where id_cliente = :idCliente", nativeQuery = true)
-    public List<Pedido> findAllByCliente(Long idCliente);
+    List<Pedido> findAllByCliente(Long idCliente);
 
-    public List<Pedido> findAllByStatus(StatusPedido status);
+    List<Pedido> findAllByStatus(StatusPedido status);
 
-    public List<Pedido> findByDataBetween(LocalDateTime inicio, LocalDateTime fim);
+    List<Pedido> findByDataBetween(LocalDateTime inicio, LocalDateTime fim);
+
+    Boolean existsByStatus(StatusPedido status);
 }

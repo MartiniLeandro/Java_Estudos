@@ -9,13 +9,17 @@ import java.util.List;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
-    public List<Produto> findByCategoria(Categoria categoria);
+     List<Produto> findByCategoria(Categoria categoria);
 
-    public List<Produto> findByPreco(Double preco);
+     List<Produto> findByPreco(Double preco);
 
-    public List<Produto> findByPrecoBetween(Double precoMin, Double precoMax);
+     List<Produto> findByPrecoBetween(Double precoMin, Double precoMax);
 
-    public List<Produto> findByCategoriaAndPrecoBetween(Categoria categoria, Double precoMin, Double precoMax);
+     List<Produto> findByCategoriaAndPrecoBetween(Categoria categoria, Double precoMin, Double precoMax);
 
-    public List<Produto> findByStatus(Status status);
+     List<Produto> findByStatus(Status status);
+
+     Boolean existsByStatus(Status status);
+
+     Boolean existsByNomeIgnoreCase(String nome);
 }

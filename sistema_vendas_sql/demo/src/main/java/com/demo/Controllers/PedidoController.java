@@ -43,7 +43,7 @@ public class PedidoController {
 
     @GetMapping("/dates")
     public ResponseEntity<List<PedidoResponseDTO>> findAllByDates(@RequestParam LocalDateTime start, @RequestParam LocalDateTime end){
-        return ResponseEntity.ok().body(pedidoService.gePedidosBetweenDates(start,end));
+        return ResponseEntity.ok().body(pedidoService.getPedidosBetweenDates(start,end));
     }
 
     @PostMapping

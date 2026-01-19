@@ -28,7 +28,7 @@ public class CategoriaController {
         return ResponseEntity.ok().body(categoriaService.findById(id));
     }
 
-    @GetMapping
+    @GetMapping("/nome")
     public ResponseEntity<CategoriaResponseDTO> findByNome(@RequestParam String nome){
         return ResponseEntity.ok().body(categoriaService.findByNome(nome));
     }

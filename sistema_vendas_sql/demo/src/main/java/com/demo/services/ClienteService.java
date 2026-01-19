@@ -29,16 +29,19 @@ public class ClienteService {
     }
 
     public List<ClienteResponseDTO> getClienteByStatus(Status status){
+        if(!clienteRepository.existsByStatus(status)) throw new RuntimeException("Status não encontrado");
         List<Cliente> clientes = clienteRepository.findAllByStatus(status);
         return clientes.stream().map(ClienteResponseDTO::new).toList();
     }
 
     public ClienteResponseDTO getClienteByEmail(String email){
+        if(!clienteRepository.existsByEmail(email)) throw new RuntimeException("Email não encontrado");
         Cliente cliente = clienteRepository.findByEmail(email);
         return new ClienteResponseDTO(cliente);
     }
 
     public ClienteResponseDTO createCliente(ClienteRequestDTO data){
+        if(clienteRepository.existsByEmail(data.email())) throw new RuntimeException("Email já cadastrado");
         Cliente cliente = new Cliente(data.email(), data.nome());
         clienteRepository.save(cliente);
         return new ClienteResponseDTO(cliente);
@@ -46,6 +49,7 @@ public class ClienteService {
 
     public ClienteResponseDTO updateCliente(Long id, ClienteRequestDTO data){
         Cliente updatedCliente =  clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente nao encontrado"));
+        if(clienteRepository.existsByEmail(data.email()) && !data.email().equals(updatedCliente.getEmail())) throw new RuntimeException("Este email já existe");
         updatedCliente.setNome(data.nome());
         updatedCliente.setEmail(data.email());
         clienteRepository.save(updatedCliente);
@@ -53,7 +57,8 @@ public class ClienteService {
     }
 
     public void deleteCliente(Long id){
-        clienteRepository.deleteById(id);
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente nao encontrado"));
+        clienteRepository.delete(cliente);
     }
 }
 

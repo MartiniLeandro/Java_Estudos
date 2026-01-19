@@ -27,10 +27,12 @@ public class CategoriaService {
     }
 
     public CategoriaResponseDTO findByNome(String nome) {
+        if(!categoriaRepository.existsByNome(nome)) throw new RuntimeException("Não existe categoria com este nome");
         return new CategoriaResponseDTO(categoriaRepository.findByNome(nome));
     }
 
     public CategoriaResponseDTO createCategoria(CategoriaRequestDTO data){
+        if(categoriaRepository.existsByNome(data.nome())) throw new RuntimeException("Já existe categoria com este nome");
         Categoria categoria = new Categoria(data.nome());
         categoriaRepository.save(categoria);
         return new CategoriaResponseDTO(categoria);
@@ -38,12 +40,14 @@ public class CategoriaService {
 
     public CategoriaResponseDTO updateCategoria(Long id, CategoriaRequestDTO data){
         Categoria updatedCategoria = categoriaRepository.findById(id).orElseThrow(() -> new RuntimeException("Categoria inexistente"));
+        if(categoriaRepository.existsByNome(data.nome()) && data.nome().equals(updatedCategoria.getNome())) throw new RuntimeException("Já existe uma categoria com este nome");
         updatedCategoria.setNome(data.nome());
         categoriaRepository.save(updatedCategoria);
         return new CategoriaResponseDTO(updatedCategoria);
     }
 
     public void deleteCategoria(Long id){
-        categoriaRepository.deleteById(id);
+        Categoria categoria = categoriaRepository.findById(id).orElseThrow(() -> new RuntimeException("Categoria inexistente"));
+        categoriaRepository.delete(categoria);
     }
 }

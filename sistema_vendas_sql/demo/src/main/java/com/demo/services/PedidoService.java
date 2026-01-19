@@ -34,22 +34,25 @@ public class PedidoService {
     }
 
     public List<PedidoResponseDTO> getPedidosByCliente(Long idCliente){
+        if(clienteRepository.findById(idCliente).isEmpty()) throw new RuntimeException("Nenhum cliente encontrado");
         List<Pedido> pedidosCliente = pedidoRepository.findAllByCliente(idCliente);
         return pedidosCliente.stream().map(PedidoResponseDTO::new).toList();
     }
 
     public List<PedidoResponseDTO> getPedidosByStatus(StatusPedido status){
+        if(!pedidoRepository.existsByStatus(status)) throw new RuntimeException("Status não encontrado");
         List<Pedido> pedidosStatus = pedidoRepository.findAllByStatus(status);
         return pedidosStatus.stream().map(PedidoResponseDTO::new).toList();
     }
 
-    public List<PedidoResponseDTO> gePedidosBetweenDates(LocalDateTime inicio, LocalDateTime fim){
+    public List<PedidoResponseDTO> getPedidosBetweenDates(LocalDateTime inicio, LocalDateTime fim){
+        if(inicio.isAfter(fim) || fim.isBefore(inicio)) throw new RuntimeException("Datas não fazem sentido");
         List<Pedido> pedidosBetweenDatas = pedidoRepository.findByDataBetween(inicio,fim);
         return pedidosBetweenDatas.stream().map(PedidoResponseDTO::new).toList();
     }
 
     public PedidoResponseDTO createPedido(PedidoCreateDTO pedido){
-        Cliente cliente = clienteRepository.findById(pedido.idCliente()).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        Cliente cliente = clienteRepository.findById(pedido.idCliente()).orElseThrow(() -> new RuntimeException("Cliente nao encontrado"));
         Pedido novoPedido = new Pedido(cliente);
         return new PedidoResponseDTO(pedidoRepository.save(novoPedido));
     }
@@ -64,7 +67,8 @@ public class PedidoService {
     }
 
     public void deletePedido(Long id){
-        pedidoRepository.deleteById(id);
+        Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não existe"));
+        pedidoRepository.delete(pedido);
     }
 
 
