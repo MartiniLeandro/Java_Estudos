@@ -4,6 +4,8 @@ import com.demo.entities.Cliente;
 import com.demo.entities.DTOS.ClienteRequestDTO;
 import com.demo.entities.DTOS.ClienteResponseDTO;
 import com.demo.entities.ENUMS.Status;
+import com.demo.exceptions.AlreadyExistsException;
+import com.demo.exceptions.NotFoundException;
 import com.demo.repositories.ClienteRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,32 +26,32 @@ public class ClienteService {
     }
 
     public ClienteResponseDTO getClienteById(Long id){
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente nao encontrado"));
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new NotFoundException("Cliente nao encontrado"));
         return new ClienteResponseDTO(cliente);
     }
 
     public List<ClienteResponseDTO> getClienteByStatus(Status status){
-        if(!clienteRepository.existsByStatus(status)) throw new RuntimeException("Status não encontrado");
+        if(!clienteRepository.existsByStatus(status)) throw new NotFoundException("Status não encontrado");
         List<Cliente> clientes = clienteRepository.findAllByStatus(status);
         return clientes.stream().map(ClienteResponseDTO::new).toList();
     }
 
     public ClienteResponseDTO getClienteByEmail(String email){
-        if(!clienteRepository.existsByEmail(email)) throw new RuntimeException("Email não encontrado");
+        if(!clienteRepository.existsByEmail(email)) throw new NotFoundException("Email não encontrado");
         Cliente cliente = clienteRepository.findByEmail(email);
         return new ClienteResponseDTO(cliente);
     }
 
     public ClienteResponseDTO createCliente(ClienteRequestDTO data){
-        if(clienteRepository.existsByEmail(data.email())) throw new RuntimeException("Email já cadastrado");
+        if(clienteRepository.existsByEmail(data.email())) throw new AlreadyExistsException("Email já cadastrado");
         Cliente cliente = new Cliente(data.email(), data.nome());
         clienteRepository.save(cliente);
         return new ClienteResponseDTO(cliente);
     }
 
     public ClienteResponseDTO updateCliente(Long id, ClienteRequestDTO data){
-        Cliente updatedCliente =  clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente nao encontrado"));
-        if(clienteRepository.existsByEmail(data.email()) && !data.email().equals(updatedCliente.getEmail())) throw new RuntimeException("Este email já existe");
+        Cliente updatedCliente =  clienteRepository.findById(id).orElseThrow(() -> new NotFoundException("Cliente nao encontrado"));
+        if(clienteRepository.existsByEmail(data.email()) && !data.email().equals(updatedCliente.getEmail())) throw new AlreadyExistsException("Este email já existe");
         updatedCliente.setNome(data.nome());
         updatedCliente.setEmail(data.email());
         clienteRepository.save(updatedCliente);
@@ -57,7 +59,7 @@ public class ClienteService {
     }
 
     public void deleteCliente(Long id){
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente nao encontrado"));
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new NotFoundException("Cliente nao encontrado"));
         clienteRepository.delete(cliente);
     }
 }

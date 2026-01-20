@@ -6,6 +6,8 @@ import com.demo.entities.DTOS.PedidoResponseDTO;
 import com.demo.entities.DTOS.PedidoUpdateDTO;
 import com.demo.entities.ENUMS.StatusPedido;
 import com.demo.entities.Pedido;
+import com.demo.exceptions.IncorrectDateException;
+import com.demo.exceptions.NotFoundException;
 import com.demo.repositories.ClienteRepository;
 import com.demo.repositories.PedidoRepository;
 import org.springframework.stereotype.Service;
@@ -30,36 +32,36 @@ public class PedidoService {
     }
 
     public PedidoResponseDTO getPedidoById(Long id){
-        return new PedidoResponseDTO(pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado")));
+        return new PedidoResponseDTO(pedidoRepository.findById(id).orElseThrow(() -> new NotFoundException("Pedido não encontrado")));
     }
 
     public List<PedidoResponseDTO> getPedidosByCliente(Long idCliente){
-        if(clienteRepository.findById(idCliente).isEmpty()) throw new RuntimeException("Nenhum cliente encontrado");
+        if(clienteRepository.findById(idCliente).isEmpty()) throw new NotFoundException("Nenhum cliente encontrado");
         List<Pedido> pedidosCliente = pedidoRepository.findAllByCliente(idCliente);
         return pedidosCliente.stream().map(PedidoResponseDTO::new).toList();
     }
 
     public List<PedidoResponseDTO> getPedidosByStatus(StatusPedido status){
-        if(!pedidoRepository.existsByStatus(status)) throw new RuntimeException("Status não encontrado");
+        if(!pedidoRepository.existsByStatus(status)) throw new NotFoundException("Status não encontrado");
         List<Pedido> pedidosStatus = pedidoRepository.findAllByStatus(status);
         return pedidosStatus.stream().map(PedidoResponseDTO::new).toList();
     }
 
     public List<PedidoResponseDTO> getPedidosBetweenDates(LocalDateTime inicio, LocalDateTime fim){
-        if(inicio.isAfter(fim) || fim.isBefore(inicio)) throw new RuntimeException("Datas não fazem sentido");
+        if(inicio.isAfter(fim) || fim.isBefore(inicio)) throw new IncorrectDateException("Datas inválidas");
         List<Pedido> pedidosBetweenDatas = pedidoRepository.findByDataBetween(inicio,fim);
         return pedidosBetweenDatas.stream().map(PedidoResponseDTO::new).toList();
     }
 
     public PedidoResponseDTO createPedido(PedidoCreateDTO pedido){
-        Cliente cliente = clienteRepository.findById(pedido.idCliente()).orElseThrow(() -> new RuntimeException("Cliente nao encontrado"));
+        Cliente cliente = clienteRepository.findById(pedido.idCliente()).orElseThrow(() -> new NotFoundException("Cliente nao encontrado"));
         Pedido novoPedido = new Pedido(cliente);
         return new PedidoResponseDTO(pedidoRepository.save(novoPedido));
     }
 
     public PedidoResponseDTO updatePedido(PedidoUpdateDTO pedido, Long id){
-        Pedido updatedPedido = pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
-        updatedPedido.setCliente(clienteRepository.findById(pedido.idCliente()).orElseThrow(() -> new RuntimeException("Cliente não encontrado")));
+        Pedido updatedPedido = pedidoRepository.findById(id).orElseThrow(() -> new NotFoundException("Pedido não encontrado"));
+        updatedPedido.setCliente(clienteRepository.findById(pedido.idCliente()).orElseThrow(() -> new NotFoundException("Cliente não encontrado")));
         updatedPedido.setData(pedido.data());
         updatedPedido.setStatus(pedido.status());
         pedidoRepository.save(updatedPedido);
@@ -67,7 +69,7 @@ public class PedidoService {
     }
 
     public void deletePedido(Long id){
-        Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não existe"));
+        Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new NotFoundException("Pedido não existe"));
         pedidoRepository.delete(pedido);
     }
 
