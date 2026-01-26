@@ -23,8 +23,10 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .authorizeHttpRequests(auth ->
-                        auth.anyRequest().permitAll()
+                .authorizeHttpRequests(auth -> {
+                        auth.requestMatchers("/clientes/**").hasRole("ADMIN");
+                        auth.requestMatchers("/auth/**").permitAll().anyRequest().permitAll();
+                        }
                 )
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);

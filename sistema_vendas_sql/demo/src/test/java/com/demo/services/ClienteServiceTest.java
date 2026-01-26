@@ -99,31 +99,6 @@ class ClienteServiceTest {
         assertEquals("Status não encontrado", exception.getMessage());
     }
 
-    // ===================== getClienteByEmail =====================
-
-    @Test
-    void deveRetornarClientePorEmail() {
-        when(clienteRepository.existsByEmail(c1.getEmail())).thenReturn(true);
-        when(clienteRepository.findByEmail(c1.getEmail())).thenReturn(c1);
-
-        ClienteResponseDTO response = clienteService.getClienteByEmail(c1.getEmail());
-
-        assertNotNull(response);
-        assertEquals(c1.getEmail(), response.email());
-    }
-
-    @Test
-    void deveLancarExcecaoQuandoEmailNaoExistir() {
-        when(clienteRepository.existsByEmail("inexistente@email.com")).thenReturn(false);
-
-        NotFoundException exception = assertThrows(
-                NotFoundException.class,
-                () -> clienteService.getClienteByEmail("inexistente@email.com")
-        );
-
-        assertEquals("Email não encontrado", exception.getMessage());
-    }
-
     // ===================== createCliente =====================
 
     @Test

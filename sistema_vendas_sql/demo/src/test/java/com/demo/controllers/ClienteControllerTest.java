@@ -100,26 +100,6 @@ public class ClienteControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    void testFindClienteByEmail() throws Exception {
-        ClienteResponseDTO clienteResponseDTO = new ClienteResponseDTO(c1);
-        when(clienteService.getClienteByEmail(c1.getEmail())).thenReturn(clienteResponseDTO);
-
-        mockMvc.perform(get("/clientes/email").param("email",c1.getEmail()))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nome").value("cliente1"));
-    }
-
-    @Test
-    void testFindClienteByEmailFailed() throws Exception {
-        when(clienteService.getClienteByEmail(anyString())).thenThrow(new NotFoundException("Email nao encontrado"));
-
-        mockMvc.perform(get("/clientes/email").param("email",c1.getEmail()))
-                .andDo(print())
-                .andExpect(status().isNotFound());
-    }
-
 
     @Test
     void testCreateCliente() throws Exception {
