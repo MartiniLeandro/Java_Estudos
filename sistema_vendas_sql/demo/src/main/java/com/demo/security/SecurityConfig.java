@@ -32,7 +32,10 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> {
                         auth.requestMatchers("/clientes/**").hasRole("ADMIN");
-                        auth.requestMatchers("/auth/**").permitAll().anyRequest().permitAll();
+                        auth.requestMatchers("/produtos/**").hasRole("ADMIN");
+                        auth.requestMatchers("/categorias/**").hasRole("ADMIN");
+                        auth.requestMatchers("/auth/**").permitAll()
+                                .anyRequest().authenticated();
                         }
                 )
                 .formLogin(AbstractHttpConfigurer::disable)

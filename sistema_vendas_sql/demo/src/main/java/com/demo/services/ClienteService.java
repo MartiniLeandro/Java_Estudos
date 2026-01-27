@@ -36,12 +36,12 @@ public class ClienteService {
         return clientes.stream().map(ClienteResponseDTO::new).toList();
     }
 
-    /*public ClienteResponseDTO createCliente(ClienteRequestDTO data){
+    public ClienteResponseDTO createCliente(ClienteRequestDTO data){
         if(clienteRepository.existsByEmail(data.email())) throw new AlreadyExistsException("Email já cadastrado");
-        Cliente cliente = new Cliente(data.email(), data.nome());
+        Cliente cliente = new Cliente(data.email(), data.nome(), data.password());
         clienteRepository.save(cliente);
         return new ClienteResponseDTO(cliente);
-    }*/
+    }
 
     public ClienteResponseDTO updateCliente(Long id, ClienteRequestDTO data){
         Cliente updatedCliente =  clienteRepository.findById(id).orElseThrow(() -> new NotFoundException("Cliente nao encontrado"));

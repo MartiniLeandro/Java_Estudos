@@ -10,6 +10,7 @@ import com.demo.exceptions.IncorrectDateException;
 import com.demo.exceptions.NotFoundException;
 import com.demo.repositories.ClienteRepository;
 import com.demo.repositories.PedidoRepository;
+import com.demo.security.TokenService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,13 +21,15 @@ public class PedidoService {
 
     private final PedidoRepository pedidoRepository;
     private final ClienteRepository clienteRepository;
+    private final TokenService tokenService;
 
-    public PedidoService(PedidoRepository pedidoRepository, ClienteRepository clienteRepository) {
+    public PedidoService(PedidoRepository pedidoRepository, ClienteRepository clienteRepository, TokenService tokenService) {
         this.pedidoRepository = pedidoRepository;
         this.clienteRepository = clienteRepository;
+        this.tokenService = tokenService;
     }
 
-    public List<PedidoResponseDTO> getAllPedidos(){
+    public List<PedidoResponseDTO> getAllPedidos(String token){
         List<Pedido> pedidos = pedidoRepository.findAll();
         return pedidos.stream().map(PedidoResponseDTO::new).toList();
     }
@@ -73,5 +76,10 @@ public class PedidoService {
         pedidoRepository.delete(pedido);
     }
 
+
+    public Cliente getClienteByToken(String token){
+        String email = tokenService.validateToken(token);
+        return clienteRepository.findClienteByEmail(email);
+    }
 
 }
