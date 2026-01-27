@@ -34,8 +34,8 @@ class ClienteServiceTest {
 
     @BeforeEach
     void setup() {
-        c1 = new Cliente("test1@email.com", "Test 1");
-        c2 = new Cliente("test2@email.com", "Test 2");
+        c1 = new Cliente("test1@email.com", "Test 1","tes1");
+        c2 = new Cliente("test2@email.com", "Test 2","tes2");
     }
 
     // ===================== getAllClientes =====================
@@ -99,39 +99,11 @@ class ClienteServiceTest {
         assertEquals("Status não encontrado", exception.getMessage());
     }
 
-    // ===================== createCliente =====================
-
-    @Test
-    void deveCriarClienteComSucesso() {
-        ClienteRequestDTO dto = new ClienteRequestDTO("novo@email.com", "Novo");
-
-        when(clienteRepository.existsByEmail(dto.email())).thenReturn(false);
-
-        ClienteResponseDTO response = clienteService.createCliente(dto);
-
-        assertNotNull(response);
-        verify(clienteRepository).save(any(Cliente.class));
-    }
-
-    @Test
-    void deveLancarExcecaoQuandoEmailJaExistirAoCriar() {
-        ClienteRequestDTO dto = new ClienteRequestDTO(c1.getEmail(), "Nome");
-
-        when(clienteRepository.existsByEmail(dto.email())).thenReturn(true);
-
-        AlreadyExistsException exception = assertThrows(
-                AlreadyExistsException.class,
-                () -> clienteService.createCliente(dto)
-        );
-
-        assertEquals("Email já cadastrado", exception.getMessage());
-    }
-
     // ===================== updateCliente =====================
 
     @Test
     void deveAtualizarClienteComSucesso() {
-        ClienteRequestDTO dto = new ClienteRequestDTO("Novo Nome","novo@email.com");
+        ClienteRequestDTO dto = new ClienteRequestDTO("Novo Nome","novo@email.com","novo");
 
         when(clienteRepository.findById(1L)).thenReturn(Optional.of(c1));
         when(clienteRepository.existsByEmail(dto.email())).thenReturn(false);
@@ -144,7 +116,7 @@ class ClienteServiceTest {
 
     @Test
     void deveLancarExcecaoQuandoClienteNaoExistirAoAtualizar() {
-        ClienteRequestDTO dto = new ClienteRequestDTO("email@email.com", "Nome");
+        ClienteRequestDTO dto = new ClienteRequestDTO("email@email.com", "Nome","novo");
 
         when(clienteRepository.findById(1L)).thenReturn(Optional.empty());
 
@@ -158,7 +130,7 @@ class ClienteServiceTest {
 
     @Test
     void deveLancarExcecaoQuandoEmailJaExistirAoAtualizar() {
-        ClienteRequestDTO dto = new ClienteRequestDTO("existente@email.com", "Nome");
+        ClienteRequestDTO dto = new ClienteRequestDTO("existente@email.com", "Nome","novo");
 
         when(clienteRepository.findById(1L)).thenReturn(Optional.of(c1));
         when(clienteRepository.existsByEmail(dto.email())).thenReturn(true);

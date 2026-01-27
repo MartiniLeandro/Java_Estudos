@@ -7,6 +7,7 @@ import com.demo.entities.DTOS.LoginDTO;
 import com.demo.exceptions.AlreadyExistsException;
 import com.demo.exceptions.NotFoundException;
 import com.demo.repositories.ClienteRepository;
+import com.demo.security.TokenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,11 +25,13 @@ public class AuthenticationController {
     private final ClienteRepository clienteRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
-    public AuthenticationController(ClienteRepository clienteRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthenticationController(ClienteRepository clienteRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.clienteRepository = clienteRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/login")
@@ -36,7 +39,8 @@ public class AuthenticationController {
         if(!clienteRepository.existsByEmail(data.email())) throw new NotFoundException("Invalid email");
         UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         Authentication authentication = authenticationManager.authenticate(usernamePassword);
-        return ResponseEntity.ok().body("usuario logado");
+        String token = tokenService.generateToken((Cliente) authentication.getPrincipal());
+        return ResponseEntity.ok().body(token);
     }
 
     @PostMapping("/register")

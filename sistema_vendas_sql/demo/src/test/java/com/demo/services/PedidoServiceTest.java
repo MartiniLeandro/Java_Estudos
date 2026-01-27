@@ -41,7 +41,7 @@ class PedidoServiceTest {
 
     @BeforeEach
     void setup() {
-        cliente = new Cliente("cliente@email.com", "Cliente Teste");
+        cliente = new Cliente("cliente@email.com", "Cliente Teste","cliente");
         pedido = new Pedido(cliente);
     }
 

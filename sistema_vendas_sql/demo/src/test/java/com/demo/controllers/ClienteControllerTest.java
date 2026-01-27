@@ -40,8 +40,8 @@ public class ClienteControllerTest {
 
     @BeforeEach
     void setup(){
-        c1 = new Cliente("cliente1", "cliente1@email.com");
-        c2 = new Cliente("cliente2", "cliente2@email.com");
+        c1 = new Cliente("cliente1", "cliente1@email.com","cliente1");
+        c2 = new Cliente("cliente2", "cliente2@email.com","cliente2");
     }
 
     @Test
@@ -100,35 +100,9 @@ public class ClienteControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-
-    @Test
-    void testCreateCliente() throws Exception {
-        ClienteRequestDTO clienteRequestDTO = new ClienteRequestDTO("cliente3","cliente3@email.com");
-        Cliente cliente = new Cliente(clienteRequestDTO.nome(),clienteRequestDTO.email());
-        when(clienteService.createCliente(clienteRequestDTO)).thenReturn(new ClienteResponseDTO(cliente));
-
-        mockMvc.perform(post("/clientes")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(clienteRequestDTO)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nome").value("cliente3"));
-    }
-
-    @Test
-    void testCreateClienteFailed() throws Exception {
-        when(clienteService.createCliente(any(ClienteRequestDTO.class))).thenThrow(new AlreadyExistsException("Email já cadastrado"));
-
-        mockMvc.perform(post("/clientes")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(c1)))
-                .andDo(print())
-                .andExpect(status().isBadRequest());
-    }
-
     @Test
     void testUpdateCliente() throws Exception {
-        ClienteRequestDTO clienteRequestDTO = new ClienteRequestDTO("cliente3","cliente3@email.com");
+        ClienteRequestDTO clienteRequestDTO = new ClienteRequestDTO("cliente3","cliente3@email.com","cliente3");
         c1.setId(1L);
         c1.setNome(clienteRequestDTO.nome());
         c1.setEmail(clienteRequestDTO.email());
