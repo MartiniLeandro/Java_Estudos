@@ -31,10 +31,17 @@ public class SecurityConfig {
                     requests.requestMatchers("/login").permitAll();
                     requests.requestMatchers("/auth/**").permitAll();
                     requests.requestMatchers("/test-api/**").permitAll();
-                    requests.anyRequest().authenticated();
+                    requests.requestMatchers(
+                    "/swagger-ui/**",
+                    "/swagger-ui.html",
+                    "/v3/api-docs/**",
+                    "/v3/api-docs.yaml"
+            ).permitAll();
+
+            requests.anyRequest().authenticated();
                 });
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.oauth2Login(Customizer.withDefaults());
+        /*http.oauth2Login(Customizer.withDefaults());*/
         http.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
