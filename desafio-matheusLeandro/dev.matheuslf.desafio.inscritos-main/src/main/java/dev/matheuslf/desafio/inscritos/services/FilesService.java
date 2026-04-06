@@ -4,9 +4,12 @@ import dev.matheuslf.desafio.inscritos.entities.DTOS.UploadFileDTO;
 import dev.matheuslf.desafio.inscritos.entities.Post;
 import dev.matheuslf.desafio.inscritos.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -49,5 +52,21 @@ public class FilesService {
             throw new RuntimeException("Erro ao salvar arquivo: ", e);
         }
 
+    }
+
+    public Resource downloadArquivo(String nomeArquivo){
+        try{
+           Path caminhoArquivo = Paths.get(diretorioFiles).resolve(nomeArquivo);
+           Resource recurso = new UrlResource(caminhoArquivo.toUri());
+
+           if(recurso.exists() || recurso.isReadable()){
+               return recurso;
+           }else {
+               throw new RuntimeException("Arquivo não encontrado!");
+           }
+
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
