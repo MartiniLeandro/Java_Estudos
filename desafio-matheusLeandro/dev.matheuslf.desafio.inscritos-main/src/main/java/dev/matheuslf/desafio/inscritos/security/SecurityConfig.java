@@ -37,7 +37,7 @@ public class SecurityConfig {
                     "/v3/api-docs/**",
                     "/v3/api-docs.yaml"
             ).permitAll();
-
+            requests.requestMatchers("api/**").permitAll();
             requests.anyRequest().authenticated();
                 });
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
