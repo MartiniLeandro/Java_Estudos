@@ -25,6 +25,7 @@ public class TryCatch {
             e.printStackTrace();
         }catch(InputMismatchException e){
             System.out.println("tipo de input incorreto");
+            System.out.print(e);
         }
         sc.close();
     }

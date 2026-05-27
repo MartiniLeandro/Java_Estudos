@@ -29,7 +29,7 @@ public class PedidoService {
         this.tokenService = tokenService;
     }
 
-    public List<PedidoResponseDTO> getAllPedidos(String token){
+    public List<PedidoResponseDTO> getAllPedidos(/*String token*/){
         List<Pedido> pedidos = pedidoRepository.findAll();
         return pedidos.stream().map(PedidoResponseDTO::new).toList();
     }
