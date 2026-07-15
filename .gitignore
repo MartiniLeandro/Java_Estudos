@@ -1,0 +1,16 @@
+# Ignorar arquivos de build do Gradle dos exercicios
+.gradle/
+build/
+gradle/
+gradlew
+gradlew.bat
+
+# Ignorar arquivos de metadados do Exercism
+.exercism/
+
+# Ignorar arquivos gerados pela IDE (IntelliJ)
+.idea/
+*.iml
+out/
+
+.gitignore
