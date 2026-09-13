@@ -35,6 +35,7 @@ public class TaskController {
     @GetMapping("/{id}")
     public ResponseEntity<Task> findById(@PathVariable Long id){
         Optional<Task> task = taskServices.findById(id);
+        System.out.println("Teste para ver o cache do docker");
         return task.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
