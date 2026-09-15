@@ -1,0 +1,10 @@
+services:
+  consulta-medica-api:
+    build: .
+    ports:
+      - "8080:8080"
+  todo-api:
+    build:
+      context: ../toDo-springboot
+    ports:
+      - "8081:8081"
